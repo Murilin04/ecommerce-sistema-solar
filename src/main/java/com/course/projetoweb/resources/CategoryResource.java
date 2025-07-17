@@ -13,7 +13,7 @@ import com.course.projetoweb.entities.Category;
 import com.course.projetoweb.services.CategoryService;
 
 @RestController
-@RequestMapping(value = "/category")
+@RequestMapping(value = "/categories")
 public class CategoryResource {
 
     @Autowired
