@@ -21,9 +21,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_order")
-public class Order implements Serializable{
+public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -96,12 +96,16 @@ public class Order implements Serializable{
         this.payment = payment;
     }
 
-    public void total() {
-
-    }
-
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public Double getTotal() {
+        double sum = 0.0;
+        for (OrderItem x : items) {
+            sum += x.getSubTotal();
+        }
+        return sum;
     }
 
     @Override
@@ -128,7 +132,5 @@ public class Order implements Serializable{
             return false;
         return true;
     }
-
-    
 
 }
