@@ -13,9 +13,11 @@ import com.course.projetoweb.repositories.UserRepository;
 import com.course.projetoweb.services.exceptions.DatabaseException;
 import com.course.projetoweb.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
-    
+
     @Autowired
     private UserRepository userRepository;
 
@@ -40,13 +42,18 @@ public class UserService {
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }
-       
+
     }
 
     public User update(Long id, User obj) {
-        User entity = userRepository.getReferenceById(id);
-        updateData(entity, obj);
-        return userRepository.save(entity);
+        try {
+            User entity = userRepository.getReferenceById(id);
+            updateData(entity, obj);
+            return userRepository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
+      
     }
 
     private void updateData(User entity, User obj) {
