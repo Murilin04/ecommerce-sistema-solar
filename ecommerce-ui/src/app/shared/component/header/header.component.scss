@@ -1,0 +1,58 @@
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* Logo Angular Story */
+.logo {
+  border: 1px solid transparent;
+  padding: 10px;
+  border-radius: 3px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.logo:hover {
+  border-color: white;
+  background-color: black;
+}
+
+/* Estilo dos Botões */
+a {
+  color: white;
+  text-decoration: none;
+  margin-left: 12px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 6px 12px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+a:hover {
+  border-color: white;
+  background-color: black;
+}
+
+.login__button span{
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.cart__button {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+
+  .mat-icon {
+    font-size: 30px;
+    height: 28px;
+    width: 25px;
+    line-height: 25px;
+    margin-right: 6px;
+    overflow: visible;
+  }
+
+}
