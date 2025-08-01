@@ -13,10 +13,5 @@ export const routes: Routes = [
     loadComponent: () => import('./home/home.component').then(m => m.HomeComponent),
     //canActivate: [authGuard]
   },
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'home'
-  }
 
 ];

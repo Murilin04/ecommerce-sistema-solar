@@ -1,7 +1,25 @@
-<mat-toolbar color="primary">
-  <span class="logo">🛒 Angular Store</span>
+<mat-toolbar>
+  <span class="logo">🛒 SOL+</span>
   <span class="spacer"></span>
-  <a mat-button routerLink="/home" class="home__button">
+
+  <div class="search_form">
+    <form action="">
+      <div class="search_container">
+        <input type="text" placeholder="Procure o que você precisa" aria-label="Pesquisa" autocomplete="off"
+          class="search_input">
+        <button mat-icon-button type="submit" aria-label="Buscar" class="search_button">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="contato">
+    <strong>Fale Conosco</strong>
+    <a href="tel: +5561994434652" title="Fale com a gente pelo telefone: (61) 994434652">61 99443-4652</a>
+  </div>
+ <!-- Pode ser utilizado depois no menu-->
+  <!-- <a mat-button routerLink="/home" class="home__button">
     <mat-icon>home</mat-icon>
     <span>Home</span>
   </a>
@@ -12,5 +30,5 @@
   <a mat-button routerLink="/cart" class="cart__button">
     <mat-icon>shopping_cart</mat-icon>
     <span>Carrinho</span>
-  </a>
+  </a> -->
 </mat-toolbar>

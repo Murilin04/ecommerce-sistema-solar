@@ -1,10 +1,10 @@
 mat-toolbar {
   display: flex;
   justify-content: space-between;
-}
-
-.spacer {
-  flex: 1;
+  background-color: white;
+  height: 104px;
+  align-items: center;
+  padding: 0 200px;
 }
 
 /* Logo Angular Story */
@@ -13,46 +13,112 @@ mat-toolbar {
   padding: 10px;
   border-radius: 3px;
   transition: background-color 0.2s ease, border-color 0.2s ease;
+  font-weight: bold;
+  font-size: 50px;
+  color: #4C4F54;
+  cursor: pointer;
 }
 
 .logo:hover {
-  border-color: white;
-  background-color: black;
+  border-color: black;
 }
 
-/* Estilo dos Botões */
-a {
-  color: white;
-  text-decoration: none;
-  margin-left: 12px;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  padding: 6px 12px;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+.search_form {
+  width: 100%;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
-a:hover {
-  border-color: white;
-  background-color: black;
-}
-
-.login__button span{
-  font-weight: 400;
-  font-size: 12px;
-}
-
-.cart__button {
+.search_container {
+  position: relative;
   display: flex;
   align-items: center;
-  padding: 6px 12px;
-
-  .mat-icon {
-    font-size: 30px;
-    height: 28px;
-    width: 25px;
-    line-height: 25px;
-    margin-right: 6px;
-    overflow: visible;
-  }
-
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s;
 }
+
+.search_input {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background: transparent;
+}
+
+.search_button {
+  border: none;
+  background: transparent;
+  padding: 8px;
+  outline: none;
+}
+
+.search_container:focus-within {
+  border-color: #FFD700;
+}
+
+.search_button mat-icon:hover{
+  color: #FFD700;
+}
+
+.contato {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #6C757D;
+  border-radius: 1rem;
+  padding: .1rem 1rem;
+}
+
+.contato strong {
+  color: #6c757d;
+  text-align: right;
+  letter-spacing: 1px;
+  font-size: 1rem;
+}
+
+.contato a {
+  color: black;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
+// Pode ser utilizado depois no menu
+// /* Estilo dos Botões */
+// a {
+//   color: white;
+//   text-decoration: none;
+//   margin-left: 12px;
+//   border: 1px solid transparent;
+//   border-radius: 3px;
+//   padding: 6px 12px;
+//   transition: background-color 0.2s ease, border-color 0.2s ease;
+// }
+
+// a:hover {
+//   border-color: white;
+//   background-color: black;
+// }
+
+// .login__button span{
+//   font-weight: 400;
+//   font-size: 12px;
+// }
+
+// .cart__button {
+//   display: flex;
+//   align-items: center;
+//   padding: 6px 12px;
+
+//   .mat-icon {
+//     font-size: 30px;
+//     height: 28px;
+//     width: 25px;
+//     line-height: 25px;
+//     margin-right: 6px;
+//     overflow: visible;
+//   }
+
+// }
