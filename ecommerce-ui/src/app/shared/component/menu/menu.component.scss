@@ -1,3 +1,133 @@
-div {
-  background: #ffc845;
+.menu {
+  background-color: #FFC845;
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15rem;
+  box-shadow: 0 1px rgba(0, 0, 0, .04), inset 0 -1px rgba(0, 0, 0, .04);
+  color: #4a4f55;
+  height: 54px;
+}
+
+.menu__ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu__li {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.submenu__one {
+  padding: 5px 15px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin: 0;
+  font-size: 15px;
+}
+
+.submenu__one:hover {
+  background-color: #ccc;
+}
+
+.menu__li > .submenu {
+  display: none;
+  position: absolute;
+  top: 100%; /* Aparece abaixo do item pai */
+  left: 0;
+  background-color: white;
+  padding: 0.5rem 0;
+  box-shadow: 0 4px 8px rgb(0, 0, 0, 0.1);
+  min-width: 180px;
+  z-index: 1000;
+}
+
+.menu__li:hover > .submenu {
+  display: block;
+}
+
+.submenu li {
+  position: relative;
+}
+
+.submenu li > .submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%; /* Abre ao lado direito do submenu pai */
+  background-color: white;
+  padding: 0.5rem 0;
+  box-shadow: 0 4px 8px rgb(0, 0, 0, 0.1);
+  min-width: 180px;
+  z-index: 1000;
+}
+
+.submenu li:hover > .submenu {
+  display: block;
+}
+
+.menu__a {
+  text-decoration: none;
+  color: #4A4f55;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .05rem;
+  padding: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.30rem;
+  white-space: nowrap;
+}
+
+.menu__li:hover {
+  background-color: #FFE4A2;
+  border-radius: 2px;
+}
+
+.menu__button {
+  display: flex;
+  gap: 1rem;
+  margin-left: 5rem;
+}
+
+.menu__button-a {
+  background-color: #4A4f55;
+  color: #FFC845;
+  border-radius: 2px;
+  padding: 14px 15px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: .05rem;
+  white-space: nowrap;
+}
+
+.menu__svg {
+  margin-top: 10px;
+  opacity: .5;
+}
+
+.menu__svg-one {
+  opacity: .5;
+  margin-left: 8px;
+  flex-shrink: 0;
+  margin-bottom: 5px;
+}
+
+a {
+  text-decoration: none;
+  color: #4A4f55;
 }

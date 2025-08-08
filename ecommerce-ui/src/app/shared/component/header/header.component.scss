@@ -1,10 +1,9 @@
 mat-toolbar {
   display: flex;
-  justify-content: space-between;
   background-color: white;
   height: 104px;
   align-items: center;
-  padding: 0 200px;
+  padding: 0 250px;
 }
 
 /* Logo Angular Story */
@@ -66,8 +65,8 @@ mat-toolbar {
   display: flex;
   flex-direction: column;
   border: 2px solid #6C757D;
-  border-radius: 1rem;
-  padding: .1rem 1rem;
+  border-radius: 0.6rem;
+  padding: 0.1rem 0.5rem;
 }
 
 .contato strong {
@@ -83,42 +82,3 @@ mat-toolbar {
   font-size: 20px;
   font-weight: 700;
 }
-
-
-// Pode ser utilizado depois no menu
-// /* Estilo dos Botões */
-// a {
-//   color: white;
-//   text-decoration: none;
-//   margin-left: 12px;
-//   border: 1px solid transparent;
-//   border-radius: 3px;
-//   padding: 6px 12px;
-//   transition: background-color 0.2s ease, border-color 0.2s ease;
-// }
-
-// a:hover {
-//   border-color: white;
-//   background-color: black;
-// }
-
-// .login__button span{
-//   font-weight: 400;
-//   font-size: 12px;
-// }
-
-// .cart__button {
-//   display: flex;
-//   align-items: center;
-//   padding: 6px 12px;
-
-//   .mat-icon {
-//     font-size: 30px;
-//     height: 28px;
-//     width: 25px;
-//     line-height: 25px;
-//     margin-right: 6px;
-//     overflow: visible;
-//   }
-
-// }
