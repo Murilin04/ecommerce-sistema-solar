@@ -3,7 +3,8 @@
     <ul class="menu__ul">
        <!-- Primeiro menu de 1° nível -->
       <li class="menu__li" title="Gerador de Energia Solar">
-        <a href="#Gerador de Energia Solar" class="menu__a">Gerador de Energia Solar
+        <a  routerLink="/gerador" class="menu__a">
+          Gerador de Energia Solar
           <svg class="menu__svg" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16">
             <path fill-rule="evenodd"
               d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
@@ -12,434 +13,341 @@
 
         <!-- submenu de 1° nível -->
         <ul class="submenu">
-          <a href="#On Grid">
-            <li class="submenu__one" title="On Grid">
-              <span>On Grid</span>
-              <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+          <li class="submenu__one" title="On Grid">
+            <a routerLink="/login">On Grid</a>
+            <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+              style="transform: rotate(-90deg);" title="Abrir: On Grid">
+              <path fill-rule="evenodd"
+                d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+            </svg>
+
+            <!-- Submenu de 2º nível -->
+            <ul class="submenu">
+              <li class="submenu__one" title="Sungrow">
+                <a routerLink="/sungrow">Sungrow</a>
+                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                  style="transform: rotate(-90deg);" title="Abrir: On Grid">
+                  <path fill-rule="evenodd"
+                    d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+                </svg>
+                <ul class="submenu submenu__two">
+                  <li class="submenu__one" title="Laje Inclinação"><a routerLink="/laje-inclinacao">Laje Inclinação</a></li>
+                  <li class="submenu__one" title="Sem Estrutura"><a routerLink="/sem-estrutura">Sem Estrutura</a></li>
+                  <li class="submenu__one" title="Solo Mesa 8 Painéis"><a routerLink="/solo-mesa-8">Solo Mesa 8 Painéis</a></li>
+                  <li class="submenu__one" title="Telhado Cerâmico"><a routerLink="/telhado-ceramico">Telhado Cerâmico</a></li>
+                  <li class="submenu__one" title="Telhado Metálico Mini Trilho"><a routerLink="/telhado-metalico-mini-trilho">Telhado Metálico Mini Trilho</a></li>
+                  <li class="submenu__one" title="Telhado Fibro Parafuso Madeira"><a routerLink="/telhado-fibro-parafuso-madeira">Telhado Fibro Parafuso Madeira</a></li>
+                  <li class="submenu__one" title="Telhado Fibro Parafuso Metal"><a routerLink="/telhado-fibro-parafuso-metal">Telhado Fibro Parafuso Metal</a></li>
+                </ul>
+              </li>
+
+              <li class="submenu__one" title="SAJ">
+                <a routerLink="/saj">SAJ</a>
+                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                  style="transform: rotate(-90deg);" title="Abrir: On Grid">
+                  <path fill-rule="evenodd"
+                    d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+                </svg>
+                <ul class="submenu submenu__two">
+                  <li class="submenu__one" title="Laje Inclinação"><a routerLink="/laje-inclinacao">Laje Inclinação</a></li>
+                  <li class="submenu__one" title="Sem Estrutura"><a routerLink="/sem-estrutura">Sem Estrutura</a></li>
+                  <li class="submenu__one" title="Solo Mesa 8 Painéis"><a routerLink="/solo-mesa-8">Solo Mesa 8 Painéis</a></li>
+                  <li class="submenu__one" title="Telhado Cerâmico"><a routerLink="/telhado-ceramico">Telhado Cerâmico</a></li>
+                  <li class="submenu__one" title="Telhado Metálico Mini Trilho"><a routerLink="/telhado-metalico-mini-trilho">Telhado Metálico Mini Trilho</a></li>
+                  <li class="submenu__one" title="Telhado Fibro Parafuso Madeira"><a routerLink="/telhado-fibro-parafuso-madeira">Telhado Fibro Parafuso Madeira</a></li>
+                  <li class="submenu__one" title="Telhado Fibro Parafuso Metal"><a routerLink="/telhado-fibro-parafuso-metal">Telhado Fibro Parafuso Metal</a></li>
+                </ul>
+              </li>
+
+              <li class="submenu__one" title="Solplanet">
+                <a routerLink="/solplanet">Solplanet</a>
+                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                  style="transform: rotate(-90deg);" title="Abrir: On Grid">
+                  <path fill-rule="evenodd"
+                    d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+                </svg>
+                <ul class="submenu submenu__two">
+                  <li class="submenu__one" title="Laje Inclinação"><a routerLink="/laje-inclinacao">Laje Inclinação</a></li>
+                  <li class="submenu__one" title="Sem Estrutura"><a routerLink="/sem-estrutura">Sem Estrutura</a></li>
+                  <li class="submenu__one" title="Solo Mesa 8 Painéis"><a routerLink="/solo-mesa-8">Solo Mesa 8 Painéis</a></li>
+                  <li class="submenu__one" title="Telhado Cerâmico"><a routerLink="/telhado-ceramico">Telhado Cerâmico</a></li>
+                  <li class="submenu__one" title="Telhado Metálico Mini Trilho"><a routerLink="/telhado-metalico-mini-trilho">Telhado Metálico Mini Trilho</a></li>
+                  <li class="submenu__one" title="Telhado Fibro Parafuso Madeira"><a routerLink="/telhado-fibro-parafuso-madeira">Telhado Fibro Parafuso Madeira</a></li>
+                  <li class="submenu__one" title="Telhado Fibro Parafuso Metal"><a routerLink="/telhado-fibro-parafuso-metal">Telhado Fibro Parafuso Metal</a></li>
+                </ul>
+              </li>
+
+              <li class="submenu__one" title="Growatt">
+                <a routerLink="/growatt">Growatt</a>
+                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                  style="transform: rotate(-90deg);" title="Abrir: On Grid">
+                  <path fill-rule="evenodd"
+                    d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+                </svg>
+                <ul class="submenu submenu__two">
+                  <li class="submenu__one" title="Laje Inclinação"><a routerLink="/laje-inclinacao">Laje Inclinação</a></li>
+                  <li class="submenu__one" title="Sem Estrutura"><a routerLink="/sem-estrutura">Sem Estrutura</a></li>
+                  <li class="submenu__one" title="Solo Mesa 8 Painéis"><a routerLink="/solo-mesa-8">Solo Mesa 8 Painéis</a></li>
+                  <li class="submenu__one" title="Telhado Cerâmico"><a routerLink="/telhado-ceramico">Telhado Cerâmico</a></li>
+                  <li class="submenu__one" title="Telhado Metálico Mini Trilho"><a routerLink="/telhado-metalico-mini-trilho">Telhado Metálico Mini Trilho</a></li>
+                  <li class="submenu__one" title="Telhado Fibro Parafuso Madeira"><a routerLink="/telhado-fibro-parafuso-madeira">Telhado Fibro Parafuso Madeira</a></li>
+                  <li class="submenu__one" title="Telhado Fibro Parafuso Metal"><a routerLink="/telhado-fibro-parafuso-metal">Telhado Fibro Parafuso Metal</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+           <!-- submenu de 1° nível -->
+        <li class="submenu__one" title="Off Grid Interativo">
+          <a routerLink="/off-grid-interativo">Off Grid Interativo</a>
+          <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+            style="transform: rotate(-90deg);">
+            <path fill-rule="evenodd"
+              d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+          </svg>
+
+          <!-- Submenu de 2° nível -->
+          <ul class="submenu">
+            <!-- Must -->
+            <li class="submenu__one" title="Must">
+              <a routerLink="/must">Must</a>
+              <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                style="transform: rotate(-90deg);" title="Abrir: On Grid">
+                <path fill-rule="evenodd"
+                  d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
               </svg>
-              <!-- Submenu de 2º nível -->
-              <ul class="submenu">
-                <a href="#Sungrow">
-                  <li class="submenu__one" title="Sungrow">Sungrow
-                    <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                      <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                    </svg>
-                    <ul class="submenu submenu__two">
-                      <a href="#Laje Inclinação">
-                        <li class="submenu__one" title="Laje Inclinação">Laje Inclinação</li>
-                      </a>
-                      <a href="#Sem Estrutura">
-                        <li class="submenu__one" title="Sem Estrutura">Sem Estrutura</li>
-                      </a>
-                      <a href="#Solo Mesa 8 Painéis">
-                        <li class="submenu__one" title="Solo Mesa 8 Painéis">Solo Mesa 8 Painéis</li>
-                      </a>
-                      <a href="#Telhado Cerâmico">
-                        <li class="submenu__one" title="Telhado Cerâmico">Telhado Cerâmico</li>
-                      </a>
-                      <a href="#Telhado Metálico Mini Trilho">
-                        <li class="submenu__one" title="Telhado Metálico Mini Trilho">Telhado Metálico Mini Trilho</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Madeira">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Madeira">Telhado Fibro Parafuso Madeira</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Metal">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Metal">Telhado Fibro Parafuso Metal</li>
-                      </a>
-                    </ul>
-                  </li>
-                </a>
-                <a href="#SAJ">
-                  <li class="submenu__one" title="SAJ">SAJ
-                    <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                      <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                    </svg>
-                    <ul class="submenu submenu__two">
-                      <a href="#Laje Inclinação">
-                        <li class="submenu__one" title="Laje Inclinação">Laje Inclinação</li>
-                      </a>
-                      <a href="#Sem Estrutura">
-                        <li class="submenu__one" title="Sem Estrutura">Sem Estrutura</li>
-                      </a>
-                      <a href="#Solo Mesa 8 Painéis">
-                        <li class="submenu__one" title="Solo Mesa 8 Painéis">Solo Mesa 8 Painéis</li>
-                      </a>
-                      <a href="#Telhado Cerâmico">
-                        <li class="submenu__one" title="Telhado Cerâmico">Telhado Cerâmico</li>
-                      </a>
-                      <a href="#Telhado Metálico Mini Trilho">
-                        <li class="submenu__one" title="Telhado Metálico Mini Trilho">Telhado Metálico Mini Trilho</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Madeira">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Madeira">Telhado Fibro Parafuso Madeira</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Metal">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Metal">Telhado Fibro Parafuso Metal</li>
-                      </a>
-                    </ul>
-                  </li>
-                </a>
-                <a href="#Solplanet">
-                  <li class="submenu__one" title="Solplanet">Solplanet
-                    <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                      <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                    </svg>
-                    <ul class="submenu submenu__two">
-                      <a href="#Laje Inclinação">
-                        <li class="submenu__one" title="Laje Inclinação">Laje Inclinação</li>
-                      </a>
-                      <a href="#Sem Estrutura">
-                        <li class="submenu__one" title="Sem Estrutura">Sem Estrutura</li>
-                      </a>
-                      <a href="#Solo Mesa 8 Painéis">
-                        <li class="submenu__one" title="Solo Mesa 8 Painéis">Solo Mesa 8 Painéis</li>
-                      </a>
-                      <a href="#Telhado Cerâmico">
-                        <li class="submenu__one" title="Telhado Cerâmico">Telhado Cerâmico</li>
-                      </a>
-                      <a href="#Telhado Metálico Mini Trilho">
-                        <li class="submenu__one" title="Telhado Metálico Mini Trilho">Telhado Metálico Mini Trilho</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Madeira">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Madeira">Telhado Fibro Parafuso Madeira</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Metal">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Metal">Telhado Fibro Parafuso Metal</li>
-                      </a>
-                    </ul>
-                  </li>
-                </a>
-                <a href="#Growatt">
-                  <li class="submenu__one" title="Growatt">Growatt
-                    <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                      <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                    </svg>
-                    <ul class="submenu submenu__two">
-                      <a href="#Laje Inclinação">
-                        <li class="submenu__one" title="Laje Inclinação">Laje Inclinação</li>
-                      </a>
-                      <a href="#Sem Estrutura">
-                        <li class="submenu__one" title="Sem Estrutura">Sem Estrutura</li>
-                      </a>
-                      <a href="#Solo Mesa 8 Painéis">
-                        <li class="submenu__one" title="Solo Mesa 8 Painéis">Solo Mesa 8 Painéis</li>
-                      </a>
-                      <a href="#Telhado Cerâmico">
-                        <li class="submenu__one" title="Telhado Cerâmico">Telhado Cerâmico</li>
-                      </a>
-                      <a href="#Telhado Metálico Mini Trilho">
-                        <li class="submenu__one" title="Telhado Metálico Mini Trilho">Telhado Metálico Mini Trilho</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Madeira">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Madeira">Telhado Fibro Parafuso Madeira</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Metal">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Metal">Telhado Fibro Parafuso Metal</li>
-                      </a>
-                    </ul>
-                  </li>
-                </a>
+
+              <ul class="submenu submenu__two">
+                <li class="submenu__one"><a routerLink="/laje-inclinacao">Laje Inclinação</a></li>
+                <li class="submenu__one"><a routerLink="/sem-estrutura">Sem Estrutura</a></li>
+                <li class="submenu__one"><a routerLink="/solo-mesa-8">Solo Mesa 8 Painéis</a></li>
+                <li class="submenu__one"><a routerLink="/telhado-ceramico">Telhado Cerâmico Gancho</a></li>
+                <li class="submenu__one"><a routerLink="/telhado-metalico-mini-trilho">Telhado Metálico Mini Trilho</a></li>
+                <li class="submenu__one"><a routerLink="/telhado-fibro-parafuso-madeira">Telhado Fibro Parafuso Madeira</a></li>
+                <li class="submenu__one"><a routerLink="/telhado-fibro-parafuso-metal">Telhado Fibro Parafuso Metal</a></li>
+                <li class="submenu__one"><a routerLink="/telhado-ondulado">Telhado Ondulado</a></li>
               </ul>
             </li>
-          </a>
-           <!-- submenu de 1° nível -->
-          <a href="#Off Grid Interativo">
-            <li class="submenu__one" title="Off Grid Interativo">
-              <span>Off Grid Interativo</span>
-                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);">
+
+            <!-- Luxpower -->
+            <li class="submenu__one" title="Luxpower">
+              <a routerLink="/luxpower">Luxpower</a>
+              <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                style="transform: rotate(-90deg);" title="Abrir: On Grid">
+                <path fill-rule="evenodd"
+                  d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+              </svg>
+
+              <ul class="submenu submenu__two">
+                <li class="submenu__one"><a routerLink="/laje-inclinacao">Laje Inclinação</a></li>
+                <li class="submenu__one"><a routerLink="/sem-estrutura">Sem Estrutura</a></li>
+                <li class="submenu__one"><a routerLink="/solo-mesa-8">Solo Mesa 8 Painéis</a></li>
+                <li class="submenu__one"><a routerLink="/telhado-ceramico">Telhado Cerâmico Gancho</a></li>
+                <li class="submenu__one"><a routerLink="/telhado-metalico-mini-trilho">Telhado Metálico Mini Trilho</a></li>
+                <li class="submenu__one"><a routerLink="/telhado-fibro-parafuso-madeira">Telhado Fibro Parafuso Madeira</a></li>
+                <li class="submenu__one"><a routerLink="/telhado-fibro-parafuso-metal">Telhado Fibro Parafuso Metal</a></li>
+                <li class="submenu__one"><a routerLink="/telhado-ondulado">Telhado Ondulado</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+          <!-- submenu de 1° nível -->
+          <li class="submenu__one" title="Híbrido">
+            <a routerLink="/hibrido">Híbrido</a>
+            <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+              style="transform: rotate(-90deg);">
+              <path fill-rule="evenodd"
+                d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+            </svg>
+
+            <!-- Submenu de 2° nível -->
+            <ul class="submenu">
+              <li class="submenu__one" title="Luxpower">
+                <a routerLink="/luxpower">Luxpower</a>
+                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                  style="transform: rotate(-90deg);" title="Abrir: On Grid">
                   <path fill-rule="evenodd"
                     d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
                 </svg>
-                <!-- submenu de 2° nível -->
-              <ul class="submenu">
-                <a href="#Must">
-                  <li class="submenu__one" title="Must">Must
-                    <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                      <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                    </svg>
-                    <ul class="submenu submenu__two">
-                      <a href="#Laje Inclinação">
-                        <li class="submenu__one" title="Laje Inclinação">Laje Inclinação</li>
-                      </a>
-                      <a href="#Sem Estrutura">
-                        <li class="submenu__one" title="Sem Estrutura">Sem Estrutura</li>
-                      </a>
-                      <a href="#Solo Mesa 8 Painéis">
-                        <li class="submenu__one" title="Solo Mesa 8 Painéis">Solo Mesa 8 Painéis</li>
-                      </a>
-                      <a href="#Telhado Cerâmico">
-                        <li class="submenu__one" title="Telhado Cerâmico Gancho">Telhado Cerâmico Gancho</li>
-                      </a>
-                      <a href="#Telhado Metálico Mini Trilho">
-                        <li class="submenu__one" title="Telhado Metálico Mini Trilho">Telhado Metálico Mini Trilho</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Madeira">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Madeira">Telhado Fibro Parafuso Madeira</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Metal">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Metal">Telhado Fibro Parafuso Metal</li>
-                      </a>
-                      <a href="#Telhado Ondulado">
-                        <li class="submenu__one" title="Telhado Ondulado">Telhado Ondulado</li>
-                      </a>
-                    </ul>
-                  </li>
-                </a>
-                <a href="#Luxpower">
-                  <li class="submenu__one" title="Luxpower">Luxpower
-                    <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                      <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                    </svg>
-                    <ul class="submenu submenu__two">
-                      <a href="#Laje Inclinação">
-                        <li class="submenu__one" title="Laje Inclinação">Laje Inclinação</li>
-                      </a>
-                      <a href="#Sem Estrutura">
-                        <li class="submenu__one" title="Sem Estrutura">Sem Estrutura</li>
-                      </a>
-                      <a href="#Solo Mesa 8 Painéis">
-                        <li class="submenu__one" title="Solo Mesa 8 Painéis">Solo Mesa 8 Painéis</li>
-                      </a>
-                      <a href="#Telhado Cerâmico">
-                        <li class="submenu__one" title="Telhado Cerâmico Gancho">Telhado Cerâmico Gancho</li>
-                      </a>
-                      <a href="#Telhado Metálico Mini Trilho">
-                        <li class="submenu__one" title="Telhado Metálico Mini Trilho">Telhado Metálico Mini Trilho</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Madeira">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Madeira">Telhado Fibro Parafuso Madeira</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Metal">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Metal">Telhado Fibro Parafuso Metal</li>
-                      </a>
-                      <a href="#Telhado Ondulado">
-                        <li class="submenu__one" title="Telhado Ondulado">Telhado Ondulado</li>
-                      </a>
-                    </ul>
-                  </li>
-                </a>
-              </ul>
-            </li>
-          </a>
-           <!-- submenu de 1° nível -->
-          <a href="#Hibrido">
-            <li class="submenu__one" title="Híbrido">
-              <span>Híbrido</span>
-                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);">
+
+                <ul class="submenu submenu__two">
+                  <li class="submenu__one"><a routerLink="/laje-inclinacao">Laje Inclinação</a></li>
+                  <li class="submenu__one"><a routerLink="/sem-estrutura">Sem Estrutura</a></li>
+                  <li class="submenu__one"><a routerLink="/solo-mesa-8">Solo Mesa 8 Painéis</a></li>
+                  <li class="submenu__one"><a routerLink="/telhado-ceramico">Telhado Cerâmico Gancho</a></li>
+                  <li class="submenu__one"><a routerLink="/telhado-metalico-mini-trilho">Telhado Metálico Mini Trilho</a></li>
+                  <li class="submenu__one"><a routerLink="/telhado-fibro-parafuso-madeira">Telhado Fibro Parafuso Madeira</a></li>
+                  <li class="submenu__one"><a routerLink="/telhado-fibro-parafuso-metal">Telhado Fibro Parafuso Metal</a></li>
+                  <li class="submenu__one"><a routerLink="/telhado-ondulado">Telhado Ondulado</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <!-- submenu de 1° nível -->
+          <li class="submenu__one" title="Retrofit">
+            <a routerLink="/retrofit">Retrofit</a>
+            <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+              style="transform: rotate(-90deg);">
+              <path fill-rule="evenodd"
+                d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+            </svg>
+
+            <!-- Submenu de 2° nível -->
+            <ul class="submenu">
+
+              <!-- Must -->
+              <li class="submenu__one" title="Must">
+                <a routerLink="/must">Must</a>
+                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                  style="transform: rotate(-90deg);" title="Abrir: On Grid">
                   <path fill-rule="evenodd"
                     d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
                 </svg>
-                 <!-- submenu de 2° nível -->
-              <ul class="submenu">
-                <a href="#Luxpower">
-                  <li class="submenu__one" title="Luxpower">Luxpower
-                    <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                      <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                    </svg>
-                    <ul class="submenu submenu__two">
-                      <a href="#Laje Inclinação">
-                        <li class="submenu__one" title="Laje Inclinação">Laje Inclinação</li>
-                      </a>
-                      <a href="#Sem Estrutura">
-                        <li class="submenu__one" title="Sem Estrutura">Sem Estrutura</li>
-                      </a>
-                      <a href="#Solo Mesa 8 Painéis">
-                        <li class="submenu__one" title="Solo Mesa 8 Painéis">Solo Mesa 8 Painéis</li>
-                      </a>
-                      <a href="#Telhado Cerâmico">
-                        <li class="submenu__one" title="Telhado Cerâmico Gancho">Telhado Cerâmico Gancho</li>
-                      </a>
-                      <a href="#Telhado Metálico Mini Trilho">
-                        <li class="submenu__one" title="Telhado Metálico Mini Trilho">Telhado Metálico Mini Trilho</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Madeira">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Madeira">Telhado Fibro Parafuso Madeira</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Metal">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Metal">Telhado Fibro Parafuso Metal</li>
-                      </a>
-                      <a href="#Telhado Ondulado">
-                        <li class="submenu__one" title="Telhado Ondulado">Telhado Ondulado</li>
-                      </a>
-                    </ul>
+                <ul class="submenu submenu__two">
+                  <li class="submenu__one">
+                    <a routerLink="/retrofit/must/sem-estrutura">Sem Estrutura</a>
                   </li>
-                </a>
-              </ul>
-            </li>
-          </a>
-           <!-- submenu de 1° nível -->
-          <a href="#Retrofit">
-            <li class="submenu__one" title="Retrofit">
-              <span>Retrofit</span>
-                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);">
+                </ul>
+              </li>
+
+              <!-- Luxpower -->
+              <li class="submenu__one" title="Luxpower">
+                <a routerLink="/luxpower">Luxpower</a>
+                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                  style="transform: rotate(-90deg);" title="Abrir: On Grid">
                   <path fill-rule="evenodd"
                     d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
                 </svg>
-                 <!-- submenu de 2° nível -->
-              <ul class="submenu">
-                <a href="#Must">
-                  <li class="submenu__one" title="Must">Must
-                    <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                      <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                    </svg>
-                    <ul class="submenu submenu__two">
-                        <a href="#Sem Estrutura">
-                          <li class="submenu__one" title="Sem Estrutura">Sem Estrutura</li>
-                        </a>
-                      </ul>
+                <ul class="submenu submenu__two">
+                  <li class="submenu__one">
+                    <a routerLink="/retrofit/luxpower/sem-estrutura">Sem Estrutura</a>
                   </li>
-                </a>
-                <a href="#Luxpower">
-                  <li class="submenu__one" title="Luxpower">Luxpower
-                    <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                      <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                    </svg>
-                    <ul class="submenu submenu__two">
-                        <a href="#Sem Estrutura">
-                          <li class="submenu__one" title="Sem Estrutura">Sem Estrutura</li>
-                        </a>
-                      </ul>
-                  </li>
-                </a>
-              </ul>
-            </li>
-          </a>
+                </ul>
+              </li>
+
+            </ul>
+          </li>
            <!-- submenu de 1° nível -->
-          <a href="#Microinversor">
-            <li class="submenu__one" title="Microinversor">
-              <span>Microinversor</span>
-                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);">
+          <li class="submenu__one" title="Microinversor">
+            <a href="/microinversor">Microinversor</a>
+            <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+              style="transform: rotate(-90deg);">
+              <path fill-rule="evenodd"
+                d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+            </svg>
+
+            <ul class="submenu">
+
+              <!-- Growatt -->
+              <li class="submenu__one" title="Growatt">
+                <a routerLink="/growatt">Growatt</a>
+                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                  style="transform: rotate(-90deg);" title="Abrir: On Grid">
                   <path fill-rule="evenodd"
                     d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
                 </svg>
-                 <!-- submenu de 2° nível -->
-              <ul class="submenu">
-                <a href="#Growatt">
-                  <li class="submenu__one" title="Growatt">Growatt
-                    <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                      <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                    </svg>
-                    <ul class="submenu submenu__two">
-                      <a href="#Laje Inclinação">
-                        <li class="submenu__one" title="Laje Inclinação">Laje Inclinação</li>
-                      </a>
-                      <a href="#Sem Estrutura">
-                        <li class="submenu__one" title="Sem Estrutura">Sem Estrutura</li>
-                      </a>
-                      <a href="#Telhado Cerâmico">
-                        <li class="submenu__one" title="Telhado Cerâmico Gancho">Telhado Cerâmico Gancho</li>
-                      </a>
-                      <a href="#Telhado Metálico Mini Trilho">
-                        <li class="submenu__one" title="Telhado Metálico Mini Trilho">Telhado Metálico Mini Trilho</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Madeira">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Madeira">Telhado Fibro Parafuso Madeira</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Metal">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Metal">Telhado Fibro Parafuso Metal</li>
-                      </a>
-                      <a href="#Telhado Ondulado">
-                        <li class="submenu__one" title="Telhado Ondulado">Telhado Ondulado</li>
-                      </a>
-                    </ul>
-                  </li>
-                </a>
-                <a href="#DEYE">
-                  <li class="submenu__one" title="DEYE">DEYE
-                    <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);" title="Abrir: On Grid">
-                      <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                    </svg>
-                    <ul class="submenu submenu__two">
-                      <a href="#Laje Inclinação">
-                        <li class="submenu__one" title="Laje Inclinação">Laje Inclinação</li>
-                      </a>
-                      <a href="#Sem Estrutura">
-                        <li class="submenu__one" title="Sem Estrutura">Sem Estrutura</li>
-                      </a>
-                      <a href="#Solo Mesa 8 Painéis">
-                        <li class="submenu__one" title="Solo Mesa 8 Painéis">Solo Mesa 8 Painéis</li>
-                      </a>
-                      <a href="#Telhado Cerâmico">
-                        <li class="submenu__one" title="Telhado Cerâmico Gancho">Telhado Cerâmico Gancho</li>
-                      </a>
-                      <a href="#Telhado Metálico Mini Trilho">
-                        <li class="submenu__one" title="Telhado Metálico Mini Trilho">Telhado Metálico Mini Trilho</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Madeira">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Madeira">Telhado Fibro Parafuso Madeira</li>
-                      </a>
-                      <a href="#Telhado Fibro Parafuso Metal">
-                        <li class="submenu__one" title="Telhado Fibro Parafuso Metal">Telhado Fibro Parafuso Metal</li>
-                      </a>
-                      <a href="#Telhado Ondulado">
-                        <li class="submenu__one" title="Telhado Ondulado">Telhado Ondulado</li>
-                      </a>
-                    </ul>
-                  </li>
-                </a>
-              </ul>
-            </li>
-          </a>
+                <ul class="submenu submenu__two">
+                  <li class="submenu__one"><a routerLink="/microinversor/growatt/laje-inclinacao">Laje Inclinação</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/growatt/sem-estrutura">Sem Estrutura</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/growatt/telhado-ceramico-gancho">Telhado Cerâmico Gancho</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/growatt/telhado-metalico-mini-trilho">Telhado Metálico Mini Trilho</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/growatt/telhado-fibro-parafuso-madeira">Telhado Fibro Parafuso Madeira</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/growatt/telhado-fibro-parafuso-metal">Telhado Fibro Parafuso Metal</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/growatt/telhado-ondulado">Telhado Ondulado</a></li>
+                </ul>
+              </li>
+
+              <!-- DEYE -->
+              <li class="submenu__one" title="DEYE">
+                <a routerLink="/deye">DEYE</a>
+                <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                  style="transform: rotate(-90deg);" title="Abrir: On Grid">
+                  <path fill-rule="evenodd"
+                    d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+                </svg>
+                <ul class="submenu submenu__two">
+                  <li class="submenu__one"><a routerLink="/microinversor/deye/laje-inclinacao">Laje Inclinação</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/deye/sem-estrutura">Sem Estrutura</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/deye/solo-mesa-8-paineis">Solo Mesa 8 Painéis</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/deye/telhado-ceramico-gancho">Telhado Cerâmico Gancho</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/deye/telhado-metalico-mini-trilho">Telhado Metálico MiniTrilho</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/deye/telhado-fibro-parafuso-madeira">Telhado Fibro Parafuso Madeira</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/deye/telhado-fibro-parafuso-metal">Telhado Fibro Parafuso Metal</a></li>
+                  <li class="submenu__one"><a routerLink="/microinversor/deye/telhado-ondulado">Telhado Ondulado</a></li>
+                </ul>
+              </li>
+
+            </ul>
+          </li>
         </ul>
       </li>
        <!-- Segundo menu de 1° nível -->
       <li class="menu__li" title="Painel Solar">
-        <a href="#" class="menu__a">Painel Solar
+        <a class="menu__a" routerLink="/painel-solar">
+          Painel Solar
           <svg class="menu__svg" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z"/>
+            <path fill-rule="evenodd"
+              d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
           </svg>
         </a>
+        <!-- Submenu 1° nível -->
         <ul class="submenu">
-          <a href="#Trina">
-            <li class="submenu__one" title="Trina">Trina</li>
-          </a>
-          <a href="#Era Solar">
-            <li class="submenu__one" title="Era Solar">Era Solar</li>
-          </a>
+          <li class="submenu__one" title="Trina">
+            <a routerLink="/painel-solar/trina">Trina</a>
+          </li>
+          <li class="submenu__one" title="Era Solar">
+            <a routerLink="/painel-solar/era-solar">Era Solar</a>
+          </li>
         </ul>
       </li>
        <!-- Terceiro menu de 1° nível -->
       <li class="menu__li" title="Inversor Solar">
-        <a href="#" class="menu__a">Inversor Solar
+        <a [routerLink]="['/inversor-solar']" class="menu__a">
+          Inversor Solar
           <svg class="menu__svg" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z"/>
+            <path fill-rule="evenodd"
+              d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
           </svg>
         </a>
-        <!-- submenu de 1° nível -->
+
+        <!-- Submenu 1° nível -->
         <ul class="submenu">
-          <a href="#On Grid">
-              <li class="submenu__one" title="On Grid">
-                <span>On Grid</span>
-                  <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16" style="transform: rotate(-90deg);">
-                    <path fill-rule="evenodd"
-                      d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-                  </svg>
-                   <!-- submenu de 2° nível -->
-                <ul class="submenu">
-                  <a href="#Songrow">
-                    <li class="submenu__one" title="Songrow">Songrow</li>
-                  </a>
-                </ul>
-              </li>
+          <li class="submenu__one" title="On Grid">
+            <a [routerLink]="['/inversor-solar/on-grid']">
+              On Grid
+              <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
+                style="transform: rotate(-90deg);">
+                <path fill-rule="evenodd"
+                  d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
+              </svg>
             </a>
+
+            <!-- Submenu 2° nível -->
+            <ul class="submenu">
+              <li class="submenu__one" title="Songrow">
+                <a routerLink="/inversor-solar/on-grid/songrow">
+                  Songrow
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </li>
        <!-- Quarto menu de 1° nível -->
       <li class="menu__li" title="Energia">
-        <a href="#" class="menu__a">Energia
+        <a class="menu__a" routerLink="/energia">
+          Energia
           <svg class="menu__svg" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z"/>
+            <path fill-rule="evenodd"
+              d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
           </svg>
         </a>
-
       </li>
     </ul>
   </nav>
 
   <div class="menu__button">
-    <a href="#" class="menu__button-a" title="Seja Integrador">Seja Integrador</a>
-    <a href="#" class="menu__button-a" title="Entrar">Entrar</a>
+    <a routerLink="/cadastro" class="menu__button-a" title="Seja Integrador">Seja Integrador</a>
+    <a routerLink="/login" class="menu__button-a" title="Entrar">Entrar</a>
   </div>
 
 </header>

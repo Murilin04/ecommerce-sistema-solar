@@ -8,18 +8,17 @@ mat-toolbar {
 
 /* Logo Angular Story */
 .logo {
-  border: 1px solid transparent;
-  padding: 10px;
-  border-radius: 3px;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-  font-weight: bold;
-  font-size: 50px;
-  color: #4C4F54;
+  padding: 20px;
   cursor: pointer;
 }
 
 .logo:hover {
   border-color: black;
+}
+
+.spacer {
+  color: #4C4F54;
+  font-weight: 500;
 }
 
 .search_form {
@@ -72,7 +71,6 @@ mat-toolbar {
 .contato strong {
   color: #6c757d;
   text-align: right;
-  letter-spacing: 1px;
   font-size: 1rem;
 }
 
