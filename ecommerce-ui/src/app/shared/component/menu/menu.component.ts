@@ -39,4 +39,8 @@ export class MenuComponent implements OnInit{
     this.showLogin = !this.showLogin;
   }
 
+  closeLogin() {
+    this.showLogin = false;
+  }
+
 }

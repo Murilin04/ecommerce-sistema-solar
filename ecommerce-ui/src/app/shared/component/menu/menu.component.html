@@ -304,10 +304,12 @@
 
   <div class="menu__button">
     <a routerLink="/cadastro" class="menu__button-a" title="Seja Integrador">Seja Integrador</a>
-    <a class="menu__button-a" title="Entrar" (click)="openLogin()">Entrar</a>
+    <a class="menu__button-a" title="Entrar" (click)="openLogin()" #loginButton>Entrar</a>
   </div>
 
-  <div *ngIf="showLogin" class="login__container">
+  <div *ngIf="showLogin"
+    appClickOutside(clickOutside)="closeLogin()"
+    class="login__container">
     <app-login></app-login>
   </div>
 
