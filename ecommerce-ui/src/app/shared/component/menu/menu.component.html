@@ -13,8 +13,8 @@
 
         <!-- submenu de 1° nível -->
         <ul class="submenu">
-          <li class="submenu__one" title="On Grid">
-            <a routerLink="/login">On Grid</a>
+          <li class="submenu__one" title="On Grid" (click)="navigateTo('/on-grid')">
+            <a routerLink="/on-grid" class="submenu__a">On Grid</a>
             <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
               style="transform: rotate(-90deg);" title="Abrir: On Grid">
               <path fill-rule="evenodd"
@@ -299,56 +299,16 @@
           </li>
         </ul>
       </li>
-       <!-- Terceiro menu de 1° nível -->
-      <li class="menu__li" title="Inversor Solar">
-        <a [routerLink]="['/inversor-solar']" class="menu__a">
-          Inversor Solar
-          <svg class="menu__svg" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-              d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-          </svg>
-        </a>
-
-        <!-- Submenu 1° nível -->
-        <ul class="submenu">
-          <li class="submenu__one" title="On Grid">
-            <a [routerLink]="['/inversor-solar/on-grid']">
-              On Grid
-              <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
-                style="transform: rotate(-90deg);">
-                <path fill-rule="evenodd"
-                  d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-              </svg>
-            </a>
-
-            <!-- Submenu 2° nível -->
-            <ul class="submenu">
-              <li class="submenu__one" title="Songrow">
-                <a routerLink="/inversor-solar/on-grid/songrow">
-                  Songrow
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-       <!-- Quarto menu de 1° nível -->
-      <li class="menu__li" title="Energia">
-        <a class="menu__a" routerLink="/energia">
-          Energia
-          <svg class="menu__svg" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-              d="M.2.4c.4-.4 1-.5 1.4-.1l2.9 3 2.9-3c.4-.4 1.1-.4 1.4.1.3.4.3.9-.1 1.3L4.5 6 .3 1.6C-.1 1.3-.1.7.2.4z" />
-          </svg>
-        </a>
-      </li>
     </ul>
   </nav>
 
   <div class="menu__button">
     <a routerLink="/cadastro" class="menu__button-a" title="Seja Integrador">Seja Integrador</a>
-    <a routerLink="/login" class="menu__button-a" title="Entrar">Entrar</a>
+    <a class="menu__button-a" title="Entrar" (click)="openLogin()">Entrar</a>
+  </div>
+
+  <div *ngIf="showLogin" class="login__container">
+    <app-login></app-login>
   </div>
 
 </header>
-

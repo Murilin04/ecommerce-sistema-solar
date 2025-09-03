@@ -5,7 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { LoginComponent } from "../../../auth/login/login.component";
 
 
 @Component({
@@ -17,14 +18,25 @@ import { RouterModule } from '@angular/router';
     MatSidenavModule,
     MatIconModule,
     CommonModule,
-    RouterModule],
+    RouterModule,
+    LoginComponent
+],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent implements OnInit{
+  showLogin = false;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  navigateTo(path: string): void {
+    this.router.navigate([path]);
+  }
+
+  openLogin() {
+    this.showLogin = !this.showLogin;
+  }
 
 }

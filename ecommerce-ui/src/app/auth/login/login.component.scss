@@ -1,0 +1,47 @@
+.login__form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+}
+
+.login__text {
+  text-align: center;
+}
+
+.login__input {
+  margin-top: 20px;
+  font-size: 15px;
+  height: 25px;
+  display: flex;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s;
+}
+
+.login__input:focus-within {
+  border-color: #FFD700;
+}
+
+.login__button {
+  margin-top: 10px;
+  background: #FFC845;
+  text-decoration: none;
+  padding: 0.5rem 1.5rem;
+  color: #696D72;
+}
+
+.login__div {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+  align-items: center;
+  gap: 25px;
+}
+
+.login__a {
+  text-decoration: none;
+  color: #696D72;
+  font-size: 15px;
+}
+
+
