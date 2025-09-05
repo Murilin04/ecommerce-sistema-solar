@@ -1,4 +1,4 @@
-package com.course.projetoweb.resources;
+package com.course.projetoweb.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -15,30 +15,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.course.projetoweb.entities.User;
-import com.course.projetoweb.services.UserService;
+import com.course.projetoweb.entities.Integrador;
+import com.course.projetoweb.services.IntegradorService;
+
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserResource {
+@RequestMapping(value = "/integrador")
+public class IntegradorController {
 
     @Autowired
-    private UserService userService;
+    private IntegradorService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> list = userService.findAll();
+    public ResponseEntity<List<Integrador>> findAll() {
+        List<Integrador> list = userService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
-        User obj = userService.findById(id);
+    public ResponseEntity<Integrador> findById(@PathVariable Long id) {
+        Integrador obj = userService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping
-    public ResponseEntity<User> insert(@RequestBody User obj) {
+    public ResponseEntity<Integrador> insert(@RequestBody @Valid Integrador obj) {
         obj = userService.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).body(obj);
@@ -50,10 +52,10 @@ public class UserResource {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) {
-        obj = userService.update(id, obj);
-        return ResponseEntity.ok().body(obj);
-    }
+    // @PutMapping(value = "/{id}")
+    // public ResponseEntity<Integrador> update(@PathVariable Long id, @RequestBody Integrador obj) {
+    //     obj = userService.update(id, obj);
+    //     return ResponseEntity.ok().body(obj);
+    // }
     
 }

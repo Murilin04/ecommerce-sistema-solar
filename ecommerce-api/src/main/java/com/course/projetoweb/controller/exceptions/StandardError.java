@@ -1,4 +1,4 @@
-package com.course.projetoweb.resources.exceptions;
+package com.course.projetoweb.controller.exceptions;
 
 import java.io.Serializable;
 import java.time.Instant;

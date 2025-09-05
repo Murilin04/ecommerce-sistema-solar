@@ -1,4 +1,4 @@
-package com.course.projetoweb.resources;
+package com.course.projetoweb.controller;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import com.course.projetoweb.services.CategoryService;
 
 @RestController
 @RequestMapping(value = "/categories")
-public class CategoryResource {
+public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
