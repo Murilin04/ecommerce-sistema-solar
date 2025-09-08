@@ -86,6 +86,10 @@ public class Integrador implements Serializable {
     @JsonProperty("whatsapp")
     private String whatsapp;
 
+    @JsonProperty("senha")
+    @NotBlank
+    private String password;
+
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
@@ -242,6 +246,14 @@ public class Integrador implements Serializable {
 
     public void setWhatsapp(String whatsapp) {
         this.whatsapp = whatsapp;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<Order> getOrders() {

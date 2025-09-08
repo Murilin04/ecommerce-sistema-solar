@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.course.projetoweb.entities.Integrador;
@@ -13,13 +14,17 @@ import com.course.projetoweb.repositories.IntegradorRepository;
 import com.course.projetoweb.services.exceptions.DatabaseException;
 import com.course.projetoweb.services.exceptions.ResourceNotFoundException;
 
-import jakarta.persistence.EntityNotFoundException;
-
 @Service
 public class IntegradorService {
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
     private IntegradorRepository userRepository;
+
+    IntegradorService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public List<Integrador> findAll() {
         return userRepository.findAll();
@@ -31,6 +36,11 @@ public class IntegradorService {
     }
 
     public Integrador insert(Integrador obj) {
+        try {
+            obj.setPassword(passwordEncoder.encode(obj.getPassword()));           
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
         return userRepository.save(obj);
     }
 

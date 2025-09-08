@@ -1,0 +1,25 @@
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mat-card {
+  background: white;
+  padding: 30px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+}
+
+mat-form-field {
+  flex: 1;
+}

@@ -1,0 +1,100 @@
+<div class="container">
+  <h2>Cadastro de Integradores</h2>
+
+  <mat-card class="mat-card">
+    <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>CNPJ</mat-label>
+          <input matInput formControlName="cnpj" placeholder="CNPJ">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Inscrição Estadual (Opcional)</mat-label>
+          <input matInput formControlName="inscricao_estadual">
+        </mat-form-field>
+
+        <mat-checkbox formControlName="sou_mei">Sou MEI</mat-checkbox>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Razão Social</mat-label>
+        <input matInput formControlName="razao_social">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nome Fantasia (Opcional)</mat-label>
+        <input matInput formControlName="nome_fantasia">
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>CEP</mat-label>
+          <input matInput formControlName="cep">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="estado">
+            <mat-option *ngFor="let estado of estados" [value]="estado">{{estado}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cidade</mat-label>
+          <mat-select formControlName="cidade">
+            <mat-option *ngFor="let cidade of cidades" [value]="cidade">{{cidade}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Endereço</mat-label>
+        <input matInput formControlName="endereco">
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Número</mat-label>
+          <input matInput formControlName="numero">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Complemento (Opcional)</mat-label>
+          <input matInput formControlName="complemento">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Bairro</mat-label>
+          <input matInput formControlName="bairro">
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email">
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Telefone</mat-label>
+          <input matInput formControlName="telefone_comercial">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Whatsapp</mat-label>
+          <input matInput formControlName="whatsapp">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input matInput formControlName="senha">
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit">Enviar</button>
+    </form>
+  </mat-card>
+</div>
+
