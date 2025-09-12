@@ -38,3 +38,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+.my-app-overlay .mat-mdc-select-panel,
+.my-app-overlay .mat-select-panel {
+  background: #fff;
+  color: #222;
+}
+
+.my-app-overlay .mat-mdc-option,
+.my-app-overlay .mat-option {
+  background: #fff;
+  color: #222;
+}
+
+.my-app-overlay .mat-mdc-option:hover,
+.my-app-overlay .mat-option:hover {
+  background: #f0f0f0;
+}
+
+.my-app-overlay .mat-mdc-input-element,
+.my-app-overlay .mat-input {
+  color: #222;
+}
+
+

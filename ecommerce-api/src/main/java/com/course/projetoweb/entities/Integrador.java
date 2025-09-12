@@ -36,7 +36,6 @@ public class Integrador implements Serializable {
     private String stateRegistration;
 
     @JsonProperty("sou_mei")
-    @NotNull
     private Boolean isMei;
 
     @JsonProperty("razao_social")

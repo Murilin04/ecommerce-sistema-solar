@@ -7,12 +7,15 @@
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>CNPJ</mat-label>
-          <input matInput formControlName="cnpj" placeholder="CNPJ">
+          <input matInput formControlName="cnpj" placeholder="CNPJ" mask="00.000.000/0000-00" style="color: #4A4F55;">
+          <mat-error *ngIf="cadastroForm.get('cnpj')?.hasError('required')">
+            O campo CNPJ é obrigatório
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Inscrição Estadual (Opcional)</mat-label>
-          <input matInput formControlName="inscricao_estadual">
+          <input matInput formControlName="inscricao_estadual" style="color: #4A4F55;">
         </mat-form-field>
 
         <mat-checkbox formControlName="sou_mei">Sou MEI</mat-checkbox>
@@ -20,81 +23,117 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Razão Social</mat-label>
-        <input matInput formControlName="razao_social">
+        <input matInput formControlName="razao_social" style="color: #4A4F55;">
+        <mat-error *ngIf="cadastroForm.get('razao_social')?.hasError('required')">
+          O campo Razão Social é obrigatório
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nome Fantasia (Opcional)</mat-label>
-        <input matInput formControlName="nome_fantasia">
+        <input matInput formControlName="nome_fantasia" style="color: #4A4F55;">
       </mat-form-field>
 
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>CEP</mat-label>
-          <input matInput formControlName="cep">
+          <input matInput formControlName="cep" mask="00000-000" style="color: #4A4F55;">
+          <mat-error *ngIf="cadastroForm.get('cep')?.hasError('required')">
+            O campo CEP é obrigatório
+          </mat-error>
+          <mat-error *ngIf="cadastroForm.get('cep')?.hasError('invalidCep')">
+            CEP inválido ou não encontrado
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Estado</mat-label>
-          <mat-select formControlName="estado">
-            <mat-option *ngFor="let estado of estados" [value]="estado">{{estado}}</mat-option>
+          <mat-label>UF</mat-label>
+          <mat-select formControlName="estado" (selectionChange)="onEstadoChange($event.value)">
+            <mat-option *ngFor="let estado of estados" [value]="estado.sigla">
+              {{estado.sigla}} - {{estado.nome}}
+            </mat-option>
           </mat-select>
+          <mat-error *ngIf="cadastroForm.get('estado')?.hasError('required')">
+            O campo Estado é obrigatório
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Cidade</mat-label>
           <mat-select formControlName="cidade">
-            <mat-option *ngFor="let cidade of cidades" [value]="cidade">{{cidade}}</mat-option>
+            <mat-option *ngFor="let cidade of cidades" [value]="cidade.nome">
+              {{cidade.nome}}
+            </mat-option>
           </mat-select>
+          <mat-error *ngIf="cadastroForm.get('cidade')?.hasError('required')">
+            O campo Cidade é obrigatório
+          </mat-error>
         </mat-form-field>
       </div>
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Endereço</mat-label>
-        <input matInput formControlName="endereco">
+        <input matInput formControlName="endereco" style="color: #4A4F55;">
+        <mat-error *ngIf="cadastroForm.get('endereco')?.hasError('required')">
+          O campo Endereço é obrigatório
+        </mat-error>
       </mat-form-field>
 
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Número</mat-label>
-          <input matInput formControlName="numero">
+          <input matInput formControlName="numero" style="color: #4A4F55;">
+          <mat-error *ngIf="cadastroForm.get('numero')?.hasError('required')">
+            O campo Número é obrigatório
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Complemento (Opcional)</mat-label>
-          <input matInput formControlName="complemento">
+          <input matInput formControlName="complemento" style="color: #4A4F55;">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Bairro</mat-label>
-          <input matInput formControlName="bairro">
+          <input matInput formControlName="bairro" style="color: #4A4F55;">
+          <mat-error *ngIf="cadastroForm.get('bairro')?.hasError('required')">
+            O campo Bairro é obrigatório
+          </mat-error>
         </mat-form-field>
       </div>
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email">
+        <input matInput type="email" formControlName="email" style="color: #4A4F55;">
+        <mat-error *ngIf="cadastroForm.get('email')?.hasError('required')">
+          O campo Email é obrigatório
+        </mat-error>
+        <mat-error *ngIf="cadastroForm.get('email')?.hasError('email')">
+          Email inválido
+        </mat-error>
       </mat-form-field>
 
       <div class="row">
         <mat-form-field appearance="outline">
-          <mat-label>Telefone</mat-label>
-          <input matInput formControlName="telefone_comercial">
+          <mat-label>Telefone Comercial</mat-label>
+          <input matInput formControlName="telefone_comercial" mask="(00) 0 0000-0000" style="color: #4A4F55;">
+          <mat-error *ngIf="cadastroForm.get('telefone_comercial')?.hasError('required')">
+            O campo Telefone Comercial é obrigatório
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Whatsapp</mat-label>
-          <input matInput formControlName="whatsapp">
+          <input matInput formControlName="whatsapp" mask="(00) 0 0000-0000" style="color: #4A4F55;">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Senha</mat-label>
-          <input matInput formControlName="senha">
+          <input matInput type="password" formControlName="senha" style="color: #4A4F55;">
         </mat-form-field>
       </div>
 
-      <button mat-raised-button color="primary" type="submit">Enviar</button>
+      <button type="submit">Enviar</button>
     </form>
   </mat-card>
 </div>
-
