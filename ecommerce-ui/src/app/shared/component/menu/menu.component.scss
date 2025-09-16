@@ -67,7 +67,7 @@
 .login__container {
   position: absolute;
   top: 20%;
-  right: 15rem;
+  right: 13rem;
   width: 15%;
   height: 35%;
   background: white;
@@ -116,7 +116,6 @@
   padding: 0.5rem 0;
   box-shadow: 0 4px 8px rgb(0, 0, 0, 0.1);
   min-width: 180px;
-  z-index: 1000;
 }
 
 .menu__li:hover > .submenu {
