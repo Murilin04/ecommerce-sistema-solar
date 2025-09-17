@@ -11,7 +11,7 @@ import { Integrador } from '../../models/integrador.model';
 })
 export class RegisterService {
 
-  private apiUrl = environment.apiPath + '/integrador';
+  private apiUrl = environment.apiPath + '/auth/register';
 
   constructor(private http: HttpClient) {}
 

@@ -1,4 +1,4 @@
-package com.course.projetoweb.config;
+package com.course.projetoweb.infra;
 
 import java.time.Instant;
 import java.util.Arrays;

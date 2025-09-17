@@ -3,18 +3,18 @@ export interface Integrador {
   cnpj: string;
   inscricao_estadual: string;
   sou_mei: boolean;
-  razao_social: string;
+  companyName: string;
   nome_fantasia: string;
-  cep: string;
-  estado: string;
-  cidade: string;
-  endereco: string;
-  numero: string;
+  postalCode: string;
+  state: string;
+  city: string;
+  address: string;
+  addressNumber: string;
   complemento: string;
-  bairro: string;
+  neighborhood: string;
   email: string;
-  telefone_comercial: string;
+  phone: string;
   whatsapp: string;
-  senha: string;
+  password: string;
 }
 

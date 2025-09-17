@@ -1,4 +1,4 @@
-package com.course.projetoweb.config;
+package com.course.projetoweb.infra.cors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

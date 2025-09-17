@@ -23,8 +23,8 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Razão Social</mat-label>
-        <input matInput formControlName="razao_social" style="color: #4A4F55;">
-        <mat-error *ngIf="cadastroForm.get('razao_social')?.hasError('required')">
+        <input matInput formControlName="companyName" style="color: #4A4F55;">
+        <mat-error *ngIf="cadastroForm.get('companyName')?.hasError('required')">
           O campo Razão Social é obrigatório
         </mat-error>
       </mat-form-field>
@@ -37,35 +37,35 @@
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>CEP</mat-label>
-          <input matInput formControlName="cep" mask="00000-000" style="color: #4A4F55;">
-          <mat-error *ngIf="cadastroForm.get('cep')?.hasError('required')">
+          <input matInput formControlName="postalCode" mask="00000-000" style="color: #4A4F55;">
+          <mat-error *ngIf="cadastroForm.get('postalCode')?.hasError('required')">
             O campo CEP é obrigatório
           </mat-error>
-          <mat-error *ngIf="cadastroForm.get('cep')?.hasError('invalidCep')">
+          <mat-error *ngIf="cadastroForm.get('postalCode')?.hasError('invalidCep')">
             CEP inválido ou não encontrado
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>UF</mat-label>
-          <mat-select formControlName="estado" (selectionChange)="onEstadoChange($event.value)">
+          <mat-select formControlName="state" (selectionChange)="onEstadoChange($event.value)">
             <mat-option *ngFor="let estado of estados" [value]="estado.sigla">
               {{estado.sigla}} - {{estado.nome}}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="cadastroForm.get('estado')?.hasError('required')">
+          <mat-error *ngIf="cadastroForm.get('state')?.hasError('required')">
             O campo Estado é obrigatório
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Cidade</mat-label>
-          <mat-select formControlName="cidade">
+          <mat-select formControlName="city">
             <mat-option *ngFor="let cidade of cidades" [value]="cidade.nome">
               {{cidade.nome}}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="cadastroForm.get('cidade')?.hasError('required')">
+          <mat-error *ngIf="cadastroForm.get('city')?.hasError('required')">
             O campo Cidade é obrigatório
           </mat-error>
         </mat-form-field>
@@ -73,8 +73,8 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Endereço</mat-label>
-        <input matInput formControlName="endereco" style="color: #4A4F55;">
-        <mat-error *ngIf="cadastroForm.get('endereco')?.hasError('required')">
+        <input matInput formControlName="address" style="color: #4A4F55;">
+        <mat-error *ngIf="cadastroForm.get('address')?.hasError('required')">
           O campo Endereço é obrigatório
         </mat-error>
       </mat-form-field>
@@ -82,8 +82,8 @@
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Número</mat-label>
-          <input matInput formControlName="numero" style="color: #4A4F55;">
-          <mat-error *ngIf="cadastroForm.get('numero')?.hasError('required')">
+          <input matInput formControlName="addressNumber" style="color: #4A4F55;">
+          <mat-error *ngIf="cadastroForm.get('addressNumber')?.hasError('required')">
             O campo Número é obrigatório
           </mat-error>
         </mat-form-field>
@@ -95,8 +95,8 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Bairro</mat-label>
-          <input matInput formControlName="bairro" style="color: #4A4F55;">
-          <mat-error *ngIf="cadastroForm.get('bairro')?.hasError('required')">
+          <input matInput formControlName="neighborhood" style="color: #4A4F55;">
+          <mat-error *ngIf="cadastroForm.get('neighborhood')?.hasError('required')">
             O campo Bairro é obrigatório
           </mat-error>
         </mat-form-field>
@@ -116,8 +116,8 @@
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Telefone Comercial</mat-label>
-          <input matInput formControlName="telefone_comercial" mask="(00) 0 0000-0000" style="color: #4A4F55;">
-          <mat-error *ngIf="cadastroForm.get('telefone_comercial')?.hasError('required')">
+          <input matInput formControlName="phone" mask="(00) 0 0000-0000" style="color: #4A4F55;">
+          <mat-error *ngIf="cadastroForm.get('phone')?.hasError('required')">
             O campo Telefone Comercial é obrigatório
           </mat-error>
         </mat-form-field>
@@ -129,7 +129,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Senha</mat-label>
-          <input matInput type="password" formControlName="senha" style="color: #4A4F55;">
+          <input matInput type="password" formControlName="password" style="color: #4A4F55;">
         </mat-form-field>
       </div>
 

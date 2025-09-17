@@ -85,7 +85,6 @@ public class Integrador implements Serializable {
     @JsonProperty("whatsapp")
     private String whatsapp;
 
-    @JsonProperty("senha")
     @NotBlank
     private String password;
 

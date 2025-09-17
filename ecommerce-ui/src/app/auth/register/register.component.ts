@@ -49,19 +49,19 @@ export class RegisterComponent implements OnInit{
       cnpj: ['', Validators.required],
       inscricao_estadual: [''],
       sou_mei: [false],
-      razao_social: ['', Validators.required],
+      companyName: ['', Validators.required],
       nome_fantasia: [''],
-      cep: ['', Validators.required],
-      estado: ['', Validators.required],
-      cidade: ['', Validators.required],
-      endereco: ['', Validators.required],
-      numero: ['', Validators.required],
+      postalCode: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      address: ['', Validators.required],
+      addressNumber: ['', Validators.required],
       complemento: [''],
-      bairro: ['', Validators.required],
+      neighborhood: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      telefone_comercial: ['', Validators.required],
+      phone: ['', Validators.required],
       whatsapp: [''],
-      senha: ['']
+      password: ['']
     });
   }
 
@@ -75,7 +75,7 @@ export class RegisterComponent implements OnInit{
     });
 
     // validar CEP enquanto o usuario digitar
-    this.cadastroForm.get('cep')?.valueChanges
+    this.cadastroForm.get('postalCode')?.valueChanges
       .pipe(
         debounceTime(500),
         distinctUntilChanged()
@@ -94,10 +94,10 @@ export class RegisterComponent implements OnInit{
       next: (data) => {
         if (!data.erro) {
           this.cadastroForm.patchValue({
-            endereco: data.logradouro,
-            bairro: data.bairro,
-            estado: data.uf,
-            cidade: data.localidade
+            address: data.logradouro,
+            neighborhood: data.bairro,
+            state: data.uf,
+            city: data.localidade
           });
 
           // busca cidades da UF para adicionar ao select
@@ -110,11 +110,11 @@ export class RegisterComponent implements OnInit{
           });
 
         } else {
-          this.cadastroForm.get('cep')?.setErrors({ invalidCep: true });
+          this.cadastroForm.get('postalCode')?.setErrors({ invalidCep: true });
         }
       },
       error: () => {
-        this.cadastroForm.get('cep')?.setErrors({ invalidCep: true });
+        this.cadastroForm.get('postalCode')?.setErrors({ invalidCep: true });
       }
     });
   }
