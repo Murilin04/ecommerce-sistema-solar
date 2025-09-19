@@ -28,6 +28,7 @@
   text-decoration: none;
   padding: 0.5rem 1.5rem;
   color: #696D72;
+  cursor: pointer;
 }
 
 .login__div {
@@ -44,4 +45,10 @@
   font-size: 15px;
 }
 
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
 

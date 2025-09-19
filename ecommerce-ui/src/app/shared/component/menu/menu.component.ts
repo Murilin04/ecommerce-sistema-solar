@@ -7,6 +7,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterModule } from '@angular/router';
 import { LoginComponent } from "../../../auth/login/login.component";
+import { AuthService } from '../../../auth/service/auth.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -26,8 +28,11 @@ import { LoginComponent } from "../../../auth/login/login.component";
 })
 export class MenuComponent implements OnInit{
   showLogin = false;
+  isAuthenticated$: Observable<boolean>;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, public auth: AuthService) {
+    this.isAuthenticated$ = this.auth.isAuthenticated$;
+  }
 
   ngOnInit(): void {}
 
@@ -41,6 +46,10 @@ export class MenuComponent implements OnInit{
 
   closeLogin() {
     this.showLogin = false;
+  }
+
+  logout() {
+    this.auth.logout();
   }
 
 }

@@ -65,7 +65,7 @@ public class AuthController {
             newUser.setPhone(body.phone());
             newUser.setWhatsapp(body.whatsapp());
             newUser.setPassword(passwordEncoder.encode(body.password()));
-            this.repository.save(newUser);
+            this.repository.save(newUser); 
 
             String token = this.tokenService.generateToken(newUser);
             return ResponseEntity.ok(new ResponseDTO(newUser.getCnpj(), token));

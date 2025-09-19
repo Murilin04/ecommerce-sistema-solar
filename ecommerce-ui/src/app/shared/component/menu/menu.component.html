@@ -303,14 +303,15 @@
   </nav>
 
   <div class="menu__button">
-    <a routerLink="/cadastro" class="menu__button-a" title="Seja Integrador">Seja Integrador</a>
-    <a class="menu__button-a" title="Entrar" (click)="openLogin()" #loginButton>Entrar</a>
+    <a *ngIf="!(isAuthenticated$ | async)" routerLink="/cadastro" class="menu__button-a" title="Seja Integrador">Seja Integrador</a>
+    <a *ngIf="!(isAuthenticated$ | async)" class="menu__button-a" title="Entrar" (click)="openLogin()" #loginButton>Entrar</a>
+    <a *ngIf="(isAuthenticated$ | async)" (click)="logout()" class="menu__button-a">Sair</a>
   </div>
 
   <div *ngIf="showLogin"
     appClickOutside (clickOutside)="closeLogin()"
     class="login__container">
-    <app-login></app-login>
+    <app-login (loginSuccess)="closeLogin()"></app-login>
   </div>
 
 </header>

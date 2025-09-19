@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCardModule } from '@angular/material/card';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RegisterService } from '../../features/service/register/register.service';
-import { CommonModule } from '@angular/common';
-import { IbgeService } from '../../features/service/ibge/ibge.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { NgxMaskDirective } from 'ngx-mask';
-import { ViacepService } from '../../features/service/cep/viacep.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+
+import { ViacepService } from '../../features/service/cep/viacep.service';
+import { IbgeService } from '../../features/service/ibge/ibge.service';
+import { AuthService } from '../service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -40,10 +41,11 @@ export class RegisterComponent implements OnInit{
 
   constructor(
     private fb: FormBuilder,
-    private registerService: RegisterService,
+    private authService: AuthService,
     private ibgeService: IbgeService,
     private viaCepService: ViacepService,
-    private overlay: OverlayContainer
+    private overlay: OverlayContainer,
+    private router: Router
   ) {
     this.cadastroForm = this.fb.group({
       cnpj: ['', Validators.required],
@@ -131,12 +133,12 @@ export class RegisterComponent implements OnInit{
 
   onSubmit() {
     if (this.cadastroForm.valid) {
-      this.registerService
-        .cadastrarIntegrador(this.cadastroForm.value)
+      this.authService
+        .register(this.cadastroForm.value)
         .subscribe({
           next: (data) => {
-            console.log('Integrador cadastrado:', data);
             this.cadastroForm.reset(); // reseta o formulário
+            this.router.navigate(['/home']);
           },
           error: (err) => {
             console.error('Erro ao cadastrar:', err);

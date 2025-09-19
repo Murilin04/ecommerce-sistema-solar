@@ -3,15 +3,35 @@
     Área restrita para
     <strong>INTEGRADORES</strong>
   </div>
-  <form (submit)="login()">
-    <input class="login__input" type="text" id="username" [(ngModel)]="username" name="username" required placeholder="CNPJ">
 
-    <input class="login__input" type="password" id="password" [(ngModel)]="password" name="password" required placeholder="Senha">
+  <form [formGroup]="form" (ngSubmit)="login()">
+    <!-- CNPJ -->
+    <input
+      class="login__input"
+      type="text"
+      id="cnpj"
+      formControlName="cnpj"
+      placeholder="CNPJ"
+    />
+    <span class="error" *ngIf="form.get('cnpj')?.touched && form.get('cnpj')?.invalid">
+      O CNPJ é obrigatório
+    </span>
+
+    <!-- Senha -->
+    <input
+      class="login__input"
+      type="password"
+      id="password"
+      formControlName="password"
+      placeholder="Senha"
+    />
+    <span class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+      A senha é obrigatória
+    </span>
 
     <div class="login__div">
-      <a href="#" class="login__button" title="Entrar">Entrar</a>
+      <button type="submit" class="login__button" [disabled]="form.invalid">Entrar</button>
       <a routerLink="/cadastro" class="login__a" title="Cadastrar">Cadastrar</a>
     </div>
   </form>
 </div>
-

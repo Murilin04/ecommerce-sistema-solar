@@ -1,32 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { FormsModule } from '@angular/forms';
+import { AuthService } from '../service/auth.service';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent {
+  @Output() loginSuccess = new EventEmitter<void>();
+  form: FormGroup;
 
-  username = '';
-  password = '';
-
-  constructor(private auth: AuthService, private router: Router) { }
-
-  ngOnInit(): void {
-
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      cnpj: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
   login() {
-    if (this.auth.login(this.username, this.password)) {
-      this.router.navigate(['/home']);
-    } else {
-      alert('Credenciais inválidas');
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
     }
+      this.auth.login(this.form.value).subscribe({
+        next: () => {
+          this.router.navigate(['/home']);
+          this.loginSuccess.emit();
+        },
+        error: () => {
+          alert('Login invalido');
+        }
+      });
   }
-
 }
