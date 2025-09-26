@@ -33,9 +33,9 @@ public class IntegradorController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Integrador> findById(@PathVariable Long id) {
-        Integrador obj = userService.findById(id);
+    @GetMapping(value = "/{cnpj}")
+    public ResponseEntity<Integrador> findById(@PathVariable String cnpj) {
+        Integrador obj = userService.findByCnpj(cnpj);
         return ResponseEntity.ok().body(obj);
     }
 

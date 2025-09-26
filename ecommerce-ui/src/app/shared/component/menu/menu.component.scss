@@ -1,5 +1,5 @@
 .menu {
-  background-color: #FFC845;
+  background-color:#4FA9FF;
   display: grid;
   grid-template-columns: 1fr 0.5fr;
   align-items: center;
@@ -26,7 +26,7 @@
 }
 
 .menu__li:hover {
-  background-color: #FFE4A2;
+  background-color: #f0f0f0;
   border-radius: 2px;
 }
 
@@ -52,7 +52,7 @@
 
 .menu__button-a {
   background-color: #4A4f55;
-  color: #FFC845;
+  color: #4FA9FF;
   border-radius: 2px;
   padding: 14px 15px;
   text-decoration: none;
@@ -64,6 +64,12 @@
   cursor: pointer;
 }
 
+.menu__button-links {
+  background-color: #4A4f55;
+  height: 30px;
+  margin-left: 10rem;
+}
+
 .login__container {
   position: absolute;
   top: 20%;
@@ -73,7 +79,7 @@
   background: white;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-
+  z-index: 999;
 }
 
 .menu__svg {

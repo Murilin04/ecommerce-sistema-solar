@@ -1,0 +1,50 @@
+<div class="profile-container" *ngIf="profile">
+  <h2>Meu Perfil</h2>
+  <p class="subtitle">Gerencie suas informações e configurações</p>
+
+  <!-- Card principal com avatar -->
+  <mat-card class="profile-card">
+    <div class="profile-header">
+      <div class="avatar"></div>
+      <div class="user-info">
+        <h3>{{ profile.companyName }}</h3>
+        <p><strong>CNPJ:</strong>{{ profile.cnpj }}</p>
+        <p>{{ profile.email }}</p>
+      </div>
+      <button mat-stroked-button>Editar Perfil</button>
+    </div>
+  </mat-card>
+
+  <!-- Informações pessoais -->
+  <mat-card class="info-card">
+    <h4>INFORMAÇÕES PESSOAIS</h4>
+    <div class="info-grid">
+      <p><strong>Nome:</strong> {{ profile.nome_fantasia }}</p>
+      <p><strong>CNPJ:</strong> {{ profile.cnpj }}</p>
+      <p><strong>Email:</strong> {{ profile.email }}</p>
+      <p><strong>Telefone Comercial:</strong> {{ profile.phone }}</p>
+    </div>
+  </mat-card>
+
+  <!-- Endereço -->
+  <mat-card class="info-card">
+    <h4>ENDEREÇO</h4>
+    <div class="info-grid">
+      <p><strong>CEP:</strong> {{ profile.postalCode }}</p>
+      <p><strong>Estado:</strong> {{ profile.state }}</p>
+      <p><strong>Cidade:</strong> {{ profile.city }}</p>
+      <p><strong>Endereço:</strong> {{ profile.address }}</p>
+      <p><strong>Bairro:</strong> {{ profile.neighborhood }}</p>
+      <p><strong>Número:</strong> {{ profile.addressNumber }}</p>
+    </div>
+  </mat-card>
+
+  <!-- Configurações -->
+  <mat-card class="info-card">
+    <h4>CONFIGURAÇÕES DE CONTA</h4>
+    <ul>
+      <li>Alterar senha</li>
+      <li>Preferências</li>
+    </ul>
+  </mat-card>
+</div>

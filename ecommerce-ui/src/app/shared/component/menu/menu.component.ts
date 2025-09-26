@@ -9,11 +9,13 @@ import { Router, RouterModule } from '@angular/router';
 import { LoginComponent } from "../../../auth/login/login.component";
 import { AuthService } from '../../../auth/service/auth.service';
 import { Observable } from 'rxjs';
+import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 
 
 @Component({
   selector: 'app-menu',
   imports: [
+    ClickOutsideDirective,
     MatToolbarModule,
     MatMenuModule,
     MatButtonModule,
