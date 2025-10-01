@@ -8,10 +8,9 @@
       <div class="avatar"></div>
       <div class="user-info">
         <h3>{{ profile.companyName }}</h3>
-        <p><strong>CNPJ:</strong>{{ profile.cnpj }}</p>
-        <p>{{ profile.email }}</p>
+        <p><strong>Nome Fantasia:</strong> {{ profile.tradeName }}</p>
       </div>
-      <button mat-stroked-button>Editar Perfil</button>
+      <button mat-stroked-button (click)="navigate('/perfil-editar')">Editar Perfil</button>
     </div>
   </mat-card>
 
@@ -19,10 +18,12 @@
   <mat-card class="info-card">
     <h4>INFORMAÇÕES PESSOAIS</h4>
     <div class="info-grid">
-      <p><strong>Nome:</strong> {{ profile.nome_fantasia }}</p>
+
       <p><strong>CNPJ:</strong> {{ profile.cnpj }}</p>
       <p><strong>Email:</strong> {{ profile.email }}</p>
       <p><strong>Telefone Comercial:</strong> {{ profile.phone }}</p>
+      <p><strong>Inscrição Estadual:</strong> {{ profile.stateRegistration }}</p>
+      <p><strong>Whatsapp:</strong> {{ profile.whatsapp }}</p>
     </div>
   </mat-card>
 
@@ -36,6 +37,7 @@
       <p><strong>Endereço:</strong> {{ profile.address }}</p>
       <p><strong>Bairro:</strong> {{ profile.neighborhood }}</p>
       <p><strong>Número:</strong> {{ profile.addressNumber }}</p>
+      <p><strong>Complemento:</strong> {{ profile.addressComplement }}</p>
     </div>
   </mat-card>
 
@@ -47,4 +49,5 @@
       <li>Preferências</li>
     </ul>
   </mat-card>
+  <button mat-stroked-button (click)="navigate('/home')">Voltar</button>
 </div>

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +15,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_integrador")
@@ -27,62 +25,59 @@ public class Integrador implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @JsonProperty("cnpj")
     @NotBlank
     @Column(length = 18, unique = true)
     private String cnpj;
 
-    @JsonProperty("inscricao_estadual")
+    // inscricao_estadual
     private String stateRegistration;
 
-    @JsonProperty("sou_mei")
+    // sou_mei
     private Boolean isMei;
 
-    @JsonProperty("razao_social")
+    // razão social
     @NotBlank
     private String companyName;
 
-    @JsonProperty("nome_fantasia")
+    // nome fantasia
     private String tradeName;
 
-    @JsonProperty("cep")
+    // cep
     @NotBlank
     @Column(length = 9)
     private String postalCode;
 
-    @JsonProperty("estado")
+    // estado
     @NotBlank
     private String state;
 
-    @JsonProperty("cidade")
+    // cidade
     @NotBlank
     private String city;
 
-    @JsonProperty("endereco")
+    // endereço
     @NotBlank
     private String address;
 
-    @JsonProperty("numero")
+    // numero
     @NotBlank
     private String addressNumber;
 
-    @JsonProperty("complemento")
+    // complemento
     private String addressComplement;
 
-    @JsonProperty("bairro")
+    // bairro
     @NotBlank
     private String neighborhood;
 
-    @JsonProperty("email")
     @NotBlank
     @Email
     private String email;
 
-    @JsonProperty("telefone_comercial")
+    // telefone comercial
     @NotBlank
     private String phone;
 
-    @JsonProperty("whatsapp")
     private String whatsapp;
 
     @NotBlank

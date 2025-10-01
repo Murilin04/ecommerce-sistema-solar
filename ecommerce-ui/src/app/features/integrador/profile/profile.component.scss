@@ -16,6 +16,16 @@
     color: #585d61;
     margin-bottom: 1.5rem;
   }
+
+  button {
+    background-color: #ffffff;
+    border: 2px solid #4FA9FF;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
 }
 
 .profile-card {
@@ -44,10 +54,10 @@
       }
       p {
         margin: 0.2rem 0;
-        color: #ffffff;
+        color: #7D7D7C;
       }
-      p:hover {
-        text-decoration: underline;
+      strong {
+        color: #ffffff;
       }
     }
 
@@ -81,10 +91,13 @@
 
     p {
       margin: 0;
-      color: #ffffff;
+      color: #7D7D7C;
     }
     p:hover {
       text-decoration: underline;
+    }
+    strong {
+      color: #ffffff;
     }
   }
 

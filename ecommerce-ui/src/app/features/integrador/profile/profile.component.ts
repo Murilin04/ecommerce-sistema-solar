@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../../../auth/service/auth.service';
 import { TokenPayload } from '../../models/tokenPayload.model';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -17,13 +17,16 @@ import { TokenPayload } from '../../models/tokenPayload.model';
 export class ProfileComponent implements OnInit{
   profile?: Integrador;
 
-  constructor(private profileService: ProfileService, private auth: AuthService) {}
+  constructor(
+    private profileService: ProfileService,
+    private auth: AuthService,
+    private router: Router) {}
 
   ngOnInit(): void {
     const token = this.auth.getToken();
     if (token) {
       const payload = jwtDecode<TokenPayload>(token);
-      const cnpj = payload.sub; // se no backend `sub` for o id
+      const cnpj = payload.sub;
 
       this.profileService.getProfile(cnpj).subscribe({
         next: (data) => (this.profile = data),
@@ -33,6 +36,10 @@ export class ProfileComponent implements OnInit{
         }
       });
     }
+  }
+
+  navigate(path: string) {
+    this.router.navigate([path]);
   }
 
 }

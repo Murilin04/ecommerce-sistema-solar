@@ -1,16 +1,16 @@
 export interface Integrador {
   id: number;
   cnpj: string;
-  inscricao_estadual: string;
-  sou_mei: boolean;
+  stateRegistration: string;
+  isMei: boolean;
   companyName: string;
-  nome_fantasia: string;
+  tradeName: string;
   postalCode: string;
   state: string;
   city: string;
   address: string;
   addressNumber: string;
-  complemento: string;
+  addressComplement: string;
   neighborhood: string;
   email: string;
   phone: string;
