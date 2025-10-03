@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Integrador } from '../../models/integrador.model';
+
+import { environment } from '../../../../environments/environment';
+import { IntegradorDTO } from '../../models/integradorDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,16 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  getProfile(cnpj: string): Observable<Integrador> {
-    return this.http.get<Integrador>(`${this.apiUrl}/${cnpj}`);
+  getProfile(cnpj: string): Observable<IntegradorDTO> {
+    return this.http.get<IntegradorDTO>(`${this.apiUrl}/${cnpj}`);
+  }
+
+  updateProfile(id: number, data: Partial<IntegradorDTO>) {
+    return this.http.put<IntegradorDTO>(`${this.apiUrl}/${id}`, data)
+  }
+
+  updatePassword(id: number, data: { currentPassword: string; newPassword: string }) {
+    return this.http.put<void>(`${this.apiUrl}/${id}/senha`, data);
   }
 
 }

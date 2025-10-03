@@ -102,12 +102,24 @@
     <!-- Card Configurações -->
     <mat-card class="edit-card">
       <h3>Configurações de Conta</h3>
-      <div class="form-grid">
-        <mat-form-field appearance="outline">
-          <mat-label>Senha</mat-label>
-          <input matInput type="password" formControlName="password" />
-        </mat-form-field>
-      </div>
+      <h4>ALTERAR SENHA</h4>
+      <form [formGroup]="formPassword" (ngSubmit)="salvarSenha()">
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Senha Atual</mat-label>
+            <input matInput type="password" id="currentPassword" formControlName="currentPassword" required />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nova Senha</mat-label>
+            <input matInput type="password" id="newPassword" formControlName="newPassword" required />
+          </mat-form-field>
+        </div>
+
+        <button mat-raised-button type="submit" [disabled]="formPassword.invalid">
+          Alterar senha
+        </button>
+      </form>
     </mat-card>
 
     <!-- Botões -->

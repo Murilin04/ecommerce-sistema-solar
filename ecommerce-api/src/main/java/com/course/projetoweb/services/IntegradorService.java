@@ -14,6 +14,8 @@ import com.course.projetoweb.repositories.IntegradorRepository;
 import com.course.projetoweb.services.exceptions.DatabaseException;
 import com.course.projetoweb.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class IntegradorService {
 
@@ -35,15 +37,6 @@ public class IntegradorService {
         return obj.orElseThrow(() -> new ResourceNotFoundException(cnpj));
     }
 
-    public Integrador insert(Integrador obj) {
-        try {
-            obj.setPassword(passwordEncoder.encode(obj.getPassword()));           
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-        return userRepository.save(obj);
-    }
-
     public void delete(Long id) {
         try {
             userRepository.deleteById(id);
@@ -55,21 +48,50 @@ public class IntegradorService {
 
     }
 
-    // public Integrador update(Long id, Integrador obj) {
-    //     try {
-    //         Integrador entity = userRepository.getReferenceById(id);
-    //         updateData(entity, obj);
-    //         return userRepository.save(entity);
-    //     } catch (EntityNotFoundException e) {
-    //         throw new ResourceNotFoundException(id);
-    //     }
+    public Integrador update(Long id, Integrador obj) {
+        try {
+            Integrador entity = userRepository.getReferenceById(id);
+            updateData(entity, obj);
+            return userRepository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
       
-    // }
+    }
 
-    // private void updateData(Integrador entity, Integrador obj) {
-    //     entity.setEmail(obj.getEmail());
-    //     entity.setName(obj.getName());
-    //     entity.setPhone(obj.getPhone());
-    // }
+    private void updateData(Integrador entity, Integrador obj) {
+        entity.setCnpj(obj.getCnpj());
+        entity.setStateRegistration(obj.getStateRegistration());
+        entity.setIsMei(obj.getIsMei());
+        entity.setCompanyName(obj.getCompanyName());
+        entity.setTradeName(obj.getTradeName());
+        entity.setPostalCode(obj.getPostalCode());
+        entity.setState(obj.getState());
+        entity.setCity(obj.getCity());
+        entity.setAddress(obj.getAddress());
+        entity.setAddressNumber(obj.getAddressNumber());
+        entity.setAddressComplement(obj.getAddressComplement());
+        entity.setNeighborhood(obj.getNeighborhood());
+        entity.setEmail(obj.getEmail());
+        entity.setPhone(obj.getPhone());
+        entity.setWhatsapp(obj.getWhatsapp());
+        if (obj.getPassword() != null && !obj.getPassword().isBlank()) {
+            entity.setPassword(passwordEncoder.encode(obj.getPassword()));
+        }
+       
+    }
+
+    public void updatePassword(Long id, String currentPassword, String newPassword) {
+        Integrador entity = userRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException(id));
+        // Verifica se a senha atual bate com a do banco
+        if (!passwordEncoder.matches(currentPassword, entity.getPassword())) {
+            throw new RuntimeException("Senha atual incorreta");
+        }
+
+        // Atualiza a senha
+        entity.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(entity);
+    }
 
 }

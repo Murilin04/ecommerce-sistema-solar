@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCard } from "@angular/material/card";
-import { Integrador } from '../../models/integrador.model';
 import { ProfileService } from '../../service/profile/profile.service';
 import { CommonModule } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../../../auth/service/auth.service';
 import { TokenPayload } from '../../models/tokenPayload.model';
 import { Router } from '@angular/router';
+import { IntegradorDTO } from '../../models/integradorDTO.model';
+
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements OnInit{
-  profile?: Integrador;
+  profile?: IntegradorDTO;
 
   constructor(
     private profileService: ProfileService,

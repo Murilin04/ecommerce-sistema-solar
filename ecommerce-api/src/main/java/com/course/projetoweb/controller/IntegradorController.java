@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.course.projetoweb.dto.IntegradorDTO;
+import com.course.projetoweb.dto.UpdatePasswordDTO;
 import com.course.projetoweb.entities.Integrador;
 import com.course.projetoweb.services.IntegradorService;
 
@@ -34,16 +36,10 @@ public class IntegradorController {
     }
 
     @GetMapping(value = "/{cnpj}")
-    public ResponseEntity<Integrador> findById(@PathVariable String cnpj) {
+    public ResponseEntity<IntegradorDTO> findById(@PathVariable String cnpj) {
         Integrador obj = userService.findByCnpj(cnpj);
-        return ResponseEntity.ok().body(obj);
-    }
-
-    @PostMapping
-    public ResponseEntity<Integrador> insert(@RequestBody @Valid Integrador obj) {
-        obj = userService.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+        IntegradorDTO dto = new IntegradorDTO(obj);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -52,10 +48,16 @@ public class IntegradorController {
         return ResponseEntity.noContent().build();
     }
 
-    // @PutMapping(value = "/{id}")
-    // public ResponseEntity<Integrador> update(@PathVariable Long id, @RequestBody Integrador obj) {
-    //     obj = userService.update(id, obj);
-    //     return ResponseEntity.ok().body(obj);
-    // }
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Integrador> update(@PathVariable Long id, @RequestBody Integrador obj) {
+        obj = userService.update(id, obj);
+        return ResponseEntity.ok().body(obj);
+    }
+
+    @PutMapping("/{id}/senha")
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UpdatePasswordDTO dto){
+        userService.updatePassword(id, dto.getCurrentPassword(), dto.getNewPassword());
+        return ResponseEntity.noContent().build();
+    }
     
 }

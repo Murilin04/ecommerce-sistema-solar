@@ -13,7 +13,7 @@ export const routes: Routes = [
   { path: 'cadastro', component: RegisterComponent, canActivate: [NoAuthGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'perfil', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'perfil-editar', component: EditProfileComponent, canActivate: [AuthGuard] }
-  // { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: 'perfil-editar', component: EditProfileComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: 'home', pathMatch: 'full' }
 
 ];
