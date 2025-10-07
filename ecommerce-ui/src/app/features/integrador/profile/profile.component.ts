@@ -7,6 +7,7 @@ import { AuthService } from '../../../auth/service/auth.service';
 import { TokenPayload } from '../../models/tokenPayload.model';
 import { Router } from '@angular/router';
 import { IntegradorDTO } from '../../models/integradorDTO.model';
+import { I } from '@angular/cdk/keycodes';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { IntegradorDTO } from '../../models/integradorDTO.model';
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements OnInit{
-  profile?: IntegradorDTO;
+  profile!: IntegradorDTO;
 
   constructor(
     private profileService: ProfileService,
@@ -27,9 +28,9 @@ export class ProfileComponent implements OnInit{
     const token = this.auth.getToken();
     if (token) {
       const payload = jwtDecode<TokenPayload>(token);
-      const cnpj = payload.sub;
+      const id = payload.id;
 
-      this.profileService.getProfile(cnpj).subscribe({
+      this.profileService.getProfile(id).subscribe({
         next: (data) => (this.profile = data),
         error: (err) => {
           console.error('Erro ao carregar perfil:', err)

@@ -32,9 +32,9 @@ public class IntegradorService {
         return userRepository.findAll();
     }
 
-    public Integrador findByCnpj(String cnpj) {
-        Optional<Integrador> obj = userRepository.findByCnpj(cnpj);
-        return obj.orElseThrow(() -> new ResourceNotFoundException(cnpj));
+    public Integrador findById(Long id) {
+        Optional<Integrador> obj = userRepository.findById(id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public void delete(Long id) {

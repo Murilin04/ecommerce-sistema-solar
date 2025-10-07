@@ -13,8 +13,8 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  getProfile(cnpj: string): Observable<IntegradorDTO> {
-    return this.http.get<IntegradorDTO>(`${this.apiUrl}/${cnpj}`);
+  getProfile(id: number): Observable<IntegradorDTO> {
+    return this.http.get<IntegradorDTO>(`${this.apiUrl}/${id}`);
   }
 
   updateProfile(id: number, data: Partial<IntegradorDTO>) {

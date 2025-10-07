@@ -33,7 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequestDTO body) {
+    public ResponseEntity login(@RequestBody @Valid LoginRequestDTO body) {
         Integrador user = this.repository.findByCnpj(body.cnpj()).orElseThrow(() -> new RuntimeException("User not found"));
         if(passwordEncoder.matches(body.password(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
@@ -44,6 +44,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO body){
+        
+        // if (this.repository.findByCnpj(body.cnpj()) != null) return ResponseEntity.badRequest().build();
         Optional<Integrador> user = this.repository.findByCnpj(body.cnpj());
 
         if(user.isEmpty()) {
@@ -65,6 +67,7 @@ public class AuthController {
             newUser.setPhone(body.phone());
             newUser.setWhatsapp(body.whatsapp());
             newUser.setPassword(passwordEncoder.encode(body.password()));
+            newUser.setRole(body.role());
             this.repository.save(newUser); 
 
             String token = this.tokenService.generateToken(newUser);

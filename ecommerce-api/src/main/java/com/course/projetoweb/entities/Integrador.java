@@ -2,8 +2,14 @@ package com.course.projetoweb.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.course.projetoweb.entities.enums.IntegradorRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -18,7 +24,7 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tb_integrador")
-public class Integrador implements Serializable {
+public class Integrador implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -83,6 +89,8 @@ public class Integrador implements Serializable {
     @NotBlank
     private String password;
 
+    private IntegradorRole role;
+
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
@@ -94,7 +102,7 @@ public class Integrador implements Serializable {
     public Integrador(Long id, @NotBlank String cnpj, String stateRegistration, Boolean isMei,
             @NotBlank String companyName, String tradeName, @NotBlank String postalCode, @NotBlank String state,
             @NotBlank String city, @NotBlank String address, @NotBlank String addressNumber, String addressComplement,
-            @NotBlank String neighborhood, @NotBlank @Email String email, @NotBlank String phone, String whatsapp) {
+            @NotBlank String neighborhood, @NotBlank @Email String email, @NotBlank String phone, IntegradorRole role, String whatsapp) {
         this.id = id;
         this.cnpj = cnpj;
         this.stateRegistration = stateRegistration;
@@ -111,6 +119,18 @@ public class Integrador implements Serializable {
         this.email = email;
         this.phone = phone;
         this.whatsapp = whatsapp;
+        this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.role == IntegradorRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getUsername() {
+        return cnpj;
     }
 
     public Long getId() {
@@ -249,6 +269,14 @@ public class Integrador implements Serializable {
         this.password = password;
     }
 
+     public IntegradorRole getRole() {
+        return role;
+    }
+
+    public void setRole(IntegradorRole role) {
+        this.role = role;
+    }
+
     public List<Order> getOrders() {
         return orders;
     }
@@ -278,4 +306,5 @@ public class Integrador implements Serializable {
         return true;
     }
 
+    
 }

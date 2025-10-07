@@ -85,9 +85,9 @@ export class EditProfileComponent implements OnInit{
     const token = localStorage.getItem('auth_token');
     if (token) {
       const payload: any = jwtDecode(token);
-      const cnpj = payload.sub;
+      const id = payload.id;
 
-      this.profileService.getProfile(cnpj).subscribe({
+      this.profileService.getProfile(id).subscribe({
         next: (data) => {
           this.integrador = data;
           this.form.patchValue(data); // popula os campos

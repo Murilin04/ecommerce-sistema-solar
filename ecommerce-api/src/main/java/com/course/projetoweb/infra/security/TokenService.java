@@ -26,6 +26,7 @@ public class TokenService {
             String token = JWT.create()
                     .withIssuer("ecommerce-api")
                     .withSubject(integrador.getCnpj())
+                .withClaim("id", integrador.getId())
                     .withExpiresAt(this.generateExpirationDate())
                     .sign(algorithm);
                 return token;

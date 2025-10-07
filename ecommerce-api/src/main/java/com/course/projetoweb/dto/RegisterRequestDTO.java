@@ -1,5 +1,7 @@
 package com.course.projetoweb.dto;
 
+import com.course.projetoweb.entities.enums.IntegradorRole;
+
 public record RegisterRequestDTO(
     String cnpj, 
     String stateRegistration, 
@@ -16,6 +18,7 @@ public record RegisterRequestDTO(
     String email, 
     String phone, 
     String whatsapp, 
-    String password) {
+    String password,
+    IntegradorRole role) {
 
 }
