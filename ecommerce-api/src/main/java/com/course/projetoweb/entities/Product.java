@@ -15,6 +15,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 
 @Entity
 @Table(name = "tb_product")
@@ -48,6 +49,10 @@ public class Product implements Serializable{
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
+    }
+
+    public Product(Product body) {
+        //TODO Auto-generated constructor stub
     }
 
     public Long getId() {

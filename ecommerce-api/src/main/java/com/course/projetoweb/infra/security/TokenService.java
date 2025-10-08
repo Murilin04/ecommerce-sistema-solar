@@ -22,11 +22,13 @@ public class TokenService {
     public String generateToken(Integrador integrador) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
+            String role = integrador.getRole() == null ? "USER" : integrador.getRole().name();
 
             String token = JWT.create()
                     .withIssuer("ecommerce-api")
                     .withSubject(integrador.getCnpj())
-                .withClaim("id", integrador.getId())
+                    .withClaim("id", integrador.getId())
+                    .withClaim("role", role)
                     .withExpiresAt(this.generateExpirationDate())
                     .sign(algorithm);
                 return token;

@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.auth0.jwt.JWT;
 import com.course.projetoweb.entities.Integrador;
 import com.course.projetoweb.repositories.IntegradorRepository;
 
@@ -30,14 +31,28 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
-        var login = tokenService.validateToken(token);
+        if (token != null) {
+            try {
+                var login = tokenService.validateToken(token);
+                if (login != null) {
+                    Integrador user = userRepository.findByCnpj(login)
+                        .orElseThrow(() -> new RuntimeException("User Not Found"));
 
-        if(login != null){
-            Integrador user = userRepository.findByCnpj(login).orElseThrow(() -> new RuntimeException("User Not Found"));
-            var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                        String role = JWT.decode(token).getClaim("role").asString();
+                        if (role == null) role = "USER";
+
+                        var authorities = Collections.singletonList(
+                            new SimpleGrantedAuthority("ROLE_" + role)
+                        );
+
+                        var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao validar token: " + e.getMessage());
+            }
         }
+        
         filterChain.doFilter(request, response);
     }
 

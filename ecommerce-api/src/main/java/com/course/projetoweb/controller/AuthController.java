@@ -13,6 +13,7 @@ import com.course.projetoweb.dto.LoginRequestDTO;
 import com.course.projetoweb.dto.RegisterRequestDTO;
 import com.course.projetoweb.dto.ResponseDTO;
 import com.course.projetoweb.entities.Integrador;
+import com.course.projetoweb.entities.enums.IntegradorRole;
 import com.course.projetoweb.infra.security.TokenService;
 import com.course.projetoweb.repositories.IntegradorRepository;
 
@@ -62,12 +63,11 @@ public class AuthController {
             newUser.setAddressNumber(body.addressNumber());
             newUser.setAddressComplement(body.addressComplement());
             newUser.setNeighborhood(body.neighborhood());
-            newUser.setPassword(passwordEncoder.encode(body.password()));
             newUser.setEmail(body.email());
             newUser.setPhone(body.phone());
             newUser.setWhatsapp(body.whatsapp());
             newUser.setPassword(passwordEncoder.encode(body.password()));
-            newUser.setRole(body.role());
+            newUser.setRole(body.role() != null ? body.role() : IntegradorRole.USER);
             this.repository.save(newUser); 
 
             String token = this.tokenService.generateToken(newUser);
