@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Integrador } from '../../features/models/integrador.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = `${environment.apiPath}/auth`;
+  private apiMail = `${environment.apiPath}`;
   private tokenKey = 'auth_token';
 
   // BehaviorSubject: fonte de verdade reativa
@@ -116,4 +118,35 @@ export class AuthService {
     const now = Math.floor(Date.now() / 1000);
     return payload.exp > now;
   }
+
+   // Conexão com endpoint para reset/update de senha do usuário. Passa o token e a nova senha para verificações e update pelo back-end.
+  update(
+    token: string,
+    newPasswordWithEmail: { password: string; email: string }
+  ): Observable<void> {
+    // Define o cabeçalho do tipo json.
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    // conexão com a url da api
+    const url = `${this.apiMail}/password-reset/reset/${token}`;
+    return this.http.post<void>(url, newPasswordWithEmail, { headers });
+  }
+
+  sendEmail(email: Integrador): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+    });
+
+    return this.http.post(
+      this.apiMail + '/password-reset/forgot?email=' + email.email,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  // requisita para o back-end um e-mail. Caso haja e-mail cadastrado, retorna bad request.
+  checkEmail(email: string) {
+    return this.http.get<any>(this.apiMail + '/user/check-email/' + email);
+  }
+
 }

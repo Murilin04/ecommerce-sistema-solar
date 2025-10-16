@@ -94,4 +94,16 @@ public class IntegradorService {
         userRepository.save(entity);
     }
 
+    public Integrador getByEmail(String email) {
+        Integrador user = userRepository.findByEmail(email);
+        return user;
+    }
+
+    // verifica se um determinado email já está cadastrado no banco de dados
+    public boolean checkEmail(String email) {
+
+        // busca um usuário pelo email
+        return userRepository.findByEmail(email) != null;
+    }
+
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {
     this.form = this.fb.group({
       cnpj: ['', Validators.required],
@@ -37,8 +39,15 @@ export class LoginComponent {
           this.loginSuccess.emit();
         },
         error: () => {
-          alert('Login invalido');
+          this.toastr.error(
+          'CNPJ ou senha invalido!'
+        );
         }
       });
   }
+
+  navigate(path: string) {
+    this.router.navigate([path]);
+  }
+
 }

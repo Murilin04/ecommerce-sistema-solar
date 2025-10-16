@@ -53,3 +53,13 @@
   display: block;
 }
 
+p {
+  cursor: pointer;
+  font-size: 12px;
+  padding-left: 6rem;
+}
+
+p:hover {
+  text-decoration: underline;
+}
+

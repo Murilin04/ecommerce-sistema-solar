@@ -6,6 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './features/integrador/profile/profile.component';
 import { NoAuthGuard } from './auth/guards/no-auth-guard/no-auth.guard';
 import { EditProfileComponent } from './features/integrador/edit-profile/edit-profile.component';
+import { ResetPasswordFormComponent } from './shared/component/reset-password-form/reset-password-form.component';
+import { SendEmailFormComponent } from './shared/component/send-email-form/send-email-form.component';
 
 export const routes: Routes = [
 
@@ -14,6 +16,11 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'perfil', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'perfil-editar', component: EditProfileComponent, canActivate: [AuthGuard] },
+  { path: 'alterar-senha', component: SendEmailFormComponent, canActivate: [NoAuthGuard] },
+  {
+    path: 'reset/:email/:token',
+    component: ResetPasswordFormComponent,
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 
 ];

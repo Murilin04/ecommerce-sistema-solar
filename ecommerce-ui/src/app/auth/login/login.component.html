@@ -28,6 +28,7 @@
     <span class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
       A senha é obrigatória
     </span>
+    <p (click)="navigate('/alterar-senha')">Esqueceu a senha?</p>
 
     <div class="login__div">
       <button type="submit" class="login__button" [disabled]="form.invalid" title="Entrar">Entrar</button>
