@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Integrador } from '../../features/models/integrador.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,10 @@ export class AuthService {
   private authSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.authSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {
+  private roleChanged = new BehaviorSubject<void>(undefined);
+  roleChanged$ = this.roleChanged.asObservable();
+
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
     // inicializa o estado e faz cleanup se token inválido
     const valid = this.hasValidToken();
     if (!valid) {
@@ -51,6 +55,10 @@ export class AuthService {
       .pipe(
         tap(response => {
           if (response?.token) this.handleAuthSuccess(response.token);
+           this.toastr.show(
+          'Olá, seja bem vido!(a)',
+          'Success'
+        );
         })
       );
   }
@@ -62,11 +70,13 @@ export class AuthService {
   setToken(token: string) {
     localStorage.setItem(this.tokenKey, token);
     this.authSubject.next(true);
+    this.roleChanged.next();
   }
 
   clearToken() {
     localStorage.removeItem(this.tokenKey);
     this.authSubject.next(false);
+    this.roleChanged.next();
   }
 
   // handler chamado ao receber token da API
@@ -96,6 +106,32 @@ export class AuthService {
     }
   }
 
+  getUserRole(): string | null {
+    const payload = this.getTokenPayload();
+    return payload?.role ?? null;
+  }
+
+  getUserId(): number | null {
+    const payload = this.getTokenPayload();
+    return payload?.id ?? null;
+  }
+
+  hasRole(role: string): boolean {
+    const payload = this.getTokenPayload();
+    if (!payload?.role) return false;
+    // se role for string única:
+    return (
+      payload.role === role ||
+      payload.role === `ROLE_${role}` ||
+      payload.role === `ROLE_${role.toUpperCase()}`
+    );
+  }
+
+  isAdmin(): boolean {
+    const payload = this.getTokenPayload();
+    return payload?.role === 'ADMIN';
+  }
+
   // Usa a fonte reativa quando precisar do valor atual
   isAuthenticatedValue(): boolean {
     return this.authSubject.getValue();
@@ -107,7 +143,7 @@ export class AuthService {
   }
 
   // Verifica validade do token (exp)
-  private hasValidToken(): boolean {
+  public hasValidToken(): boolean {
     const payload = this.getTokenPayload();
     if (!payload) return false; // token ausente ou malformed
     // Se o token não traz "exp", decidir política:
@@ -146,7 +182,7 @@ export class AuthService {
 
   // requisita para o back-end um e-mail. Caso haja e-mail cadastrado, retorna bad request.
   checkEmail(email: string) {
-    return this.http.get<any>(this.apiMail + '/user/check-email/' + email);
+    return this.http.get<any>(this.apiMail + '/integrador/check-email/' + email);
   }
 
 }

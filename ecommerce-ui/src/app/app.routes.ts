@@ -2,12 +2,15 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from './auth/guards/auth-guard/auth.guard';
 import { RegisterComponent } from './auth/register/register.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './shared/component/home/home.component';
 import { ProfileComponent } from './features/integrador/profile/profile.component';
 import { NoAuthGuard } from './auth/guards/no-auth-guard/no-auth.guard';
 import { EditProfileComponent } from './features/integrador/edit-profile/edit-profile.component';
 import { ResetPasswordFormComponent } from './shared/component/reset-password-form/reset-password-form.component';
 import { SendEmailFormComponent } from './shared/component/send-email-form/send-email-form.component';
+import { RoleGuard } from './auth/guards/role-guard/role.guard';
+import { AdminDashboardComponent } from './auth/admin/admin-dashboard/admin-dashboard.component';
+import { AdminUsersListComponent } from './auth/admin/admin-users-list/admin-users-list.component';
 
 export const routes: Routes = [
 
@@ -20,6 +23,18 @@ export const routes: Routes = [
   {
     path: 'reset/:email/:token',
     component: ResetPasswordFormComponent,
+  },
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'admin/users',
+    component: AdminUsersListComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ADMIN'] }
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 
