@@ -13,6 +13,7 @@ import com.course.projetoweb.entities.Integrador;
 import com.course.projetoweb.repositories.IntegradorRepository;
 import com.course.projetoweb.services.exceptions.DatabaseException;
 import com.course.projetoweb.services.exceptions.ResourceNotFoundException;
+import com.course.projetoweb.utils.CnpjUtils;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -60,7 +61,7 @@ public class IntegradorService {
     }
 
     private void updateData(Integrador entity, Integrador obj) {
-        entity.setCnpj(obj.getCnpj());
+        entity.setCnpj(CnpjUtils.normalize(obj.getCnpj()));
         entity.setStateRegistration(obj.getStateRegistration());
         entity.setIsMei(obj.getIsMei());
         entity.setCompanyName(obj.getCompanyName());

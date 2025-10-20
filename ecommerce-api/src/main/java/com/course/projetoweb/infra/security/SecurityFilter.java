@@ -13,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.auth0.jwt.JWT;
 import com.course.projetoweb.entities.Integrador;
 import com.course.projetoweb.repositories.IntegradorRepository;
+import com.course.projetoweb.utils.CnpjUtils;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -33,7 +34,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if (token != null) {
             try {
-                var login = tokenService.validateToken(token);
+                var login = CnpjUtils.normalize(tokenService.validateToken(token));
                 if (login != null) {
                     Integrador user = userRepository.findByCnpj(login)
                         .orElseThrow(() -> new RuntimeException("User Not Found"));

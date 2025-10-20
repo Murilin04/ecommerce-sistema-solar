@@ -13,6 +13,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { ProfileService } from '../../service/profile/profile.service';
 import { jwtDecode } from 'jwt-decode';
 import { IntegradorDTO } from '../../models/integradorDTO.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-profile',
@@ -41,7 +42,8 @@ export class EditProfileComponent implements OnInit{
     private router: Router,
     private ibgeService: IbgeService,
     private viaCepService: ViacepService,
-    private profileService: ProfileService) {}
+    private profileService: ProfileService,
+    private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -68,7 +70,7 @@ export class EditProfileComponent implements OnInit{
       next: (data) => {
         this.estados = data;
       },
-      error: (err) => console.error('Erro ao carregar estados:', err),
+      error: (err) => this.toastr.error('Error ao carregar estados', err),
     });
 
     // validar CEP enquanto o usuario digitar
@@ -92,7 +94,7 @@ export class EditProfileComponent implements OnInit{
           this.integrador = data;
           this.form.patchValue(data); // popula os campos
         },
-        error: (err) => console.error('Erro ao carregar perfil', err),
+        error: (err) => this.toastr.error('Error ao carregar perfil', err),
       });
     }
 
@@ -119,7 +121,7 @@ export class EditProfileComponent implements OnInit{
               this.cidades = cidades;
               this.form.patchValue({ cidade: data.localidade });
             },
-            error: (err) => console.error('Erro as carregar cidades:', err)
+            error: (err) => this.toastr.error('Error ao carregar cidades', err)
           });
 
         } else {
@@ -138,7 +140,7 @@ export class EditProfileComponent implements OnInit{
         this.cidades = data;
         this.form.patchValue({ cidade: '' });
       },
-      error: (err) => console.error('Erro ao carregar cidades:', err)
+      error: (err) => this.toastr.error('Error ao carregar cidades', err)
     });
   }
 
@@ -152,9 +154,9 @@ export class EditProfileComponent implements OnInit{
             this.integrador = data;
             this.router.navigate(['/perfil']); // volta para a tela de perfil
           },
-          error: (err) => console.error('Erro ao atualizar perfil:', err)
+          error: (err) => this.toastr.error('Error ao atualizar perfil', err)
       });
-      console.log('Dados salvos:', this.form.value);
+      this.toastr.success('Dados atualizados');
     }
   }
 
@@ -162,10 +164,10 @@ export class EditProfileComponent implements OnInit{
     if (this.formPassword.valid && this.integrador) {
       this.profileService.updatePassword(this.integrador.id, this.formPassword.value).subscribe({
         next: () => {
-          alert('Senha alterada com sucesso');
+           this.toastr.success('Senha alterada com sucesso!');
           this.formPassword.reset();
         },
-        error: (err) => alert('Erro ao atualizar senha: ' + err.message),
+        error: (err) => this.toastr.error('Error ao atualizar senha', err.message),
       });
     }
   }

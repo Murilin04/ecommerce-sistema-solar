@@ -16,6 +16,7 @@ import com.course.projetoweb.entities.Integrador;
 import com.course.projetoweb.entities.enums.IntegradorRole;
 import com.course.projetoweb.infra.security.TokenService;
 import com.course.projetoweb.repositories.IntegradorRepository;
+import com.course.projetoweb.utils.CnpjUtils;
 
 import jakarta.validation.Valid;
 
@@ -35,7 +36,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid LoginRequestDTO body) {
-        Integrador user = this.repository.findByCnpj(body.cnpj()).orElseThrow(() -> new RuntimeException("User not found"));
+        Integrador user = this.repository.findByCnpj(CnpjUtils.normalize(body.cnpj())).orElseThrow(() -> new RuntimeException("User not found"));
         if(passwordEncoder.matches(body.password(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
             return ResponseEntity.ok(new ResponseDTO(user.getCnpj(), token));
@@ -51,7 +52,7 @@ public class AuthController {
 
         if(user.isEmpty()) {
             Integrador newUser = new Integrador();
-            newUser.setCnpj(body.cnpj());
+            newUser.setCnpj(CnpjUtils.normalize(body.cnpj()));
             newUser.setStateRegistration(body.stateRegistration());
             newUser.setIsMei(body.isMei());
             newUser.setCompanyName(body.companyName());
