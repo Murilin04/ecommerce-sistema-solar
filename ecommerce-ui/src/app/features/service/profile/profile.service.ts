@@ -17,11 +17,11 @@ export class ProfileService {
     return this.http.get<IntegradorDTO>(`${this.apiUrl}/${id}`);
   }
 
-  updateProfile(id: number, data: Partial<IntegradorDTO>) {
-    return this.http.put<IntegradorDTO>(`${this.apiUrl}/${id}`, data)
+  updateProfile(id: number, data: Partial<IntegradorDTO>): Observable<IntegradorDTO> {
+    return this.http.put<IntegradorDTO>(`${this.apiUrl}/${id}`, data);
   }
 
-  updatePassword(id: number, data: { currentPassword: string; newPassword: string }) {
+  updatePassword(id: number, data: { currentPassword: string; newPassword: string }): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}/senha`, data);
   }
 

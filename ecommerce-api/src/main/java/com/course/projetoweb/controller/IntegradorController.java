@@ -45,9 +45,10 @@ public class IntegradorController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Integrador> update(@PathVariable Long id, @RequestBody Integrador obj) {
-        obj = userService.update(id, obj);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<IntegradorDTO> update(@PathVariable Long id, @RequestBody IntegradorDTO obj) {
+        Integrador updated = userService.update(id, obj);
+        IntegradorDTO dto = new IntegradorDTO(updated);
+        return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/{id}/senha")

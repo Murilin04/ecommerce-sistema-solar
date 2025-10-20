@@ -13,6 +13,7 @@ import com.course.projetoweb.dto.LoginRequestDTO;
 import com.course.projetoweb.dto.RegisterRequestDTO;
 import com.course.projetoweb.dto.ResponseDTO;
 import com.course.projetoweb.entities.Integrador;
+import com.course.projetoweb.entities.IntegradorProfile;
 import com.course.projetoweb.entities.enums.IntegradorRole;
 import com.course.projetoweb.infra.security.TokenService;
 import com.course.projetoweb.repositories.IntegradorRepository;
@@ -48,33 +49,39 @@ public class AuthController {
     public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO body){
         
         // if (this.repository.findByCnpj(body.cnpj()) != null) return ResponseEntity.badRequest().build();
-        Optional<Integrador> user = this.repository.findByCnpj(body.cnpj());
-
-        if(user.isEmpty()) {
-            Integrador newUser = new Integrador();
-            newUser.setCnpj(CnpjUtils.normalize(body.cnpj()));
-            newUser.setStateRegistration(body.stateRegistration());
-            newUser.setIsMei(body.isMei());
-            newUser.setCompanyName(body.companyName());
-            newUser.setTradeName(body.tradeName());
-            newUser.setPostalCode(body.postalCode());
-            newUser.setState(body.state());
-            newUser.setCity(body.city());
-            newUser.setAddress(body.address());
-            newUser.setAddressNumber(body.addressNumber());
-            newUser.setAddressComplement(body.addressComplement());
-            newUser.setNeighborhood(body.neighborhood());
-            newUser.setEmail(body.email());
-            newUser.setPhone(body.phone());
-            newUser.setWhatsapp(body.whatsapp());
-            newUser.setPassword(passwordEncoder.encode(body.password()));
-            newUser.setRole(body.role() != null ? body.role() : IntegradorRole.USER);
-            this.repository.save(newUser); 
-
-            String token = this.tokenService.generateToken(newUser);
-            return ResponseEntity.ok(new ResponseDTO(newUser.getCnpj(), token));
+        Optional<Integrador> user = this.repository.findByCnpj(CnpjUtils.normalize(body.cnpj()));
+        if (user.isPresent()) {
+            return ResponseEntity.badRequest().body("CNPJ já cadastrado");
         }
-        return ResponseEntity.badRequest().build();
+
+        // Cria o perfil
+        IntegradorProfile profile = new IntegradorProfile();
+        profile.setStateRegistration(body.stateRegistration());
+        profile.setIsMei(body.isMei());
+        profile.setCompanyName(body.companyName());
+        profile.setTradeName(body.tradeName());
+        profile.setPostalCode(body.postalCode());
+        profile.setState(body.state());
+        profile.setCity(body.city());
+        profile.setAddress(body.address());
+        profile.setAddressNumber(body.addressNumber());
+        profile.setAddressComplement(body.addressComplement());
+        profile.setNeighborhood(body.neighborhood());
+        profile.setPhone(body.phone());
+        profile.setWhatsapp(body.whatsapp());
+
+        // Cria o usuário principal
+        Integrador newUser = new Integrador();
+        newUser.setCnpj(CnpjUtils.normalize(body.cnpj()));
+        newUser.setEmail(body.email());
+        newUser.setPassword(passwordEncoder.encode(body.password()));
+        newUser.setRole(body.role() != null ? body.role() : IntegradorRole.USER);
+        newUser.setProfile(profile);
+        this.repository.save(newUser); 
+
+        String token = this.tokenService.generateToken(newUser);
+        return ResponseEntity.ok(new ResponseDTO(newUser.getCnpj(), token));
+        
     }
 
 }

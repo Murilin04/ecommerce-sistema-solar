@@ -29,7 +29,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss'
 })
-export class EditProfileComponent implements OnInit{
+export class EditProfileComponent implements OnInit {
   integrador!: IntegradorDTO;
   form!: FormGroup;
   formPassword!: FormGroup;
@@ -43,7 +43,8 @@ export class EditProfileComponent implements OnInit{
     private ibgeService: IbgeService,
     private viaCepService: ViacepService,
     private profileService: ProfileService,
-    private toastr: ToastrService) {}
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -51,7 +52,6 @@ export class EditProfileComponent implements OnInit{
       stateRegistration: [''],
       companyName: [''],
       tradeName: [''],
-
       postalCode: [''],
       state: [''],
       city: [''],
@@ -59,31 +59,17 @@ export class EditProfileComponent implements OnInit{
       addressNumber: [''],
       addressComplement: [''],
       neighborhood: [''],
-
       email: ['', [Validators.email]],
       phone: [''],
       whatsapp: ['']
     });
 
-    // carregar estados do IBGE
-    this.ibgeService.getEstados().subscribe({
-      next: (data) => {
-        this.estados = data;
-      },
-      error: (err) => this.toastr.error('Error ao carregar estados', err),
+    this.formPassword = this.fb.group({
+      currentPassword: ['', Validators.required],
+      newPassword: ['', [Validators.required, Validators.minLength(8)]]
     });
 
-    // validar CEP enquanto o usuario digitar
-    this.form
-      .get('postalCode')
-      ?.valueChanges.pipe(debounceTime(500), distinctUntilChanged())
-      .subscribe((cep) => {
-        if (cep && cep.length === 8) {
-          this.buscarCep(cep);
-        }
-      });
-
-    // Buscar perfil do usuário logado
+    // Buscar perfil
     const token = localStorage.getItem('auth_token');
     if (token) {
       const payload: any = jwtDecode(token);
@@ -92,19 +78,28 @@ export class EditProfileComponent implements OnInit{
       this.profileService.getProfile(id).subscribe({
         next: (data) => {
           this.integrador = data;
-          this.form.patchValue(data); // popula os campos
+          this.form.patchValue(data); // flat, sem problemas
         },
-        error: (err) => this.toastr.error('Error ao carregar perfil', err),
+        error: (err) => console.error('Erro ao carregar perfil:', err)
       });
     }
 
-    this.formPassword = this.fb.group({
-      currentPassword: ['', Validators.required],
-      newPassword: ['', [Validators.required, Validators.minLength(8)]]
+    // carregar estados do IBGE
+    this.ibgeService.getEstados().subscribe({
+      next: (data) => this.estados = data,
+      error: (err) => console.error('Erro ao carregar estados:', err)
     });
+
+    // validar CEP enquanto o usuario digitar
+    this.form.get('postalCode')?.valueChanges
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((cep) => {
+        if (cep && cep.length === 8) this.buscarCep(cep);
+      });
+
   }
 
-  buscarCep(cep: string) {
+   buscarCep(cep: string) {
     this.viaCepService.buscarCep(cep).subscribe({
       next: (data) => {
         if (!data.erro) {
@@ -115,22 +110,18 @@ export class EditProfileComponent implements OnInit{
             city: data.localidade
           });
 
-          // busca cidades da UF para adicionar ao select
           this.ibgeService.getCidades(data.uf).subscribe({
             next: (cidades) => {
               this.cidades = cidades;
-              this.form.patchValue({ cidade: data.localidade });
+              this.form.patchValue({ city: data.localidade });
             },
-            error: (err) => this.toastr.error('Error ao carregar cidades', err)
+            error: (err) => console.error('Erro ao carregar cidades:', err)
           });
-
         } else {
           this.form.get('postalCode')?.setErrors({ invalidCep: true });
         }
       },
-      error: () => {
-        this.form.get('postalCode')?.setErrors({ invalidCep: true });
-      }
+      error: () => this.form.get('postalCode')?.setErrors({ invalidCep: true })
     });
   }
 
@@ -138,43 +129,41 @@ export class EditProfileComponent implements OnInit{
     this.ibgeService.getCidades(estado).subscribe({
       next: (data) => {
         this.cidades = data;
-        this.form.patchValue({ cidade: '' });
+        this.form.patchValue({ city: '' });
       },
-      error: (err) => this.toastr.error('Error ao carregar cidades', err)
+      error: (err) => console.error('Erro ao carregar cidades:', err)
     });
   }
 
-
   salvar() {
     if (this.form.valid && this.integrador) {
-      const dadosAtualizados: Partial<IntegradorDTO> = this.form.value;
-
-      this.profileService.updateProfile(this.integrador.id, dadosAtualizados).subscribe({
+      this.profileService.updateProfile(this.integrador.id, this.form.value)
+        .subscribe({
           next: (data) => {
             this.integrador = data;
-            this.router.navigate(['/perfil']); // volta para a tela de perfil
+            this.toastr.success('Dados atualizados com sucesso!');
+            this.router.navigate(['/perfil']);
           },
-          error: (err) => this.toastr.error('Error ao atualizar perfil', err)
-      });
-      this.toastr.success('Dados atualizados');
+          error: (err) => console.error('Erro ao atualizar perfil:', err)
+        });
     }
   }
 
   salvarSenha() {
     if (this.formPassword.valid && this.integrador) {
-      this.profileService.updatePassword(this.integrador.id, this.formPassword.value).subscribe({
-        next: () => {
-           this.toastr.success('Senha alterada com sucesso!');
-          this.formPassword.reset();
-        },
-        error: (err) => this.toastr.error('Error ao atualizar senha', err.message),
-      });
+      this.profileService.updatePassword(this.integrador.id, this.formPassword.value)
+        .subscribe({
+          next: () => {
+            this.toastr.success('Senha alterada com sucesso!');
+            this.formPassword.reset();
+          },
+          error: (err) => console.error('Erro ao atualizar senha:', err.message)
+        });
     }
   }
 
   cancelar() {
     this.form.reset();
-    this.router.navigate(['perfil'])
+    this.router.navigate(['/perfil']);
   }
-
 }

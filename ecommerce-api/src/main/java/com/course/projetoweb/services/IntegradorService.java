@@ -9,13 +9,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.course.projetoweb.dto.IntegradorDTO;
 import com.course.projetoweb.entities.Integrador;
+import com.course.projetoweb.entities.IntegradorProfile;
 import com.course.projetoweb.repositories.IntegradorRepository;
 import com.course.projetoweb.services.exceptions.DatabaseException;
 import com.course.projetoweb.services.exceptions.ResourceNotFoundException;
-import com.course.projetoweb.utils.CnpjUtils;
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class IntegradorService {
@@ -49,37 +48,39 @@ public class IntegradorService {
 
     }
 
-    public Integrador update(Long id, Integrador obj) {
-        try {
-            Integrador entity = userRepository.getReferenceById(id);
-            updateData(entity, obj);
-            return userRepository.save(entity);
-        } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException(id);
-        }
-      
-    }
+    public Integrador update(Long id, IntegradorDTO dto) {
+        Integrador entity = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
 
-    private void updateData(Integrador entity, Integrador obj) {
-        entity.setCnpj(CnpjUtils.normalize(obj.getCnpj()));
-        entity.setStateRegistration(obj.getStateRegistration());
-        entity.setIsMei(obj.getIsMei());
-        entity.setCompanyName(obj.getCompanyName());
-        entity.setTradeName(obj.getTradeName());
-        entity.setPostalCode(obj.getPostalCode());
-        entity.setState(obj.getState());
-        entity.setCity(obj.getCity());
-        entity.setAddress(obj.getAddress());
-        entity.setAddressNumber(obj.getAddressNumber());
-        entity.setAddressComplement(obj.getAddressComplement());
-        entity.setNeighborhood(obj.getNeighborhood());
-        entity.setEmail(obj.getEmail());
-        entity.setPhone(obj.getPhone());
-        entity.setWhatsapp(obj.getWhatsapp());
-        if (obj.getPassword() != null && !obj.getPassword().isBlank()) {
-            entity.setPassword(passwordEncoder.encode(obj.getPassword()));
+        // Atualiza campos flat
+        entity.setCnpj(dto.getCnpj());
+        entity.setEmail(dto.getEmail());
+
+        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
-       
+
+        // Atualiza o profile
+        if (entity.getProfile() == null) entity.setProfile(new IntegradorProfile());
+        IntegradorProfile profile = entity.getProfile();
+
+        profile.setStateRegistration(dto.getStateRegistration());
+        profile.setIsMei(dto.getIsMei());
+        profile.setCompanyName(dto.getCompanyName());
+        profile.setTradeName(dto.getTradeName());
+        profile.setPostalCode(dto.getPostalCode());
+        profile.setState(dto.getState());
+        profile.setCity(dto.getCity());
+        profile.setAddress(dto.getAddress());
+        profile.setAddressNumber(dto.getAddressNumber());
+        profile.setAddressComplement(dto.getAddressComplement());
+        profile.setNeighborhood(dto.getNeighborhood());
+        profile.setPhone(dto.getPhone());
+        profile.setWhatsapp(dto.getWhatsapp());
+
+        entity.setProfile(profile);
+
+        return userRepository.save(entity);
     }
 
     public void updatePassword(Long id, String currentPassword, String newPassword) {
