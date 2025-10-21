@@ -34,6 +34,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/password-reset/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/integrador/check-email").permitAll()
                         .requestMatchers(HttpMethod.GET, "/integrador").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/integrador").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

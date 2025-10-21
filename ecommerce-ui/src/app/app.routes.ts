@@ -11,6 +11,7 @@ import { SendEmailFormComponent } from './shared/component/send-email-form/send-
 import { RoleGuard } from './auth/guards/role-guard/role.guard';
 import { AdminDashboardComponent } from './auth/admin/admin-dashboard/admin-dashboard.component';
 import { AdminUsersListComponent } from './auth/admin/admin-users-list/admin-users-list.component';
+import { AdminAddNewUsersComponent } from './auth/admin/admin-add-new-users/admin-add-new-users.component';
 
 export const routes: Routes = [
 
@@ -31,8 +32,14 @@ export const routes: Routes = [
     data: { roles: ['ADMIN'] }
   },
   {
-    path: 'admin/users',
+    path: 'admin/editar/:id',
     component: AdminUsersListComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'admin/novo',
+    component: AdminAddNewUsersComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ADMIN'] }
   },

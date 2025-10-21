@@ -1,6 +1,4 @@
-export interface Integrador {
-  id: number;
-  cnpj: string;
+export interface IntegradorProfile {
   stateRegistration: string;
   isMei: boolean;
   companyName: string;
@@ -12,9 +10,15 @@ export interface Integrador {
   addressNumber: string;
   addressComplement: string;
   neighborhood: string;
-  email: string;
   phone: string;
   whatsapp: string;
-  password: string;
 }
 
+export interface Integrador {
+  id: number;
+  cnpj: string;
+  email: string;
+  password: string;
+  role: string;
+  profile: IntegradorProfile;
+}

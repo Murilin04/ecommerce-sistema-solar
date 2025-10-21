@@ -12,31 +12,22 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-
 import { AuthService } from '../../../auth/service/auth.service';
 import { Integrador } from '../../../features/models/integrador.model';
 import { LoadingComponent } from '../loading/loading.component';
 
-
-function passwordMatchValidator(
-  control: FormGroup
-): { [key: string]: any } | null {
-  // 1. Obtém os campos de senha e confirmação de senha do FormGroup
+function passwordMatchValidator(control: FormGroup): { [key: string]: any } | null {
   const password = control.get('password');
   const confirmPassword = control.get('confirmPassword');
-
-  // 2. Verifica se ambos os campos têm valores e se eles não são iguais
   const passwordsDoNotMatch =
     password && confirmPassword && password.value !== confirmPassword.value;
 
-  // 3. Se as senhas não coincidirem, define o erro 'passwordsDoNotMatch' para ambos os campos e retorne o objeto de erro
   if (passwordsDoNotMatch) {
     password.setErrors({ passwordsDoNotMatch: true });
     confirmPassword.setErrors({ passwordsDoNotMatch: true });
     return { passwordsDoNotMatch: true };
   }
 
-  // 4. Se as senhas coincidirem ou ambos os campos estiverem vazios, remove todos os erros e retorna null
   password?.setErrors(null);
   confirmPassword?.setErrors(null);
   return null;
@@ -44,6 +35,7 @@ function passwordMatchValidator(
 
 @Component({
   selector: 'app-reset-password-form',
+  standalone: true,
   imports: [
     LoadingComponent,
     CommonModule,
@@ -56,7 +48,8 @@ function passwordMatchValidator(
     MatTabsModule,
     MatProgressBarModule,
     ToastrModule,
-    ReactiveFormsModule ],
+    ReactiveFormsModule
+  ],
   templateUrl: './reset-password-form.component.html',
   styleUrl: './reset-password-form.component.scss'
 })
@@ -83,55 +76,54 @@ export class ResetPasswordFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      if (params != null) {
+      if (params) {
         this.email = params.get('email');
         this.token = params.get('token');
       }
     });
   }
 
-  resetPasswordForm() {
-    if (
-      this.form.invalid ||
-      (this.form.value.password === '' &&
-        this.form.value.confirmPassword === '')
-    )
-      return;
+  resetPasswordForm(): void {
+    if (this.form.invalid) return;
 
-    if (this.form.valid && this.token != null && this.email != null) {
+    if (this.form.valid && this.token && this.email) {
       const userData: Integrador = {
-        email: this.email,
-        password: this.form.value.password,
         id: 0,
         cnpj: '',
-        stateRegistration: '',
-        isMei: false,
-        companyName: '',
-        tradeName: '',
-        postalCode: '',
-        state: '',
-        city: '',
-        address: '',
-        addressNumber: '',
-        addressComplement: '',
-        neighborhood: '',
-        phone: '',
-        whatsapp: ''
+        email: this.email,
+        password: this.form.value.password,
+        role: 'ROLE_USER',
+        profile: {
+          stateRegistration: '',
+          isMei: false,
+          companyName: '',
+          tradeName: '',
+          postalCode: '',
+          state: '',
+          city: '',
+          address: '',
+          addressNumber: '',
+          addressComplement: '',
+          neighborhood: '',
+          phone: '',
+          whatsapp: ''
+        }
       };
 
       this.userService.update(this.token, userData).subscribe({
         complete: () => {
           this.toastr.success('Sua senha foi alterada!', 'Sucesso');
-          this.form.reset;
+          this.form.reset();
           this.router.navigate(['']);
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 400) {
             this.toastr.error('Token inválido ou expirado!', 'Erro');
+          } else {
+            this.toastr.error('Erro ao alterar senha', 'Erro');
           }
         },
       });
     }
   }
 }
-
