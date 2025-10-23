@@ -1,16 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+
 import { Integrador } from '../../../features/models/integrador.model';
-import { ProfileService } from '../../../features/service/profile/profile.service';
+import { AdminService } from '../../service/admin.service';
+import { AuthService } from '../../service/auth.service';
+import { MatCardModule } from "@angular/material/card";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -22,7 +25,9 @@ import { ProfileService } from '../../../features/service/profile/profile.servic
     MatIconModule,
     MatButtonModule,
     MatInputModule,
-    MatFormFieldModule],
+    MatFormFieldModule,
+    MatCardModule
+],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
 })
@@ -31,22 +36,25 @@ export class AdminDashboardComponent implements OnInit {
   displayedColumns: string[] = ['companyName', 'cnpj', 'email', 'city', 'phone', 'actions'];
   dataSource =  new MatTableDataSource<Integrador>([]);
   isLoading = true;
+  isAdmin = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private profileService: ProfileService,
+    private adminService: AdminService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
     this.loadUsers();
+    this.isAdmin = this.auth.isAdmin();
   }
 
   loadUsers(): void {
-    this.profileService.getAllProfiles().subscribe({
+    this.adminService.getAll().subscribe({
       next: (data) => {
         this.dataSource.data = data;
         this.isLoading = false;
@@ -75,7 +83,7 @@ export class AdminDashboardComponent implements OnInit {
 
   deleteUser(user: Integrador): void {
     if (confirm(`Tem certeza que deseja excluir o cliente ${user.profile.companyName}?`)) {
-      this.profileService.deleteProfile(user.id).subscribe({
+      this.adminService.delete(user.id).subscribe({
         next: () => {
           this.toastr.success('Usuário excluído com sucesso');
           this.loadUsers();

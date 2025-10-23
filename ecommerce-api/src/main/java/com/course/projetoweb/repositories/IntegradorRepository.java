@@ -10,4 +10,5 @@ import com.course.projetoweb.entities.Integrador;
 public interface IntegradorRepository extends JpaRepository<Integrador, Long> {
     Optional<Integrador> findByCnpj(String cnpj);
     Integrador findByEmail(String email);
+    boolean existsByEmail(String email);
 }

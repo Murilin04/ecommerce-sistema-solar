@@ -1,0 +1,64 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  border: 2px solid #F0F0F0;
+  margin-top: 50px;
+  margin-left: 15rem;
+}
+
+.container h2 {
+  color: #4A4F55;
+  font-size: 25pt;
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 3px;
+}
+
+.mat-card {
+  background: white;
+  padding: 30px;
+  border-radius: 0%;
+  border: 2px solid #F0F0F0;
+}
+
+mat-label {
+  color: #4A4F55;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-error {
+  color: #DF4554;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+button {
+  background: #4A4F55;
+  color: #FFC845 ;
+  width: 15%;
+  height: 35px;
+  border: 1px solid;
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+

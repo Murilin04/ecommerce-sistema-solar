@@ -33,8 +33,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/password-reset/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/integrador/check-email").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/integrador").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/integrador").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/integrador/exists-email").permitAll()
+
+                        
+                        .requestMatchers("/admin/integrador").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

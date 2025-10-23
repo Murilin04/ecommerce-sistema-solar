@@ -14,10 +14,6 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  getAllProfiles(): Observable<Integrador[]> {
-    return this.http.get<Integrador[]>(`${this.apiUrl}`);
-  }
-
   getProfile(id: number): Observable<IntegradorDTO> {
     return this.http.get<IntegradorDTO>(`${this.apiUrl}/${id}`);
   }
@@ -28,10 +24,6 @@ export class ProfileService {
 
   updatePassword(id: number, data: { currentPassword: string; newPassword: string }): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}/senha`, data);
-  }
-
-  deleteProfile(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
 }

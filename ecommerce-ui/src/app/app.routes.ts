@@ -10,8 +10,8 @@ import { ResetPasswordFormComponent } from './shared/component/reset-password-fo
 import { SendEmailFormComponent } from './shared/component/send-email-form/send-email-form.component';
 import { RoleGuard } from './auth/guards/role-guard/role.guard';
 import { AdminDashboardComponent } from './auth/admin/admin-dashboard/admin-dashboard.component';
-import { AdminUsersListComponent } from './auth/admin/admin-users-list/admin-users-list.component';
 import { AdminAddNewUsersComponent } from './auth/admin/admin-add-new-users/admin-add-new-users.component';
+import { AdminEditUsersComponent } from './auth/admin/admin-edit-users/admin-edit-users.component';
 
 export const routes: Routes = [
 
@@ -33,7 +33,7 @@ export const routes: Routes = [
   },
   {
     path: 'admin/editar/:id',
-    component: AdminUsersListComponent,
+    component: AdminEditUsersComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ADMIN'] }
   },

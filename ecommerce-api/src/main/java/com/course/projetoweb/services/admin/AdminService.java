@@ -1,4 +1,4 @@
-package com.course.projetoweb.services;
+package com.course.projetoweb.services.admin;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,43 +9,68 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.course.projetoweb.dto.CreateIntegradorDTO;
 import com.course.projetoweb.dto.IntegradorDTO;
+import com.course.projetoweb.dto.UpdateIntegradorDTO;
 import com.course.projetoweb.entities.Integrador;
 import com.course.projetoweb.entities.IntegradorProfile;
-import com.course.projetoweb.repositories.IntegradorRepository;
+import com.course.projetoweb.entities.enums.IntegradorRole;
+import com.course.projetoweb.repositories.admin.AdminRepository;
 import com.course.projetoweb.services.exceptions.DatabaseException;
 import com.course.projetoweb.services.exceptions.ResourceNotFoundException;
+import com.course.projetoweb.utils.CnpjUtils;
 
 @Service
-public class IntegradorService {
-
-    private final PasswordEncoder passwordEncoder;
+public class AdminService {
+    
+    @Autowired
+    private AdminRepository adminRepository;
 
     @Autowired
-    private IntegradorRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    IntegradorService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    public List<Integrador> findAll() {
+        return adminRepository.findAll();
     }
 
     public Integrador findById(Long id) {
-        Optional<Integrador> obj = userRepository.findById(id);
+        Optional<Integrador> obj = adminRepository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public void delete(Long id) {
-        try {
-            userRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException(id);
-        } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException(e.getMessage());
+    public Integrador create(CreateIntegradorDTO dto) {
+        Optional<Integrador> existing = adminRepository.findByCnpj(CnpjUtils.normalize(dto.cnpj()));
+        if (existing.isPresent()) {
+            throw new DatabaseException("CNPJ já cadastrado");
         }
 
+        IntegradorProfile profile = new IntegradorProfile();
+        profile.setStateRegistration(dto.stateRegistration());
+        profile.setIsMei(dto.isMei());
+        profile.setCompanyName(dto.companyName());
+        profile.setTradeName(dto.tradeName());
+        profile.setPostalCode(dto.postalCode());
+        profile.setState(dto.state());
+        profile.setCity(dto.city());
+        profile.setAddress(dto.address());
+        profile.setAddressNumber(dto.addressNumber());
+        profile.setAddressComplement(dto.addressComplement());
+        profile.setNeighborhood(dto.neighborhood());
+        profile.setPhone(dto.phone());
+        profile.setWhatsapp(dto.whatsapp());
+
+        Integrador integrador = new Integrador();
+        integrador.setCnpj(CnpjUtils.normalize(dto.cnpj()));
+        integrador.setEmail(dto.email());
+        integrador.setPassword(passwordEncoder.encode(dto.password()));
+        integrador.setRole(dto.role() != null ? dto.role() : IntegradorRole.USER);
+        integrador.setProfile(profile);
+
+        return adminRepository.save(integrador);
     }
 
     public Integrador update(Long id, IntegradorDTO dto) {
-        Integrador entity = userRepository.findById(id)
+        Integrador entity = adminRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
 
         // Atualiza campos flat
@@ -76,11 +101,11 @@ public class IntegradorService {
 
         entity.setProfile(profile);
 
-        return userRepository.save(entity);
+        return adminRepository.save(entity);
     }
 
     public void updatePassword(Long id, String currentPassword, String newPassword) {
-        Integrador entity = userRepository.findById(id)
+        Integrador entity = adminRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));
         // Verifica se a senha atual bate com a do banco
         if (!passwordEncoder.matches(currentPassword, entity.getPassword())) {
@@ -89,19 +114,17 @@ public class IntegradorService {
 
         // Atualiza a senha
         entity.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(entity);
+        adminRepository.save(entity);
     }
 
-    public Integrador getByEmail(String email) {
-        Integrador user = userRepository.findByEmail(email);
-        return user;
+    public void delete(Long id) {
+        try {
+            adminRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+
     }
-
-    // verifica se um determinado email já está cadastrado no banco de dados
-    public boolean checkEmail(String email) {
-
-        // busca um usuário pelo email
-        return userRepository.findByEmail(email) != null;
-    }
-
 }

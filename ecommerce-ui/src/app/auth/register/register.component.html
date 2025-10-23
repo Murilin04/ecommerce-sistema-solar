@@ -111,6 +111,9 @@
         <mat-error *ngIf="cadastroForm.get('email')?.hasError('email')">
           Email inválido
         </mat-error>
+        <mat-error *ngIf="cadastroForm.get('email')?.hasError('emailTaken')">
+          Este email já está cadastrado.
+        </mat-error>
       </mat-form-field>
 
       <div class="row">

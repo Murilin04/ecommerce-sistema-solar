@@ -38,6 +38,7 @@ public class Integrador implements Serializable, UserDetails {
 
     @NotBlank
     @Email
+    @Column(unique = true)
     private String email;
 
     @NotBlank

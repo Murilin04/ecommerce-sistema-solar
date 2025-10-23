@@ -1,0 +1,131 @@
+<div class="profile-edit-container">
+  <h2>Editar Perfil</h2>
+  <p class="subtitle">Atualize suas informações e configurações</p>
+
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <!-- Card Informações Pessoais -->
+    <mat-card class="edit-card">
+      <h3>Informações Pessoais</h3>
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Nome da Loja</mat-label>
+          <input matInput formControlName="companyName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nome Fantasia</mat-label>
+          <input matInput formControlName="tradeName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>CNPJ</mat-label>
+          <input matInput formControlName="cnpj" mask="00.000.000/0000-00" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+          <mat-error *ngIf="form.get('email')?.hasError('email')">
+            Email inválido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Telefone Comercial</mat-label>
+          <input matInput formControlName="phone" mask="(00) 0 0000-0000"/>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Whatsapp</mat-label>
+          <input matInput formControlName="whatsapp" mask="(00) 0 0000-0000"/>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Escrição Estadual</mat-label>
+          <input matInput formControlName="stateRegistration" />
+        </mat-form-field>
+      </div>
+    </mat-card>
+
+    <!-- Card Endereço -->
+    <mat-card class="edit-card">
+      <h3>Endereço</h3>
+      <div class="form-grid">
+         <mat-form-field appearance="outline">
+          <mat-label>CEP</mat-label>
+          <input matInput formControlName="postalCode" mask="00000-000" style="color: #4A4F55;">
+          <mat-error *ngIf="form.get('postalCode')?.hasError('invalidCep')">
+            CEP inválido ou não encontrado
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>UF</mat-label>
+          <mat-select formControlName="state" (selectionChange)="onEstadoChange($event.value)">
+            <mat-option *ngFor="let estado of estados" [value]="estado.sigla">
+              {{estado.sigla}} - {{estado.nome}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cidade</mat-label>
+          <mat-select formControlName="city">
+            <mat-option *ngFor="let cidade of cidades" [value]="cidade.nome">
+              {{cidade.nome}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Bairro</mat-label>
+          <input matInput formControlName="neighborhood" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="wide">
+          <mat-label>Endereço</mat-label>
+          <input matInput formControlName="address" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Número</mat-label>
+          <input matInput formControlName="addressNumber" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Complemento</mat-label>
+          <input matInput formControlName="addressComplement" />
+        </mat-form-field>
+      </div>
+    </mat-card>
+
+    <!-- Card Configurações -->
+    <mat-card class="edit-card">
+      <h3>Configurações de Conta</h3>
+      <h4>ALTERAR SENHA</h4>
+      <form [formGroup]="formPassword" (ngSubmit)="salvarSenha()">
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Senha Atual</mat-label>
+            <input matInput type="password" id="currentPassword" formControlName="currentPassword" required />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nova Senha</mat-label>
+            <input matInput type="password" id="newPassword" formControlName="newPassword" required />
+          </mat-form-field>
+        </div>
+
+        <button mat-raised-button type="submit" [disabled]="formPassword.invalid">
+          Alterar senha
+        </button>
+      </form>
+    </mat-card>
+
+    <!-- Botões -->
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit">Salvar</button>
+      <button mat-stroked-button color="warn" type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>

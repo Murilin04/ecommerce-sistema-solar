@@ -1,7 +1,5 @@
 package com.course.projetoweb.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.course.projetoweb.dto.IntegradorDTO;
 import com.course.projetoweb.dto.UpdatePasswordDTO;
 import com.course.projetoweb.entities.Integrador;
+import com.course.projetoweb.repositories.IntegradorRepository;
 import com.course.projetoweb.services.IntegradorService;
 
 @RestController
@@ -25,11 +25,8 @@ public class IntegradorController {
     @Autowired
     private IntegradorService userService;
 
-    @GetMapping
-    public ResponseEntity<List<Integrador>> findAll() {
-        List<Integrador> list = userService.findAll();
-        return ResponseEntity.ok().body(list);
-    }
+    @Autowired
+    private IntegradorRepository integradorRepository;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<IntegradorDTO> findById(@PathVariable Long id) {
@@ -55,6 +52,12 @@ public class IntegradorController {
     public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UpdatePasswordDTO dto){
         userService.updatePassword(id, dto.getCurrentPassword(), dto.getNewPassword());
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/exists-email")
+    public ResponseEntity<Boolean> checkIfEmailExists(@RequestParam String email) {
+        boolean exists = integradorRepository.existsByEmail(email);
+        return ResponseEntity.ok(exists);
     }
 
     @GetMapping("/check-email/{email}")

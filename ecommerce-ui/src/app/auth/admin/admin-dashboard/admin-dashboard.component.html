@@ -1,4 +1,9 @@
 <div class="manage-users-container">
+  <mat-card *ngIf="isAdmin" color="primary" class="admin-banner">
+    <mat-card-content>
+      👑 <strong>Você é ADMIN</strong> — possui acesso total ao gerenciamento de usuários.
+    </mat-card-content>
+  </mat-card>
   <div class="header">
     <h2>Gerenciamento de Usuários</h2>
     <button mat-raised-button color="primary" (click)="navigate('/admin/novo')">

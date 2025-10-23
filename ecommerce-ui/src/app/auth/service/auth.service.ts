@@ -8,7 +8,7 @@ import { Integrador } from '../../features/models/integrador.model';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = `${environment.apiPath}/auth`;
@@ -22,7 +22,11 @@ export class AuthService {
   private roleChanged = new BehaviorSubject<void>(undefined);
   roleChanged$ = this.roleChanged.asObservable();
 
-  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
     // inicializa o estado e faz cleanup se token inválido
     const valid = this.hasValidToken();
     if (!valid) {
@@ -42,23 +46,22 @@ export class AuthService {
   // Autenticação (API)
   // ----------------------
   register(data: { cnpj: string; password: string }) {
-    return this.http.post<{ token?: string }>(`${this.apiUrl}/register`, data)
+    return this.http
+      .post<{ token?: string }>(`${this.apiUrl}/register`, data)
       .pipe(
-        tap(response => {
+        tap((response) => {
           if (response?.token) this.handleAuthSuccess(response.token);
         })
       );
   }
 
   login(data: { cnpj: string; password: string }) {
-    return this.http.post<{ token?: string }>(`${this.apiUrl}/login`, data)
+    return this.http
+      .post<{ token?: string }>(`${this.apiUrl}/login`, data)
       .pipe(
-        tap(response => {
+        tap((response) => {
           if (response?.token) this.handleAuthSuccess(response.token);
-           this.toastr.show(
-          'Olá, seja bem vido!(a)',
-          'Success'
-        );
+          this.toastr.show('Olá, seja bem vido!(a)', 'Success');
         })
       );
   }
@@ -155,7 +158,7 @@ export class AuthService {
     return payload.exp > now;
   }
 
-   // Conexão com endpoint para reset/update de senha do usuário. Passa o token e a nova senha para verificações e update pelo back-end.
+  // Conexão com endpoint para reset/update de senha do usuário. Passa o token e a nova senha para verificações e update pelo back-end.
   update(
     token: string,
     newPasswordWithEmail: { password: string; email: string }
@@ -180,9 +183,20 @@ export class AuthService {
     );
   }
 
-  // requisita para o back-end um e-mail. Caso haja e-mail cadastrado, retorna bad request.
+  // requisita para o back-end um e-mail. Caso haja e-mail cadastrado, retorna bad request. redefinição de senha
   checkEmail(email: string) {
-    return this.http.get<any>(this.apiMail + '/integrador/check-email/' + email);
+    return this.http.get<any>(
+      this.apiMail + '/integrador/check-email/' + email
+    );
   }
 
+  // Verificar no registro se existe esse email
+  checkEmailAvailability(email: string) {
+    return this.http.get<boolean>(
+      `${environment.apiPath}/integrador/exists-email`,
+      {
+        params: { email },
+      }
+    );
+  }
 }
