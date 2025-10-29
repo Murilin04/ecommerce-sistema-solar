@@ -1,0 +1,65 @@
+.item {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 300px;
+  margin: 0 auto;
+  transition: all 0.5s ease-in-out;
+}
+
+.botoes-controle {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.botoes-controle button {
+  background: #ccc;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+}
+
+.botoes-controle button.ativo {
+  background: #ff0000;
+  cursor: default;
+}
+
+.mensagem {
+  margin: 10px auto;
+  font-family: "Montserrat", sans-serif;
+  white-space: nowrap;
+  color: #4A4F55;
+
+  strong {
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 20px;
+    margin: 0 auto;
+  }
+
+}
+
+.item2 {
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 300px;
+  margin: 5rem auto;
+  transition: all 0.5s ease-in-out;
+}
+
+.sub-item {
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 300px;
+  margin: 0 auto;
+  transition: all 0.5s ease-in-out;
+
+}

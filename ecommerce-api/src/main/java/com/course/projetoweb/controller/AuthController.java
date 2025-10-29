@@ -48,7 +48,6 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO body){
         
-        // if (this.repository.findByCnpj(body.cnpj()) != null) return ResponseEntity.badRequest().build();
         Optional<Integrador> user = this.repository.findByCnpj(CnpjUtils.normalize(body.cnpj()));
         if (user.isPresent()) {
             return ResponseEntity.badRequest().body("CNPJ já cadastrado");

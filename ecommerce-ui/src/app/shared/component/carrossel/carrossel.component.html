@@ -1,0 +1,34 @@
+<div class="mensagem">
+  <strong>WM Energia Solar</strong>
+  <p>Distribuidora de Produtos para Geração de Energia Solar!</p>
+</div>
+
+<div
+  class="item"
+  [style.backgroundImage]="
+    'url(' + imagens[indexImagemAtiva] + ')'
+  "
+></div>
+
+<!-- Botões de controle -->
+<div class="botoes-controle">
+  <button
+    *ngFor="let imagem of imagens; index as i"
+    [class.ativo]="i === indexImagemAtiva"
+    (click)="pararTimer(); ativarImagem(i)"></button>
+</div>
+
+<img
+  *ngFor="let imagem of imagens"
+  [src]="imagem"
+  width="1"
+  height="1"
+  style="opacity: 0; position: fixed"
+/>
+
+<div class="item2">
+  <div class="sub-item">
+    <img src="/assets/img/banner4.png" alt="Banner">
+  </div>
+</div>
+
