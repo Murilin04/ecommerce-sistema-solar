@@ -1,65 +1,415 @@
-.item {
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 300px;
+/* ========================================= */
+/* ESTILOS GERAIS                            */
+/* ========================================= */
+
+.carroseis-container {
+  width: 100%;
+  max-width: 1000px;
   margin: 0 auto;
-  transition: all 0.5s ease-in-out;
+  padding: 20px;
 }
 
-.botoes-controle {
+.carrossel-wrapper {
+  position: relative;
   display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 8px;
+  align-items: center;
+  overflow: hidden;
 }
 
-.botoes-controle button {
-  background: #ccc;
+/* Botões de Navegação */
+.carrossel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  height: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.carrossel-btn mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  overflow: visible;
+}
+
+.carrossel-btn:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carrossel-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-anterior {
+  left: 10px;
+}
+
+.btn-proximo {
+  right: 10px;
+}
+
+/* Indicadores (Bolinhas) */
+.carrossel-indicadores {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.indicador {
   width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.botoes-controle button.ativo {
-  background: #ff0000;
-  cursor: default;
+.indicador.ativo {
+  background-color: #ff9800;
+  transform: scale(1.2);
 }
 
-.mensagem {
-  margin: 10px auto;
-  font-family: "Montserrat", sans-serif;
+.indicador:hover {
+  background-color: #ffa726;
+}
+
+
+/* ========================================= */
+/* CARROSSEL 1: BANNER PRINCIPAL             */
+/* ========================================= */
+
+.carrossel-banner-principal {
+  margin-bottom: 40px;
+}
+
+.carrossel-banner-principal .carrossel-slides {
+  width: 100%;
+  height: 400px;
+  position: relative;
+}
+
+.carrossel-banner-principal .slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  pointer-events: none;
+}
+
+.carrossel-banner-principal .slide.ativo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.carrossel-banner-principal .slide-imagem {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.carrossel-banner-principal .slide-conteudo {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.carrossel-banner-principal .slide-titulo {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.carrossel-banner-principal .slide-subtitulo {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #ff9800;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.carrossel-banner-principal .slide-descricao {
+  font-size: 1.3rem;
+  font-weight: 400;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ========================================= */
+/* CARROSSEL 2: MARCAS                       */
+/* ========================================= */
+
+.carrossel-marcas {
+  margin-bottom: 40px;
+  background-color: #f5f5f5;
+  padding: 5px 20px;
+  border-radius: 12px;
+}
+
+.carrossel-marcas .secao-titulo {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 0;
+  color: #333;
+}
+
+.carrossel-marcas .marcas-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carrossel-marcas .marcas-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carrossel-marcas .marca-item {
+  flex: 0 0 calc(100% / 9);
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carrossel-marcas .marca-item img {
+  max-width: 120px;
+  max-height: 70px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.carrossel-marcas .marca-item:hover img {
+  filter: grayscale(0%);
+  transform: scale(1.1);
+}
+
+
+/* ========================================= */
+/* CARROSSEL 3: BANNER INFERIOR              */
+/* ========================================= */
+
+.carrossel-banner-inferior {
+  margin-bottom: 40px;
+}
+
+.carrossel-banner-inferior .carrossel-slides {
+  width: 100%;
+  height: 300px;
+  position: relative;
+}
+
+.carrossel-banner-inferior .slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  pointer-events: none;
+}
+
+.carrossel-banner-inferior .slide.ativo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.carrossel-banner-inferior .slide-conteudo-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff9800 0%, #ff6f00 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.carrossel-banner-inferior .slide-texto {
+  flex: 1;
+  padding: 80px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   white-space: nowrap;
-  color: #4A4F55;
-
-  strong {
-    font-size: 20px;
-  }
-
-  p {
-    font-size: 20px;
-    margin: 0 auto;
-  }
-
 }
 
-.item2 {
-  background-size: 50% 50%;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 300px;
-  margin: 5rem auto;
-  transition: all 0.5s ease-in-out;
+.carrossel-banner-inferior .banner-titulo {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
 }
 
-.sub-item {
-  background-size: 50% 50%;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 300px;
-  margin: 0 auto;
-  transition: all 0.5s ease-in-out;
+.carrossel-banner-inferior .banner-texto {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
 
+.carrossel-banner-inferior .banner-beneficios {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.carrossel-banner-inferior .beneficio {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.carrossel-banner-inferior .btn-acao {
+  width: fit-content;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: white;
+  color: #ff9800;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.carrossel-banner-inferior .btn-acao mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.carrossel-banner-inferior .btn-acao:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.carrossel-banner-inferior .slide-imagem-lateral {
+  flex: 0 0 40%;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.carrossel-banner-inferior .slide-imagem-lateral img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+
+/* ========================================= */
+/* RESPONSIVIDADE                            */
+/* ========================================= */
+
+@media (max-width: 992px) {
+  .carrossel-banner-principal .slide-titulo {
+    font-size: 2rem;
+  }
+
+  .carrossel-banner-principal .slide-subtitulo {
+    font-size: 1.5rem;
+  }
+
+  .carrossel-marcas .marca-item {
+    flex: 0 0 calc(100% / 4);
+  }
+}
+
+@media (max-width: 768px) {
+  .carrossel-banner-principal .carrossel-slides,
+  .carrossel-banner-inferior .carrossel-slides {
+    height: 300px;
+  }
+
+  .carrossel-banner-principal .slide-titulo {
+    font-size: 1.5rem;
+  }
+
+  .carrossel-banner-principal .slide-subtitulo {
+    font-size: 1.2rem;
+  }
+
+  .carrossel-marcas .marca-item {
+    flex: 0 0 calc(100% / 3);
+  }
+
+  .carrossel-banner-inferior .slide-conteudo-wrapper {
+    flex-direction: column;
+  }
+
+  .carrossel-banner-inferior .slide-imagem-lateral {
+    flex: 0 0 auto;
+    height: 150px;
+  }
+
+  .carrossel-banner-inferior .banner-titulo {
+    font-size: 1.8rem;
+  }
+
+  .carrossel-banner-inferior .slide-texto {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .carrossel-banner-principal .carrossel-slides,
+  .carrossel-banner-inferior .carrossel-slides {
+    height: 250px;
+  }
+
+  .carrossel-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .carrossel-btn mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .carrossel-marcas .marca-item {
+    flex: 0 0 calc(100% / 2);
+  }
+
+  .carrossel-banner-inferior .slide-texto {
+    padding: 20px;
+  }
+
+  .carrossel-banner-inferior .banner-beneficios {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .carrossel-banner-inferior .banner-titulo {
+    font-size: 1.5rem;
+  }
+
+  .carrossel-banner-inferior .banner-texto {
+    font-size: 1rem;
+  }
 }
