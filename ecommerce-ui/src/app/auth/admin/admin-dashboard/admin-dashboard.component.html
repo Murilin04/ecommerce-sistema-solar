@@ -25,7 +25,8 @@
     <ng-container matColumnDef="companyName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Empresa </th>
       <td mat-cell *matCellDef="let user">
-        <b>{{ user.profile.companyName }}</b><br />
+        <b>{{ user.profile.companyName }}</b>
+        <span class="badge-you" *ngIf="isCurrentUser(user)">Admin</span><br />
         <small>{{ user.tradeName }}</small>
       </td>
     </ng-container>
@@ -58,10 +59,16 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td mat-cell *matCellDef="let user">
-        <button mat-icon-button color="accent" (click)="editUser(user)">
+        <button mat-icon-button color="accent"
+                (click)="editUser(user)"
+                [disabled]="isCurrentUser(user)"
+                [title]="isCurrentUser(user) ? 'Não é possível editar seu próprio usuário por aqui, acesse seu perfil.' : ''">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="deleteUser(user)">
+        <button mat-icon-button color="warn"
+                (click)="deleteUser(user)"
+                [disabled]="isCurrentUser(user)"
+                [title]="isCurrentUser(user) ? 'Não é possível excluir seu próprio usuário' : ''">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

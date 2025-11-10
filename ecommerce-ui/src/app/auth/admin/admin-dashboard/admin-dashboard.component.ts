@@ -37,6 +37,7 @@ export class AdminDashboardComponent implements OnInit {
   dataSource =  new MatTableDataSource<Integrador>([]);
   isLoading = true;
   isAdmin = false;
+  currentUserId?: number | null;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -49,6 +50,7 @@ export class AdminDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.currentUserId = this.auth.getUserId();
     this.loadUsers();
     this.isAdmin = this.auth.isAdmin();
   }
@@ -77,11 +79,19 @@ export class AdminDashboardComponent implements OnInit {
     this.router.navigate(['/admin/editar', user.id]);
   }
 
+  isCurrentUser(user: Integrador): boolean {
+    return !!this.currentUserId && user.id === this.currentUserId;
+  }
+
   navigate(path: string) {
     this.router.navigate([path]);
   }
 
   deleteUser(user: Integrador): void {
+    if (this.isCurrentUser(user)) {
+      this.toastr.warning('Não é possível excluir seu próprio usuário via painel.');
+      return;
+    }
     if (confirm(`Tem certeza que deseja excluir o cliente ${user.profile.companyName}?`)) {
       this.adminService.delete(user.id).subscribe({
         next: () => {
