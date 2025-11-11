@@ -1,0 +1,106 @@
+<!-- Overlay do Modal -->
+<div
+  class="modal-overlay"
+  *ngIf="isOpen && produto"
+  (click)="fecharModal()"
+  [@fadeIn]>
+
+  <!-- Conteúdo do Modal -->
+  <div
+    class="modal-content"
+    (click)="pararPropagacao($event)"
+    [@slideIn]>
+
+    <!-- Botão Fechar -->
+    <button
+      class="btn-fechar"
+      (click)="fecharModal()"
+      aria-label="Fechar modal">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <!-- Container Principal -->
+    <div class="modal-body">
+      <!-- COLUNA ESQUERDA: IMAGENS                  -->
+      <div class="modal-imagens">
+        <!-- Imagem Principal -->
+        <div class="imagem-principal-container">
+          <img
+            [src]="imagemPrincipal"
+            [alt]="produto.nome"
+            class="imagem-principal">
+        </div>
+
+        <!-- Miniaturas -->
+        <div class="imagens-miniaturas" *ngIf="todasImagens.length > 1">
+          <div
+            class="miniatura"
+            *ngFor="let imagem of todasImagens; let i = index"
+            [class.ativa]="i === imagemAtual"
+            (click)="selecionarImagem(i)">
+            <img [src]="imagem" [alt]="'Imagem ' + (i + 1)">
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA DIREITA: INFORMAÇÕES               -->
+      <div class="modal-info">
+
+        <!-- Categoria e Título -->
+        <div class="info-header">
+          <h2 class="produto-categoria-titulo">
+            {{ produto.categoria }}
+          </h2>
+
+          <!-- Avaliações -->
+          <div class="produto-avaliacoes">
+            <div class="estrelas">
+              <mat-icon *ngFor="let star of [1,2,3,4,5]">star_border</mat-icon>
+            </div>
+            <span class="avaliacoes-texto">
+              {{ produto.avaliacoes || 0 }} Avaliações
+            </span>
+          </div>
+        </div>
+
+        <!-- Nome do Produto -->
+        <h3 class="produto-nome-modal">
+          {{ produto.nome }}
+        </h3>
+
+        <!-- Disponibilidade e Código -->
+        <div class="produto-metadata">
+          <div class="disponibilidade">
+            <span class="label">Disponibilidade:</span>
+            <span
+              class="status"
+              [class.disponivel]="produto.disponibilidade === 'Disponível'"
+              [class.indisponivel]="produto.disponibilidade !== 'Disponível'">
+              {{ produto.disponibilidade }}
+            </span>
+          </div>
+
+          <div class="codigo">
+            <span class="label">Código:</span>
+            <span class="valor">{{ getCodigoValor(produto) }}</span>
+          </div>
+        </div>
+
+        <!-- Botão Consultar Preço -->
+        <button
+          class="btn-consultar-preco-modal"
+          (click)="consultarPreco()">
+          Consulte o Preço
+        </button>
+
+        <!-- Aviso de Preço -->
+        <div class="aviso-preco">
+          <p class="aviso-titulo">Preço sugerido ao consumidor final</p>
+          <p class="aviso-subtitulo">Não inclusos custos de projeto e instalação</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

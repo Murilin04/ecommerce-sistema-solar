@@ -1,0 +1,92 @@
+
+<section class="produtos-destaque">
+  <!-- CABEÇALHO COM TÍTULO E NAVEGAÇÃO          -->
+  <div class="produtos-header">
+    <h2 class="produtos-titulo">Produtos em destaque</h2>
+
+    <!-- Botões de Navegação -->
+    <div class="produtos-navegacao">
+      <button
+        class="nav-btn btn-anterior"
+        (click)="produtosAnteriores()"
+        [disabled]="!podeVoltar()"
+        aria-label="Produtos anteriores">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <button
+        class="nav-btn btn-proximo"
+        (click)="proximosProdutos()"
+        [disabled]="!podeAvancar()"
+        aria-label="Próximos produtos">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- GRID DE PRODUTOS                          -->
+  <div class="produtos-grid">
+    <!-- Card de cada produto -->
+    <div
+      class="produto-card"
+      *ngFor="let produto of produtosVisiveis">
+
+      <!-- ========== IMAGEM DO PRODUTO ========== -->
+      <div class="produto-imagem-container">
+        <img
+          [src]="produto.imagem"
+          [alt]="produto.nome"
+          class="produto-imagem"
+          loading="lazy"
+          (error)="onImageError($event)">
+
+        <!-- Botão de Visualização Rápida -->
+        <button
+          class="btn-quick-view"
+          aria-label="Visualização rápida"
+          title="Visualização rápida"
+          (click)="openQuickView(produto)">
+          <mat-icon>zoom_in</mat-icon>
+        </button>
+      </div>
+
+      <!-- ========== INFORMAÇÕES DO PRODUTO ========== -->
+      <div class="produto-info">
+        <!-- Categoria -->
+        <div class="produto-categoria">
+          <span class="categoria-label">Categorias</span>
+          <span class="categoria-nome">{{ produto.categoria }}</span>
+        </div>
+
+        <!-- Código do Produto -->
+        <p class="produto-codigo">{{ produto.codigoCategoria }}</p>
+
+        <!-- Nome do Produto -->
+        <h3 class="produto-nome" [title]="produto.nome">
+          {{ produto.nome }}
+        </h3>
+
+        <!-- Botão Consultar Preço -->
+        <button
+          class="btn-consultar-preco"
+          (click)="consultarPreco(produto)">
+          Consulte o Preço
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDICADOR DE POSIÇÃO (OPCIONAL)           -->
+  <div class="produtos-indicador">
+    <span class="indicador-texto">
+      Mostrando {{ indiceAtual + 1 }} - {{ indiceAtual + produtosVisiveis.length }}
+      de {{ produtosDestaque.length }} produtos
+    </span>
+  </div>
+</section>
+<!-- MODAL DE VISUALIZAÇÃO RÁPIDA DO PRODUTO    -->
+<app-quick-view
+  [produto]="produtoSelecionado"
+  [isOpen]="modalAberto"
+  (fechar)="closeQuickView()">
+</app-quick-view>

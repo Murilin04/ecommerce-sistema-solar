@@ -1,7 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription, timer } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from "@angular/material/icon";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
 interface Banner {
   imagem: string;
