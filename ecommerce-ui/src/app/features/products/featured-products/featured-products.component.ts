@@ -20,10 +20,12 @@ export class FeaturedProductsComponent implements OnInit {
       id: 1,
       nome: 'FRONT BOX AC DE 32A PARA INVERSORES DE ATÉ 6KW MONO',
       descricao: 'Front Box AC de 32A para Inversores de até 6kW Monofásico',
-      categoria: 'Componentes CA',
+      categoria: 'Componentes CA Quadro CA',
       codigoCategoria: 'Código: 30521',
       imagem: 'assets/img/produtos/front-box-32a.png',
-      emDestaque: true
+      disponibilidade: 'Disponível',
+      avaliacoes: 0,
+      emDestaque: true,
     },
     {
       id: 2,
@@ -32,6 +34,8 @@ export class FeaturedProductsComponent implements OnInit {
       categoria: 'Componentes CA',
       codigoCategoria: 'Código: 31073',
       imagem: 'assets/img/produtos/disjuntor-weg-20a.png',
+      disponibilidade: 'Disponível',
+      avaliacoes: 0,
       emDestaque: true
     },
     {
@@ -41,6 +45,8 @@ export class FeaturedProductsComponent implements OnInit {
       categoria: 'Bateria de Lítio Must Solar',
       codigoCategoria: 'Código: 41165',
       imagem: 'assets/img/produtos/bateria-litio-must.png',
+      disponibilidade: 'Disponível',
+      avaliacoes: 0,
       emDestaque: true
     },
     {
@@ -50,6 +56,8 @@ export class FeaturedProductsComponent implements OnInit {
       categoria: 'Inversor Solar Microinversor Solar Growatt',
       codigoCategoria: 'Código: 112096',
       imagem: 'assets/img/produtos/microinversor-growatt.png',
+      disponibilidade: 'Disponível',
+      avaliacoes: 0,
       emDestaque: true
     },
     {
@@ -59,6 +67,8 @@ export class FeaturedProductsComponent implements OnInit {
       categoria: 'Grid Zero Multimarcas',
       codigoCategoria: 'Código: 20145',
       imagem: 'assets/img/produtos/grid-zero-multimarcas.png',
+      disponibilidade: 'Disponível',
+      avaliacoes: 0,
       emDestaque: true
     },
   ];

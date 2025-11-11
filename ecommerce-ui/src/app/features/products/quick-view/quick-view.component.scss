@@ -13,6 +13,7 @@
   z-index: 9999;
   padding: 20px;
   overflow-y: auto;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 /* CONTEÚDO DO MODAL                         */
@@ -26,6 +27,7 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   max-height: 90vh;
   overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
 }
 
 /* Botão Fechar */

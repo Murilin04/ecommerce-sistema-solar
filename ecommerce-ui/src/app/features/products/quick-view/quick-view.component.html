@@ -2,14 +2,12 @@
 <div
   class="modal-overlay"
   *ngIf="isOpen && produto"
-  (click)="fecharModal()"
-  [@fadeIn]>
+  (click)="fecharModal()">
 
   <!-- Conteúdo do Modal -->
   <div
     class="modal-content"
-    (click)="pararPropagacao($event)"
-    [@slideIn]>
+    (click)="pararPropagacao($event)">
 
     <!-- Botão Fechar -->
     <button
