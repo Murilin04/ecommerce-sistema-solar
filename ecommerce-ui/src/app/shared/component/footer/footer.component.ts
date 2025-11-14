@@ -20,9 +20,9 @@ export class FooterComponent {
 
   // Endereço
   endereco = {
-    rua: 'Rua 5, 2495',
-    bairro: 'Bairro Norte',
-    cidade: 'Planaltina/GO - CEP 73751-150'
+    rua: 'Quadra 04 MR 4, Lote 20',
+    bairro: '',
+    cidade: 'Planaltina/GO - Brazil'
   };
 
   // Links de informações
@@ -40,7 +40,7 @@ export class FooterComponent {
     {
       nome: 'Instagram',
       icone: 'instagram',
-      url: 'https://www.instagram.com/wmenergiasolar/',
+      url: 'https://www.instagram.com/wm_energiasolarr/',
       cor: '#E4405F'
     },
     {
@@ -52,7 +52,7 @@ export class FooterComponent {
     {
       nome: 'Facebook',
       icone: 'facebook',
-      url: 'https://www.facebook.com/wmenergiasolar',
+      url: 'https://www.facebook.com/share/184zLDE1Lo/',
       cor: '#1877F2'
     }
   ];

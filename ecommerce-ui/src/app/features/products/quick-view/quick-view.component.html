@@ -85,10 +85,16 @@
         </div>
 
         <!-- Botão Consultar Preço -->
-        <button
-          class="btn-consultar-preco-modal"
-          (click)="consultarPreco()">
-          Consulte o Preço
+        <div class="produto-preco" *ngIf="isAuthenticated && produto.preco">
+          <span class="preco-valor">{{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}</span>
+        </div>
+
+        <!-- Botão Consultar Preço -->
+        <button class="btn-consultar-preco" [class.btn-adicionar-carrinho]="isAuthenticated" (click)="consultarPreco(produto)">
+          <span>
+            {{ isAuthenticated ? 'Adicionar ao Carrinho' : 'Consulte o Preço' }}
+          </span>
+          <mat-icon *ngIf="isAuthenticated">shopping_cart</mat-icon>
         </button>
 
         <!-- Aviso de Preço -->

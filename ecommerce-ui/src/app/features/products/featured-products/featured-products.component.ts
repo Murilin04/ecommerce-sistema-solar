@@ -1,18 +1,22 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { QuickViewComponent } from "../quick-view/quick-view.component";
 
+import { AuthService } from '../../../auth/service/auth.service';
 import { Produto } from '../../models/produto.model';
+import { QuickViewComponent } from '../quick-view/quick-view.component';
+import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-featured-products',
   standalone: true,
-  imports: [CommonModule, MatIconModule, QuickViewComponent],
+  imports: [CommonModule, MatIconModule, QuickViewComponent, MatSnackBarModule],
   templateUrl: './featured-products.component.html',
   styleUrl: './featured-products.component.scss'
 })
 export class FeaturedProductsComponent implements OnInit {
+  private snackBar = inject(MatSnackBar);
   showQuickView = false;
   // Array de produtos em destaque
   produtosDestaque: Produto[] = [
@@ -26,6 +30,7 @@ export class FeaturedProductsComponent implements OnInit {
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: true,
+      preco: 15000
     },
     {
       id: 2,
@@ -36,7 +41,8 @@ export class FeaturedProductsComponent implements OnInit {
       imagem: 'assets/img/produtos/disjuntor-weg-20a.png',
       disponibilidade: 'Disponível',
       avaliacoes: 0,
-      emDestaque: true
+      emDestaque: true,
+      preco: 2000
     },
     {
       id: 3,
@@ -47,7 +53,8 @@ export class FeaturedProductsComponent implements OnInit {
       imagem: 'assets/img/produtos/bateria-litio-must.png',
       disponibilidade: 'Disponível',
       avaliacoes: 0,
-      emDestaque: true
+      emDestaque: true,
+      preco: 20000
     },
     {
       id: 4,
@@ -58,7 +65,8 @@ export class FeaturedProductsComponent implements OnInit {
       imagem: 'assets/img/produtos/microinversor-growatt.png',
       disponibilidade: 'Disponível',
       avaliacoes: 0,
-      emDestaque: true
+      emDestaque: true,
+      preco: 10000
     },
     {
       id: 5,
@@ -69,7 +77,8 @@ export class FeaturedProductsComponent implements OnInit {
       imagem: 'assets/img/produtos/grid-zero-multimarcas.png',
       disponibilidade: 'Disponível',
       avaliacoes: 0,
-      emDestaque: true
+      emDestaque: true,
+      preco: 5000
     },
   ];
 
@@ -83,10 +92,20 @@ export class FeaturedProductsComponent implements OnInit {
   // Controle do modal
   modalAberto = false;
   produtoSelecionado: Produto | null = null;
+  isAuthenticated = false;
+
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.atualizarProdutosVisiveis();
     this.ajustarProdutosPorPagina();
+
+    this.auth.isAuthenticated$.subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+    });
   }
 
   atualizarProdutosVisiveis() {
@@ -123,9 +142,16 @@ export class FeaturedProductsComponent implements OnInit {
   }
 
   consultarPreco(produto: Produto) {
-    console.log('Consultar preço do produto:', produto);
-    // abrir um modal, redirecionar para página do produto, etc.
-    // Por exemplo: this.router.navigate(['/produto', produto.id]);
+    if (!this.isAuthenticated) {
+      this.router.navigate(['/login']);
+    } else {
+      this.snackBar.open('Produto adicionado ao carrinho!', 'Fechar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        panelClass: ['snackbar-sucesso']
+      });
+    }
   }
 
   ajustarProdutosPorPagina() {

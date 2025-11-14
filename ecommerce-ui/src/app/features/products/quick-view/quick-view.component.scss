@@ -231,7 +231,7 @@
 }
 
 /* Botão Consultar Preço */
-.btn-consultar-preco-modal {
+.btn-consultar-preco {
   width: 100%;
   padding: 15px 30px;
   background-color: #ffc107;
@@ -255,12 +255,39 @@
   }
 }
 
+// Estilos do preço
+.produto-preco {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin: 15px 0 10px 0;
+  padding: 10px 0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.preco-valor {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4caf50; // Verde
+}
+
+// Botão verde quando logado
+.btn-consultar-preco.btn-adicionar-carrinho {
+  background-color: #33ac39;
+  color: white;
+
+  &:hover {
+    background-color: #33ac39;
+  }
+}
+
 /* Aviso de Preço */
 .aviso-preco {
-  padding: 15px;
+  padding: 10px;
   border: 2px solid #f44336;
   border-radius: 4px;
   background-color: #fff;
+  margin-top: 10px;
 }
 
 .aviso-titulo {

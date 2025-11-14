@@ -12,12 +12,14 @@ import { RoleGuard } from './auth/guards/role-guard/role.guard';
 import { AdminDashboardComponent } from './auth/admin/admin-dashboard/admin-dashboard.component';
 import { AdminAddNewUsersComponent } from './auth/admin/admin-add-new-users/admin-add-new-users.component';
 import { AdminEditUsersComponent } from './auth/admin/admin-edit-users/admin-edit-users.component';
+import { ProductsComponent } from './features/products/products/products.component';
 
 export const routes: Routes = [
 
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
   { path: 'cadastro', component: RegisterComponent, canActivate: [NoAuthGuard] },
   { path: 'home', component: HomeComponent },
+  { path: 'produtos', component: ProductsComponent },
   { path: 'perfil', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'perfil-editar', component: EditProfileComponent, canActivate: [AuthGuard] },
   { path: 'alterar-senha', component: SendEmailFormComponent, canActivate: [NoAuthGuard] },
