@@ -1,1 +1,126 @@
-<p>products works!</p>
+<div class="produtos-page">
+  <!-- CABEÇALHO DA PÁGINA                       -->
+  <div class="produtos-header">
+    <h1 class="produtos-titulo">Produtos</h1>
+    <p class="produtos-subtitulo" *ngIf="produtosFiltrados.length > 0">
+      Mostrando {{ produtosFiltrados.length }} produto{{ produtosFiltrados.length > 1 ? 's' : '' }}
+    </p>
+  </div>
+
+  <!-- GRID DE PRODUTOS (4 por linha)            -->
+  <div class="produtos-grid">
+    <div
+      class="produto-card"
+      *ngFor="let produto of produtosPaginados">
+
+      <!-- ========== IMAGEM DO PRODUTO ========== -->
+      <div class="produto-imagem-container">
+        <img
+          [src]="produto.imagem"
+          [alt]="produto.nome"
+          class="produto-imagem"
+          loading="lazy"
+          (error)="onImageError($event)">
+
+        <!-- Botão de Visualização Rápida -->
+        <button
+          class="btn-quick-view"
+          aria-label="Visualização rápida"
+          title="Visualização rápida"
+          (click)="openQuickView(produto)">
+          <mat-icon>zoom_in</mat-icon>
+        </button>
+      </div>
+
+      <!--  INFORMAÇÕES DO PRODUTO  -->
+      <div class="produto-info">
+        <!-- Categoria -->
+        <div class="produto-categoria">
+          <span class="categoria-label">{{ produto.subcategoria }}</span>
+          <span class="categoria-nome">{{ produto.marca }}</span>
+        </div>
+
+        <!-- Código do Produto -->
+        <p class="produto-codigo">{{ produto.codigoCategoria }}</p>
+
+        <!-- Nome do Produto -->
+        <h3 class="produto-nome" [title]="produto.nome">
+          {{ produto.nome }}
+        </h3>
+
+        <!-- Preço (visível apenas se logado) -->
+        <div class="produto-preco" *ngIf="isAuthenticated && produto.preco">
+          <span class="preco-label">R$</span>
+          <span class="preco-valor">{{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}</span>
+        </div>
+
+        <!-- Botão Consultar Preço ou Adicionar ao Carrinho -->
+        <button
+          class="btn-consultar-preco"
+          [class.btn-adicionar-carrinho]="isAuthenticated"
+          (click)="consultarPreco(produto)">
+          <mat-icon *ngIf="isAuthenticated">shopping_cart</mat-icon>
+          <span>{{ isAuthenticated ? 'Adicionar ao Carrinho' : 'Consulte o Preço' }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGINAÇÃO                                 -->
+  <div class="produtos-paginacao" *ngIf="totalPaginas > 1">
+    <!-- Botão Anterior -->
+    <button
+      class="pagina-btn btn-anterior"
+      (click)="paginaAnterior()"
+      [disabled]="paginaAtual === 1">
+      <mat-icon>chevron_left</mat-icon>
+      Anterior
+    </button>
+
+    <!-- Números das Páginas -->
+    <div class="paginas-numeros">
+      <button
+        *ngFor="let pagina of [].constructor(totalPaginas); let i = index"
+        class="pagina-numero"
+        [class.ativa]="paginaAtual === i + 1"
+        (click)="irParaPagina(i + 1)">
+        {{ i + 1 }}
+      </button>
+    </div>
+
+    <!-- Botão Próximo -->
+    <button
+      class="pagina-btn btn-proximo"
+      (click)="proximaPagina()"
+      [disabled]="paginaAtual === totalPaginas">
+      Próximo
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <!-- INDICADOR DE PÁGINA   -->
+  <div class="produtos-indicador" *ngIf="produtosFiltrados.length > 0">
+    <span class="indicador-texto">
+      Mostrando {{ (paginaAtual - 1) * produtosPorPagina + 1 }} -
+      {{ Math.min(paginaAtual * produtosPorPagina, produtosFiltrados.length) }}
+      de {{ produtosFiltrados.length }} produtos
+    </span>
+  </div>
+
+  <!-- MENSAGEM SE NÃO HOUVER PRODUTOS           -->
+  <div class="sem-produtos" *ngIf="produtosFiltrados.length === 0">
+    <mat-icon class="sem-produtos-icon">inventory_2</mat-icon>
+    <h2>Nenhum produto encontrado</h2>
+    <p>Tente ajustar seus filtros ou explore outras categorias.</p>
+    <button class="btn-voltar" (click)="navigate('/home')">
+      Voltar para Home
+    </button>
+  </div>
+</div>
+
+<!-- MODAL DE VISUALIZAÇÃO RÁPIDA              -->
+<app-quick-view
+  [produto]="produtoSelecionado"
+  [isOpen]="modalAberto"
+  (fechar)="closeQuickView()">
+</app-quick-view>

@@ -13,7 +13,7 @@
 
         <!-- submenu de 1° nível -->
         <ul class="submenu">
-          <li class="submenu__one" title="On Grid" (click)="navigateTo('/on-grid')">
+          <li class="submenu__one" title="On Grid" (click)="navigateTo('On-Grid')">
             <a routerLink="/on-grid" class="submenu__a">On Grid</a>
             <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
               style="transform: rotate(-90deg);" title="Abrir: On Grid">
@@ -23,7 +23,7 @@
 
             <!-- Submenu de 2º nível -->
             <ul class="submenu">
-              <li class="submenu__one" title="Sungrow">
+              <li class="submenu__one" title="Sungrow" (click)="navigateTo('On-Grid', 'sungrow')">
                 <a routerLink="/sungrow">Sungrow</a>
                 <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
                   style="transform: rotate(-90deg);" title="Abrir: On Grid">
@@ -97,7 +97,7 @@
             </ul>
           </li>
            <!-- submenu de 1° nível -->
-        <li class="submenu__one" title="Off Grid Interativo">
+        <li class="submenu__one" title="Off Grid Interativo" (click)="navigateTo('off-grid-interativo')">
           <a routerLink="/off-grid-interativo">Off Grid Interativo</a>
           <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
             style="transform: rotate(-90deg);">
@@ -151,7 +151,7 @@
           </ul>
         </li>
           <!-- submenu de 1° nível -->
-          <li class="submenu__one" title="Híbrido">
+          <li class="submenu__one" title="Híbrido" (click)="navigateTo('hibrido')">
             <a routerLink="/hibrido">Híbrido</a>
             <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
               style="transform: rotate(-90deg);">
@@ -183,7 +183,7 @@
             </ul>
           </li>
           <!-- submenu de 1° nível -->
-          <li class="submenu__one" title="Retrofit">
+          <li class="submenu__one" title="Retrofit" (click)="navigateTo('retrofit')">
             <a routerLink="/retrofit">Retrofit</a>
             <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
               style="transform: rotate(-90deg);">
@@ -227,8 +227,8 @@
             </ul>
           </li>
            <!-- submenu de 1° nível -->
-          <li class="submenu__one" title="Microinversor">
-            <a href="/microinversor">Microinversor</a>
+          <li class="submenu__one" title="Microinversor" (click)="navigateTo('microinversor')">
+            <a>Microinversor</a>
             <svg class="menu__svg-one" xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" viewBox="0 0 16 16"
               style="transform: rotate(-90deg);">
               <path fill-rule="evenodd"

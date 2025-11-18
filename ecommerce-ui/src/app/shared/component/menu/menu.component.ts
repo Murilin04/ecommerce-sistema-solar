@@ -23,12 +23,12 @@ import { ClickOutsideDirective } from '../../directives/click-outside.directive'
     MatIconModule,
     CommonModule,
     RouterModule,
-    LoginComponent
-],
+    LoginComponent,
+  ],
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.scss'
+  styleUrl: './menu.component.scss',
 })
-export class MenuComponent implements OnInit, OnDestroy{
+export class MenuComponent implements OnInit, OnDestroy {
   showLogin = false;
   isAuthenticated$: Observable<boolean>;
   isAdmin = false;
@@ -50,8 +50,14 @@ export class MenuComponent implements OnInit, OnDestroy{
     this.sub?.unsubscribe();
   }
 
-  navigateTo(path: string): void {
-    this.router.navigate([path]);
+  navigateTo(subcategoria?: string, marca?: string,  tipo?: string): void {
+    const queryParams: any = {};
+
+    if (subcategoria) queryParams.subcategoria = subcategoria;
+    if (marca) queryParams.marca = marca;
+    if (tipo) queryParams.tipo = tipo;
+
+    this.router.navigate(['/produtos'], { queryParams });
   }
 
   openLogin() {
@@ -65,5 +71,4 @@ export class MenuComponent implements OnInit, OnDestroy{
   logout() {
     this.auth.logout();
   }
-
 }
