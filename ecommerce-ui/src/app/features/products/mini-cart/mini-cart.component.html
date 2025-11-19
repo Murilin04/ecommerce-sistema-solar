@@ -1,0 +1,66 @@
+<button
+  mat-icon-button
+  class="cart-button"
+  [matMenuTriggerFor]="cartMenu"
+  [@cartBadge]="itemCount() > 0 ? 'visible' : 'hidden'">
+    <mat-icon
+     [matBadge]="itemCount()"
+     [matBadgeHidden]="itemCount() === 0"
+     matBadgeColor="warn"
+     matBadgeSize="small"
+     aria-hidden="false">
+     shopping_cart
+    </mat-icon>
+</button>
+
+    <mat-menu #cartMenu="matMenu" class="cart-dropdown">
+      <!-- Carrinho Vazio -->
+      <div *ngIf="isEmpty()" class="empty-cart-dropdown" (click)="$event.stopPropagation()">
+        <mat-icon class="empty-icon">shopping_cart</mat-icon>
+        <p>Seu carrinho está vazio</p>
+        <button mat-raised-button color="primary" (click)="goToProducts()">
+          Ver Produtos
+        </button>
+      </div>
+
+      <!-- Itens do Carrinho -->
+      <div *ngIf="!isEmpty()" class="cart-items-dropdown" (click)="$event.stopPropagation()">
+        <div class="cart-header-dropdown">
+          <h3>Meu Carrinho</h3>
+          <span class="item-count">{{ itemCount() }} {{ itemCount() === 1 ? 'item' : 'itens' }}</span>
+        </div>
+
+        <div class="items-list-dropdown">
+          <div class="cart-item-mini" *ngFor="let item of cart().items.slice(0, 3)">
+            <img [src]="item.imagem" [alt]="item.nome" class="item-image-mini">
+            <div class="item-info-mini">
+              <p class="item-name-mini">{{ item.nome | slice:0:40 }}{{ item.nome.length > 40 ? '...' : '' }}</p>
+              <p class="item-details-mini">
+                {{ item.quantidade }}x {{ formatPrice(item.preco) }}
+              </p>
+            </div>
+            <p class="item-total-mini">{{ formatPrice(item.preco * item.quantidade) }}</p>
+          </div>
+
+          <div class="more-items" *ngIf="cart().items.length > 3">
+            <p>+ {{ cart().items.length - 3 }} {{ cart().items.length - 3 === 1 ? 'outro item' : 'outros itens' }}</p>
+          </div>
+        </div>
+
+        <div class="cart-footer-dropdown">
+          <div class="total-row">
+            <span>Subtotal:</span>
+            <span class="total-value">{{ formatPrice(cart().subtotal) }}</span>
+          </div>
+
+          <div class="action-buttons">
+            <button mat-stroked-button (click)="goToCart()">
+              Ver Carrinho
+            </button>
+            <button mat-raised-button color="primary" (click)="goToCheckout()">
+              Finalizar
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-menu>

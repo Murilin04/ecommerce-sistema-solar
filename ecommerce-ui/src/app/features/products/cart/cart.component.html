@@ -1,0 +1,202 @@
+<div class="cart-container">
+  <!-- Header -->
+  <div class="cart-header">
+    <h1>
+      <mat-icon>shopping_cart</mat-icon>
+      Meu Carrinho
+      <span class="item-count" *ngIf="!isEmpty()">{{ itemCount() }} {{ itemCount() === 1 ? 'item' : 'itens' }}</span>
+    </h1>
+  </div>
+
+  <!-- Carrinho Vazio -->
+  <div class="empty-cart" *ngIf="isEmpty()">
+    <mat-icon class="empty-icon">shopping_cart</mat-icon>
+    <h2>Seu carrinho está vazio</h2>
+    <p>Adicione produtos ao carrinho para continuar comprando</p>
+    <button mat-raised-button color="primary" (click)="continueShopping()">
+      Ver Produtos
+    </button>
+  </div>
+
+  <!-- Carrinho com Itens -->
+  <div class="cart-content" *ngIf="!isEmpty()">
+    <div class="cart-items">
+      <!-- Lista de Produtos -->
+      <div class="items-list">
+        <div class="cart-item" *ngFor="let item of cart().items">
+          <div class="item-image">
+            <img [src]="item.imagem" [alt]="item.nome" (error)="onImageError($event)">
+          </div>
+
+          <div class="item-details">
+            <h3 class="item-name">{{ item.nome }}</h3>
+            <p class="item-category">{{ item.categoria }}</p>
+            <p class="item-price-mobile">{{ formatPrice(item.preco) }}</p>
+          </div>
+
+          <div class="item-quantity">
+            <button
+              mat-icon-button
+              (click)="decrementQuantity(item.id)"
+              [disabled]="item.quantidade <= 1">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <input
+              type="number"
+              [value]="item.quantidade"
+              (change)="updateQuantity(item.id, $event)"
+              min="1"
+              class="quantity-input">
+            <button
+              mat-icon-button
+              (click)="incrementQuantity(item.id)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+
+          <div class="item-price">
+            <p class="unit-price">{{ formatPrice(item.preco) }}</p>
+            <p class="total-price">{{ formatPrice(item.preco * item.quantidade) }}</p>
+          </div>
+
+          <div class="item-actions">
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="confirmRemove(item)"
+              class="remove-btn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ações do Carrinho -->
+      <div class="cart-actions">
+        <button mat-stroked-button (click)="continueShopping()">
+          <mat-icon>arrow_back</mat-icon>
+          Continuar Comprando
+        </button>
+        <button mat-stroked-button color="warn" (click)="clearCart()">
+          <mat-icon>delete_sweep</mat-icon>
+          Limpar Carrinho
+        </button>
+      </div>
+    </div>
+
+    <!-- Resumo e Checkout -->
+    <div class="cart-summary">
+      <!-- Calcular Frete -->
+      <div class="summary-section shipping">
+        <h3>Calcular Frete</h3>
+        <div class="input-group">
+          <mat-form-field appearance="outline">
+            <mat-label>CEP</mat-label>
+            <input
+              matInput
+              [(ngModel)]="cep"
+              placeholder="00000-000"
+              maxlength="9">
+            <mat-icon matPrefix>location_on</mat-icon>
+          </mat-form-field>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="calcularFrete()"
+            [disabled]="calculandoFrete">
+            {{ calculandoFrete ? 'Calculando...' : 'Calcular' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Cupom de Desconto -->
+      <div class="summary-section coupon">
+        <h3>Cupom de Desconto</h3>
+        <div class="input-group">
+          <mat-form-field appearance="outline">
+            <mat-label>Código do Cupom</mat-label>
+            <input
+              matInput
+              [(ngModel)]="cupomCode"
+              placeholder="Digite o cupom">
+            <mat-icon matPrefix>local_offer</mat-icon>
+          </mat-form-field>
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="aplicarCupom()"
+            [disabled]="aplicandoCupom">
+            {{ aplicandoCupom ? 'Aplicando...' : 'Aplicar' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Resumo de Valores -->
+      <div class="summary-section totals">
+        <h3>Resumo do Pedido</h3>
+
+        <div class="total-line">
+          <span>Subtotal</span>
+          <span class="value">{{ formatPrice(cart().subtotal) }}</span>
+        </div>
+
+        <div class="total-line discount" *ngIf="cart().desconto > 0">
+          <span>Desconto</span>
+          <span class="value">- {{ formatPrice(cart().desconto) }}</span>
+        </div>
+
+        <div class="total-line shipping-cost" *ngIf="cart().frete > 0">
+          <span>Frete</span>
+          <span class="value">{{ formatPrice(cart().frete) }}</span>
+        </div>
+
+        <div class="total-line shipping-cost" *ngIf="cart().frete === 0 && cep">
+          <span>Frete</span>
+          <span class="value free">GRÁTIS</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="total-line final-total">
+          <span>Total</span>
+          <span class="value">{{ formatPrice(cart().total) }}</span>
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          class="checkout-btn"
+          (click)="proceedToCheckout()">
+          <mat-icon>payment</mat-icon>
+          Finalizar Compra
+        </button>
+
+        <!-- Info de Segurança -->
+        <div class="security-info">
+          <mat-icon>lock</mat-icon>
+          <span>Compra 100% segura</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmação de Remoção -->
+<div class="modal-overlay" *ngIf="showDeleteModal" (click)="cancelRemove()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Remover Item</h2>
+      <button mat-icon-button (click)="cancelRemove()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Deseja realmente remover este item do carrinho?</p>
+      <p class="item-name">{{ itemToDelete?.nome }}</p>
+    </div>
+    <div class="modal-footer">
+      <button mat-stroked-button (click)="cancelRemove()">Cancelar</button>
+      <button mat-raised-button color="warn" (click)="removeItem()">Remover</button>
+    </div>
+  </div>
+</div>

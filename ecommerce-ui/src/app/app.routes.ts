@@ -13,6 +13,7 @@ import { AdminDashboardComponent } from './auth/admin/admin-dashboard/admin-dash
 import { AdminAddNewUsersComponent } from './auth/admin/admin-add-new-users/admin-add-new-users.component';
 import { AdminEditUsersComponent } from './auth/admin/admin-edit-users/admin-edit-users.component';
 import { ProductsComponent } from './features/products/products/products.component';
+import { CartComponent } from './features/products/cart/cart.component';
 
 export const routes: Routes = [
 
@@ -20,6 +21,7 @@ export const routes: Routes = [
   { path: 'cadastro', component: RegisterComponent, canActivate: [NoAuthGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'produtos', component: ProductsComponent },
+  { path: 'carrinho', component: CartComponent, canActivate: [AuthGuard]},
   { path: 'perfil', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'perfil-editar', component: EditProfileComponent, canActivate: [AuthGuard] },
   { path: 'alterar-senha', component: SendEmailFormComponent, canActivate: [NoAuthGuard] },

@@ -7,13 +7,14 @@ import { Produto } from '../../models/produto.model';
 import { QuickViewComponent } from '../quick-view/quick-view.component';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { CartService } from '../../service/cart/cart.service';
 
 @Component({
   selector: 'app-featured-products',
   standalone: true,
   imports: [CommonModule, MatIconModule, QuickViewComponent, MatSnackBarModule],
   templateUrl: './featured-products.component.html',
-  styleUrl: './featured-products.component.scss'
+  styleUrl: './featured-products.component.scss',
 })
 export class FeaturedProductsComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
@@ -30,7 +31,7 @@ export class FeaturedProductsComponent implements OnInit {
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: true,
-      preco: 15000
+      preco: 15000,
     },
     {
       id: 2,
@@ -42,7 +43,7 @@ export class FeaturedProductsComponent implements OnInit {
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: true,
-      preco: 2000
+      preco: 2000,
     },
     {
       id: 3,
@@ -54,7 +55,7 @@ export class FeaturedProductsComponent implements OnInit {
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: true,
-      preco: 20000
+      preco: 20000,
     },
     {
       id: 4,
@@ -66,7 +67,7 @@ export class FeaturedProductsComponent implements OnInit {
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: true,
-      preco: 10000
+      preco: 10000,
     },
     {
       id: 5,
@@ -78,7 +79,7 @@ export class FeaturedProductsComponent implements OnInit {
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: true,
-      preco: 5000
+      preco: 5000,
     },
   ];
 
@@ -96,14 +97,15 @@ export class FeaturedProductsComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
     this.atualizarProdutosVisiveis();
     this.ajustarProdutosPorPagina();
 
-    this.auth.isAuthenticated$.subscribe(isAuth => {
+    this.auth.isAuthenticated$.subscribe((isAuth) => {
       this.isAuthenticated = isAuth;
     });
   }
@@ -134,7 +136,9 @@ export class FeaturedProductsComponent implements OnInit {
   }
 
   podeAvancar(): boolean {
-    return this.indiceAtual + this.produtosPorPagina < this.produtosDestaque.length;
+    return (
+      this.indiceAtual + this.produtosPorPagina < this.produtosDestaque.length
+    );
   }
 
   podeVoltar(): boolean {
@@ -143,15 +147,43 @@ export class FeaturedProductsComponent implements OnInit {
 
   consultarPreco(produto: Produto) {
     if (!this.isAuthenticated) {
-      this.router.navigate(['/login']);
-    } else {
-      this.snackBar.open('Produto adicionado ao carrinho!', 'Fechar', {
-        duration: 3000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom',
-        panelClass: ['snackbar-sucesso']
+      this.router.navigate(['/login'], {
+        queryParams: { returnUrl: this.router.url },
       });
+    } else {
+      // Adicionar ao carrinho
+      this.cartService.addToCart(produto, 1);
+
+      this.snackBar
+        .open('Produto adicionado ao carrinho!', 'Ver Carrinho', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['snackbar-sucesso'],
+        })
+        .onAction()
+        .subscribe(() => {
+          this.router.navigate(['/carrinho']);
+        });
     }
+  }
+
+  addToCartQuick(produto: Produto, event: Event) {
+    event.stopPropagation();
+
+    if (!this.isAuthenticated) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.cartService.addToCart(produto, 1);
+
+    this.snackBar.open('✓ Produto adicionado!', 'Fechar', {
+      duration: 2000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['snackbar-success-compact'],
+    });
   }
 
   ajustarProdutosPorPagina() {

@@ -287,9 +287,11 @@
     <a *ngIf="!(isAuthenticated$ | async)" class="menu__button-a" title="Entrar" (click)="openLogin()" #loginButton>Entrar</a>
 
     <button mat-button [matMenuTriggerFor]="menu" *ngIf="(isAuthenticated$ | async)" class="menu__button-links">Menu</button>
+    <app-mini-cart *ngIf="(isAuthenticated$ | async)"></app-mini-cart>
     <mat-menu #menu="matMenu" class="mat-menu">
       <button mat-menu-item routerLink="/perfil" *ngIf="(isAuthenticated$ | async)">Perfil</button>
       <button mat-menu-item routerLink="/produtos">Produtos</button>
+      <button mat-menu-item routerLink="/carrinho">Carrinho</button>
       <button mat-menu-item *ngIf="isAdmin" routerLink="/admin">Gerenciar usuários</button>
       <button mat-menu-item (click)="logout()">Sair</button>
     </mat-menu>

@@ -10,6 +10,7 @@ import { LoginComponent } from "../../../auth/login/login.component";
 import { AuthService } from '../../../auth/service/auth.service';
 import { Observable, Subscription } from 'rxjs';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
+import { MiniCartComponent } from "../../../features/products/mini-cart/mini-cart.component";
 
 
 @Component({
@@ -24,7 +25,8 @@ import { ClickOutsideDirective } from '../../directives/click-outside.directive'
     CommonModule,
     RouterModule,
     LoginComponent,
-  ],
+    MiniCartComponent
+],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
 })

@@ -5,6 +5,7 @@ import { QuickViewComponent } from '../quick-view/quick-view.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CartService } from '../../service/cart/cart.service';
 
 export interface Produto {
   id: number;
@@ -28,9 +29,9 @@ export interface Produto {
   selector: 'app-products',
   imports: [CommonModule, MatIconModule, QuickViewComponent],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.scss'
+  styleUrl: './products.component.scss',
 })
-export class ProductsComponent implements OnInit{
+export class ProductsComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   Math = Math;
   isAuthenticated = false;
@@ -49,7 +50,8 @@ export class ProductsComponent implements OnInit{
     {
       id: 1,
       nome: 'GERADOR ON GRID SUNGROW - LAJE INCLINAÇÃO 5.5KW',
-      descricao: 'Kit completo para geração de energia solar em laje com inclinação',
+      descricao:
+        'Kit completo para geração de energia solar em laje com inclinação',
       categoria: 'Gerador de Energia Solar',
       subcategoria: 'On Grid',
       marca: 'Sungrow',
@@ -59,7 +61,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 8500.00
+      preco: 8500.0,
     },
     {
       id: 2,
@@ -74,12 +76,13 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 12000.00
+      preco: 12000.0,
     },
     {
       id: 3,
       nome: 'GERADOR ON GRID SUNGROW - SOLO MESA 8 PAINÉIS 10KW',
-      descricao: 'Sistema completo para instalação no solo com mesa para 8 painéis',
+      descricao:
+        'Sistema completo para instalação no solo com mesa para 8 painéis',
       categoria: 'Gerador de Energia Solar',
       subcategoria: 'On Grid',
       marca: 'Sungrow',
@@ -89,7 +92,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 15000.00
+      preco: 15000.0,
     },
     {
       id: 4,
@@ -104,7 +107,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 18000.00
+      preco: 18000.0,
     },
 
     // ON GRID - SAJ
@@ -121,7 +124,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 9000.00
+      preco: 9000.0,
     },
 
     // ON GRID - Solplanet
@@ -138,7 +141,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 11000.00
+      preco: 11000.0,
     },
 
     // ON GRID - Growatt
@@ -155,7 +158,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 13500.00
+      preco: 13500.0,
     },
 
     // OFF GRID INTERATIVO - Must
@@ -172,7 +175,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 16000.00
+      preco: 16000.0,
     },
     {
       id: 9,
@@ -187,7 +190,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 17500.00
+      preco: 17500.0,
     },
 
     // OFF GRID - Luxpower
@@ -204,7 +207,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 19000.00
+      preco: 19000.0,
     },
 
     // HÍBRIDO - Luxpower
@@ -221,7 +224,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 22000.00
+      preco: 22000.0,
     },
     {
       id: 12,
@@ -236,7 +239,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 24000.00
+      preco: 24000.0,
     },
 
     // RETROFIT - Must
@@ -253,7 +256,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 14000.00
+      preco: 14000.0,
     },
 
     // RETROFIT - Luxpower
@@ -270,7 +273,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 16500.00
+      preco: 16500.0,
     },
 
     // MICROINVERSOR - Growatt
@@ -287,7 +290,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 10500.00
+      preco: 10500.0,
     },
     {
       id: 16,
@@ -302,7 +305,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 12000.00
+      preco: 12000.0,
     },
 
     // MICROINVERSOR - DEYE
@@ -319,7 +322,7 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 11000.00
+      preco: 11000.0,
     },
     {
       id: 18,
@@ -334,8 +337,8 @@ export class ProductsComponent implements OnInit{
       disponibilidade: 'Disponível',
       avaliacoes: 0,
       emDestaque: false,
-      preco: 13500.00
-    }
+      preco: 13500.0,
+    },
   ];
 
   produtosFiltrados: Produto[] = [];
@@ -349,12 +352,13 @@ export class ProductsComponent implements OnInit{
   constructor(
     private auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
     // Verificar autenticação
-    this.auth.isAuthenticated$.subscribe(isAuth => {
+    this.auth.isAuthenticated$.subscribe((isAuth) => {
       this.isAuthenticated = isAuth;
     });
 
@@ -380,7 +384,10 @@ export class ProductsComponent implements OnInit{
       .trim();
   }
 
-  private matchesFilter(productField: string | undefined | null, filtro: string | null): boolean {
+  private matchesFilter(
+    productField: string | undefined | null,
+    filtro: string | null
+  ): boolean {
     if (!filtro) return true; // sem filtro -> aceita
     const prod = this.normalizeForCompare(productField);
     const filt = this.normalizeForCompare(filtro);
@@ -389,10 +396,13 @@ export class ProductsComponent implements OnInit{
 
   filtrarProdutos() {
     // Filtragem dinâmica considerando todos os possíveis filtros
-    this.produtosFiltrados = this.todosProdutos.filter(p => {
+    this.produtosFiltrados = this.todosProdutos.filter((p) => {
       // Comparações flexíveis
       const categoriaOK = this.matchesFilter(p.categoria, this.categoriaAtual);
-      const subcategoriaOK = this.matchesFilter(p.subcategoria, this.subcategoriaAtual);
+      const subcategoriaOK = this.matchesFilter(
+        p.subcategoria,
+        this.subcategoriaAtual
+      );
       const marcaOK = this.matchesFilter(p.marca, this.marcaAtual);
       const tipoOK = this.matchesFilter(p.tipo, this.tipoAtual);
 
@@ -404,7 +414,9 @@ export class ProductsComponent implements OnInit{
   }
 
   calcularPaginacao() {
-    this.totalPaginas = Math.ceil(this.produtosFiltrados.length / this.produtosPorPagina);
+    this.totalPaginas = Math.ceil(
+      this.produtosFiltrados.length / this.produtosPorPagina
+    );
   }
 
   atualizarProdutosPaginados() {
@@ -433,15 +445,61 @@ export class ProductsComponent implements OnInit{
 
   consultarPreco(produto: Produto) {
     if (!this.isAuthenticated) {
-      this.router.navigate(['/login']);
-    } else {
-     this.snackBar.open('Produto adicionado ao carrinho!', 'Fechar', {
-        duration: 3000,
+      this.snackBar
+        .open('Faça login para adicionar ao carrinho', 'Login', {
+          duration: 5000,
+          panelClass: ['snackbar-warning'],
+        })
+        .onAction()
+        .subscribe(() => {
+          this.router.navigate(['/login'], {
+            queryParams: { returnUrl: '/produtos' },
+          });
+        });
+      return;
+    }
+
+    // Adicionar ao carrinho
+    this.cartService.addToCart(produto, 1);
+
+    this.snackBar
+      .open('Produto adicionado ao carrinho!', 'Ver Carrinho', {
+        duration: 5000,
         horizontalPosition: 'center',
         verticalPosition: 'bottom',
-        panelClass: ['snackbar-sucesso']
+        panelClass: ['snackbar-sucesso'],
+      })
+      .onAction()
+      .subscribe(() => {
+        this.router.navigate(['/carrinho']);
       });
+  }
+
+  addToCartWithQuantity(produto: Produto, quantidade: number = 1) {
+    if (!this.isAuthenticated) {
+      this.router.navigate(['/login']);
+      return;
     }
+
+    this.cartService.addToCart(produto, quantidade);
+
+    this.snackBar
+      .open(
+        `${quantidade} ${
+          quantidade > 1 ? 'produtos adicionados' : 'produto adicionado'
+        } ao carrinho!`,
+        'Ver Carrinho',
+        {
+          duration: 4000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['snackbar-sucesso'],
+        }
+      )
+      .onAction()
+      .subscribe(() => {
+        this.router.navigate(['/carrinho']);
+      });
   }
 
   openQuickView(produto: Produto) {
