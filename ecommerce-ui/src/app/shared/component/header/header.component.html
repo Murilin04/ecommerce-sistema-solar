@@ -4,15 +4,20 @@
   </div>
 
   <div class="search_form">
-    <form action="">
+    <div>
       <div class="search_container">
-        <input type="text" placeholder="Procure o que você precisa" aria-label="Pesquisa" autocomplete="off"
-          class="search_input">
-        <button mat-icon-button type="submit" aria-label="Buscar" class="search_button">
-          <mat-icon>search</mat-icon>
-        </button>
+        <form (ngSubmit)="onSearchSubmit()" class="search_form_internal">
+          <input name="search" [(ngModel)]="searchTerm" type="text" placeholder="Procure o que você precisa" aria-label="Pesquisa" autocomplete="off"
+            class="search_input" />
+          <button mat-icon-button type="button" aria-label="Limpar busca" class="search_button" (click)="clearSearch()">
+            <mat-icon>close</mat-icon>
+          </button>
+          <button mat-icon-button type="submit" aria-label="Buscar" class="search_button">
+            <mat-icon>search</mat-icon>
+          </button>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 
   <div class="contato">

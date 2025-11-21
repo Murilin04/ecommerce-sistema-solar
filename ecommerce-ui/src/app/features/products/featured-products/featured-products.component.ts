@@ -8,6 +8,7 @@ import { QuickViewComponent } from '../quick-view/quick-view.component';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartService } from '../../service/cart/cart.service';
+import { SearchService } from '../../../shared/service/search.service';
 
 @Component({
   selector: 'app-featured-products',
@@ -85,6 +86,8 @@ export class FeaturedProductsComponent implements OnInit {
 
   // Produtos visíveis no carrossel
   produtosVisiveis: Produto[] = [];
+  // quando há filtro de busca, armazenamos a versão filtrada
+  produtosDestaqueFiltrados: Produto[] | null = null;
 
   // Controle do carrossel
   indiceAtual = 0;
@@ -98,7 +101,8 @@ export class FeaturedProductsComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private searchService: SearchService
   ) {}
 
   ngOnInit() {
@@ -108,12 +112,53 @@ export class FeaturedProductsComponent implements OnInit {
     this.auth.isAuthenticated$.subscribe((isAuth) => {
       this.isAuthenticated = isAuth;
     });
+
+    // Escuta o termo de busca global e aplica filtro nos produtos em destaque
+    this.searchService.search$.subscribe((term) => {
+      if (term) {
+        const q = this.normalizeForCompare(term);
+        this.produtosDestaqueFiltrados = this.produtosDestaque.filter((p) => {
+          const nome = this.normalizeForCompare(p.nome);
+          const descricao = this.normalizeForCompare(p.descricao);
+          const categoria = this.normalizeForCompare(p.categoria);
+          const codigo = this.normalizeForCompare(p.codigoCategoria);
+
+          return (
+            nome.includes(q) ||
+            descricao.includes(q) ||
+            categoria.includes(q) ||
+            codigo.includes(q)
+          );
+        });
+      } else {
+        this.produtosDestaqueFiltrados = null;
+      }
+
+      // reajustar view
+      this.indiceAtual = 0;
+      this.atualizarProdutosVisiveis();
+    });
   }
 
   atualizarProdutosVisiveis() {
+    const source = this.produtosDestaqueFiltrados || this.produtosDestaque;
     const inicio = this.indiceAtual;
     const fim = inicio + this.produtosPorPagina;
-    this.produtosVisiveis = this.produtosDestaque.slice(inicio, fim);
+    this.produtosVisiveis = source.slice(inicio, fim);
+  }
+
+  private normalizeForCompare(value: string | undefined | null): string {
+    if (!value) return '';
+    return value
+      .toString()
+      .toLowerCase()
+      // normalize + remove diacritics (acentos)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[_\-]+/g, ' ')
+      .replace(/[^\w\s]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 
   proximosProdutos() {

@@ -35,6 +35,7 @@ export class ProductsComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   Math = Math;
   isAuthenticated = false;
+  searchTerm: string | null = null;
   categoriaAtual: string | null = null;
   subcategoriaAtual: string | null = null;
   marcaAtual: string | null = null;
@@ -368,6 +369,12 @@ export class ProductsComponent implements OnInit {
       this.subcategoriaAtual = params['subcategoria'] || null;
       this.marcaAtual = params['marca'] || null;
       this.tipoAtual = params['tipo'] || null;
+      this.searchTerm = params['q'] || null;
+
+      // Se mudou o termo de busca, resetar para a primeira página
+      if (this.searchTerm) {
+        this.paginaAtual = 1;
+      }
 
       this.filtrarProdutos();
     });
@@ -378,6 +385,9 @@ export class ProductsComponent implements OnInit {
     return value
       .toString()
       .toLowerCase()
+      // normalize + remove diacritics (acentos)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
       .replace(/[_\-]+/g, ' ')
       .replace(/[^\w\s]/g, '') // remove pontuação
       .replace(/\s+/g, ' ')
@@ -395,19 +405,42 @@ export class ProductsComponent implements OnInit {
   }
 
   filtrarProdutos() {
-    // Filtragem dinâmica considerando todos os possíveis filtros
-    this.produtosFiltrados = this.todosProdutos.filter((p) => {
-      // Comparações flexíveis
-      const categoriaOK = this.matchesFilter(p.categoria, this.categoriaAtual);
-      const subcategoriaOK = this.matchesFilter(
-        p.subcategoria,
-        this.subcategoriaAtual
-      );
-      const marcaOK = this.matchesFilter(p.marca, this.marcaAtual);
-      const tipoOK = this.matchesFilter(p.tipo, this.tipoAtual);
 
-      return categoriaOK && subcategoriaOK && marcaOK && tipoOK;
-    });
+    // Se houver um termo de busca genérico, filtra por substring em vários campos
+    if (this.searchTerm) {
+      const q = this.normalizeForCompare(this.searchTerm);
+      this.produtosFiltrados = this.todosProdutos.filter((p) => {
+        const nome = this.normalizeForCompare(p.nome);
+        const descricao = this.normalizeForCompare(p.descricao);
+        const categoria = this.normalizeForCompare(p.categoria);
+        const marca = this.normalizeForCompare(p.marca);
+        const tipo = this.normalizeForCompare(p.tipo);
+        const codigo = this.normalizeForCompare(p.codigoCategoria);
+
+        return (
+          nome.includes(q) ||
+          descricao.includes(q) ||
+          categoria.includes(q) ||
+          marca.includes(q) ||
+          tipo.includes(q) ||
+          codigo.includes(q)
+        );
+      });
+    } else {
+      // Filtragem dinâmica considerando todos os possíveis filtros
+      this.produtosFiltrados = this.todosProdutos.filter((p) => {
+        // Comparações flexíveis
+        const categoriaOK = this.matchesFilter(p.categoria, this.categoriaAtual);
+        const subcategoriaOK = this.matchesFilter(
+          p.subcategoria,
+          this.subcategoriaAtual
+        );
+        const marcaOK = this.matchesFilter(p.marca, this.marcaAtual);
+        const tipoOK = this.matchesFilter(p.tipo, this.tipoAtual);
+
+        return categoriaOK && subcategoriaOK && marcaOK && tipoOK;
+      });
+    }
 
     this.calcularPaginacao();
     this.atualizarProdutosPaginados();
