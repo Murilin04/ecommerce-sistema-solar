@@ -26,4 +26,8 @@ export class ProfileService {
     return this.http.put<void>(`${this.apiUrl}/${id}/senha`, data);
   }
 
+  deleteProfile(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 }

@@ -19,8 +19,8 @@
           [src]="produto.imagem"
           [alt]="produto.nome"
           class="produto-imagem"
-          loading="lazy"
           (error)="onImageError($event)">
+          <!-- loading="lazy" ADICIONAR QUANDO NECESSÁRIO -->
 
         <!-- Botão de Visualização Rápida -->
         <button

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIcon } from "@angular/material/icon";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { MatInput } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../service/cart/cart.service';
 import { CartItem } from '../../models/CartItem.model';
@@ -11,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
-  imports: [MatIcon, MatFormField, MatLabel, CommonModule, FormsModule],
+  imports: [MatIcon, MatFormField, MatLabel, CommonModule, FormsModule, MatInput],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })

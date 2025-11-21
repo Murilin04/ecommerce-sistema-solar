@@ -116,7 +116,7 @@
           </mat-form-field>
         </div>
 
-        <button mat-raised-button type="submit" [disabled]="formPassword.invalid">
+        <button type="submit" [disabled]="formPassword.invalid">
           Alterar senha
         </button>
       </form>
@@ -124,8 +124,8 @@
 
     <!-- Botões -->
     <div class="actions">
-      <button mat-raised-button color="primary" type="submit">Salvar</button>
-      <button mat-stroked-button color="warn" type="button" (click)="cancelar()">Cancelar</button>
+      <button type="submit">Salvar</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
     </div>
   </form>
 </div>

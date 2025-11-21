@@ -48,6 +48,12 @@
       <li>Alterar senha</li>
       <li>Preferências</li>
     </ul>
+    <div class="delete-wrapper">
+      <button mat-raised-button color="warn" class="delete-btn" (click)="deleteAccount()">
+        <mat-icon>delete</mat-icon>
+        Excluir minha conta
+      </button>
+    </div>
   </mat-card>
   <button mat-stroked-button (click)="navigate('/home')">Voltar</button>
 </div>
