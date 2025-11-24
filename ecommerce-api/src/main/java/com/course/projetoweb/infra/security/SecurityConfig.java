@@ -34,10 +34,16 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/password-reset/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/integrador/check-email").permitAll()
                         .requestMatchers(HttpMethod.GET, "/integrador/exists-email").permitAll()
+                        .requestMatchers("/products/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
 
                         
                         .requestMatchers("/admin/integrador").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/products/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

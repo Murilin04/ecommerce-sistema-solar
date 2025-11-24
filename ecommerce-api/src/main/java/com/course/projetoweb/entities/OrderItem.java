@@ -2,51 +2,135 @@ package com.course.projetoweb.entities;
 
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
-import com.course.projetoweb.entities.pk.OrderItemPK;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_order_item")
+@Table(name = "order_item")
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @EmbeddedId
-    private OrderItemPK id = new OrderItemPK();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private Integer quantity;
-    private Double price;
-
-    public OrderItem() {
-
-    }
-
-    public OrderItem(Order order, Product product, Integer quantity, Double price) {
-        id.setOrder(order);
-        id.setProduct(product);
-        this.quantity = quantity;
-        this.price = price;
-    }
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
     @JsonIgnore
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @NotBlank(message = "Nome do produto é obrigatório")
+    @Column(name = "product_name", nullable = false)
+    private String productName;
+
+    @Column(name = "product_image")
+    private String productImage;
+
+    @Column(name = "product_code", length = 50)
+    private String productCode;
+
+    @NotNull(message = "Quantidade é obrigatória")
+    @Min(value = 1, message = "Quantidade mínima é 1")
+    @Column(nullable = false)
+    private Integer quantity;
+
+    @NotNull(message = "Preço unitário é obrigatório")
+    @DecimalMin(value = "0.0", inclusive = false)
+    @Column(name = "unit_price", nullable = false, precision = 10, scale = 2)
+    private BigDecimal unitPrice;
+
+    @NotNull(message = "Preço total é obrigatório")
+    @DecimalMin(value = "0.0", inclusive = false)
+    @Column(name = "total_price", nullable = false, precision = 10, scale = 2)
+    private BigDecimal totalPrice;
+
+    // Construtores
+    public OrderItem() {
+    }
+
+    public OrderItem(Product product, String productName, Integer quantity, BigDecimal unitPrice) {
+        this.product = product;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.totalPrice = unitPrice.multiply(BigDecimal.valueOf(quantity));
+    }
+
+    // Helper method
+    public void calculateTotalPrice() {
+        if (this.unitPrice == null || this.quantity == null) {
+            this.totalPrice = BigDecimal.ZERO;
+        } else {
+            this.totalPrice = this.unitPrice.multiply(BigDecimal.valueOf(this.quantity));
+        }
+    }
+
+    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Order getOrder() {
-        return id.getOrder();
-    }    
+        return order;
+    }
 
     public void setOrder(Order order) {
-        id.setOrder(order);
+        this.order = order;
     }
 
     public Product getProduct() {
-        return id.getProduct();
+        return product;
     }
 
     public void setProduct(Product product) {
-        id.setProduct(product);
+        this.product = product;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 
     public Integer getQuantity() {
@@ -55,44 +139,24 @@ public class OrderItem implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+        calculateTotalPrice();
     }
 
-    public Double getPrice() {
-        return price;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
+        calculateTotalPrice();
     }
 
-    public Double getSubTotal() {
-        return price * quantity;
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        OrderItem other = (OrderItem) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
-    
 }
 

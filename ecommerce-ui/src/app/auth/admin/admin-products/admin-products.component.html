@@ -1,0 +1,423 @@
+<div class="admin-products-container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <span class="icon">📦</span>
+        Gerenciamento de Produtos
+      </h1>
+      <p class="page-subtitle">Cadastre, edite e gerencie todos os produtos do catálogo</p>
+    </div>
+    <button class="btn-primary" (click)="openCreateModal()">
+      <span class="icon">➕</span>
+      Novo Produto
+    </button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon stat-primary">📊</div>
+      <div class="stat-content">
+        <p class="stat-label">Total de Produtos</p>
+        <h3 class="stat-value">{{ totalProducts }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-success">✓</div>
+      <div class="stat-content">
+        <p class="stat-label">Produtos Ativos</p>
+        <h3 class="stat-value">{{ activeProducts }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-warning">⚠</div>
+      <div class="stat-content">
+        <p class="stat-label">Estoque Baixo</p>
+        <h3 class="stat-value">{{ lowStockProducts }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-info">⭐</div>
+      <div class="stat-content">
+        <p class="stat-label">Em Destaque</p>
+        <h3 class="stat-value">{{ featuredProducts }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters and Search -->
+  <div class="filters-section">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Buscar produtos..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()"
+        class="search-input"
+      />
+      <span class="search-icon">🔍</span>
+    </div>
+
+    <div class="filter-buttons">
+      <button
+        class="filter-btn"
+        [class.active]="filterStatus === 'all'"
+        (click)="filterByStatus('all')"
+      >
+        Todos
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="filterStatus === 'active'"
+        (click)="filterByStatus('active')"
+      >
+        Ativos
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="filterStatus === 'featured'"
+        (click)="filterByStatus('featured')"
+      >
+        Destaque
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="filterStatus === 'lowStock'"
+        (click)="filterByStatus('lowStock')"
+      >
+        Estoque Baixo
+      </button>
+    </div>
+  </div>
+
+  <!-- Products Table -->
+  <div class="table-container">
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>Imagem</th>
+          <th>Nome</th>
+          <th>Categoria</th>
+          <th>Marca</th>
+          <th>Preço</th>
+          <th>Estoque</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of displayedProducts" [class.inactive]="!product.ativo">
+          <td>
+            <img
+              [src]="product.imagem"
+              [alt]="product.nome"
+              class="product-thumbnail"
+              (error)="onImageError($event)"
+            />
+          </td>
+          <td>
+            <div class="product-name-cell">
+              <p class="product-name">{{ product.nome }}</p>
+              <p class="product-code">{{ product.codigoCategoria }}</p>
+            </div>
+          </td>
+          <td>
+            <span class="badge badge-category">{{ product.categoria }}</span>
+          </td>
+          <td>{{ product.marca || '-' }}</td>
+          <td class="price-cell">
+            {{ product.preco ? (product.preco / 100 | currency: 'BRL') : '-' }}
+          </td>
+          <td>
+            <span
+              class="stock-badge"
+              [class.stock-low]="product.estoque && product.estoque <= 10"
+              [class.stock-out]="!product.estoque || product.estoque === 0"
+            >
+              {{ product.estoque || 0 }}
+            </span>
+          </td>
+          <td>
+            <span
+              class="status-badge"
+              [class.status-active]="product.ativo"
+              [class.status-inactive]="!product.ativo"
+            >
+              {{ product.ativo ? 'Ativo' : 'Inativo' }}
+            </span>
+            <span *ngIf="product.emDestaque" class="featured-badge">⭐</span>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button
+                class="action-btn btn-edit"
+                (click)="openEditModal(product)"
+                title="Editar"
+              >
+                ✏️
+              </button>
+              <button
+                class="action-btn btn-stock"
+                (click)="openStockModal(product)"
+                title="Atualizar Estoque"
+              >
+                📦
+              </button>
+              <button
+                *ngIf="product.ativo"
+                class="action-btn btn-delete"
+                (click)="deleteProduct(product)"
+                title="Desativar"
+              >
+                🗑️
+              </button>
+              <button
+                *ngIf="!product.ativo"
+                class="action-btn btn-restore"
+                (click)="restoreProduct(product)"
+                title="Restaurar"
+              >
+                ↩️
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="displayedProducts.length === 0" class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h3>Nenhum produto encontrado</h3>
+      <p>Tente ajustar os filtros ou adicione um novo produto</p>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button
+      class="page-btn"
+      [disabled]="currentPage === 0"
+      (click)="previousPage()"
+    >
+      ← Anterior
+    </button>
+
+    <div class="page-numbers">
+      <button
+        *ngFor="let page of getPageNumbers()"
+        class="page-number"
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)"
+      >
+        {{ page + 1 }}
+      </button>
+    </div>
+
+    <button
+      class="page-btn"
+      [disabled]="currentPage === totalPages - 1"
+      (click)="nextPage()"
+    >
+      Próxima →
+    </button>
+  </div>
+</div>
+
+<!-- Modal Create/Edit -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ isEditMode ? 'Editar Produto' : 'Novo Produto' }}</h2>
+      <button class="close-btn" (click)="closeModal()">×</button>
+    </div>
+
+    <form [formGroup]="productForm" (ngSubmit)="saveProduct()" class="product-form">
+      <div class="form-grid">
+        <!-- Nome -->
+        <div class="form-group full-width">
+          <label>Nome do Produto *</label>
+          <input
+            type="text"
+            formControlName="nome"
+            placeholder="Ex: Inversor Solar 5kW"
+            class="form-input"
+          />
+          <span class="error-message" *ngIf="productForm.get('nome')?.invalid && productForm.get('nome')?.touched">
+            Nome é obrigatório
+          </span>
+        </div>
+
+        <!-- Descrição -->
+        <div class="form-group full-width">
+          <label>Descrição *</label>
+          <textarea
+            formControlName="descricao"
+            placeholder="Descrição detalhada do produto"
+            class="form-textarea"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <!-- Categoria -->
+        <div class="form-group">
+          <label>Categoria *</label>
+          <input
+            type="text"
+            formControlName="categoria"
+            placeholder="Ex: Gerador de Energia Solar"
+            class="form-input"
+          />
+        </div>
+
+        <!-- Subcategoria -->
+        <div class="form-group">
+          <label>Subcategoria</label>
+          <input
+            type="text"
+            formControlName="subcategoria"
+            placeholder="Ex: On Grid"
+            class="form-input"
+          />
+        </div>
+
+        <!-- Marca -->
+        <div class="form-group">
+          <label>Marca</label>
+          <input
+            type="text"
+            formControlName="marca"
+            placeholder="Ex: Sungrow"
+            class="form-input"
+          />
+        </div>
+
+        <!-- Tipo -->
+        <div class="form-group">
+          <label>Tipo</label>
+          <input
+            type="text"
+            formControlName="tipo"
+            placeholder="Ex: Laje Inclinação"
+            class="form-input"
+          />
+        </div>
+
+        <!-- Código -->
+        <div class="form-group">
+          <label>Código *</label>
+          <input
+            type="text"
+            formControlName="codigoCategoria"
+            placeholder="Ex: Código: 10001"
+            class="form-input"
+          />
+        </div>
+
+        <!-- Preço -->
+        <div class="form-group">
+          <label>Preço (em centavos) *</label>
+          <input
+            type="number"
+            formControlName="preco"
+            placeholder="Ex: 15000 (R$ 150,00)"
+            class="form-input"
+          />
+        </div>
+
+        <!-- Estoque -->
+        <div class="form-group">
+          <label>Estoque *</label>
+          <input
+            type="number"
+            formControlName="estoque"
+            placeholder="Ex: 50"
+            class="form-input"
+          />
+        </div>
+
+        <!-- Imagem Principal -->
+        <div class="form-group full-width">
+          <label>URL da Imagem Principal *</label>
+          <input
+            type="text"
+            formControlName="imagem"
+            placeholder="Ex: assets/img/produtos/produto.png"
+            class="form-input"
+          />
+        </div>
+
+        <!-- Checkboxes -->
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="emDestaque" />
+            <span>Produto em Destaque</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="ativo" />
+            <span>Produto Ativo</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="productForm.invalid || saving"
+        >
+          {{ saving ? 'Salvando...' : (isEditMode ? 'Atualizar' : 'Criar') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Stock Update -->
+<div class="modal-overlay" *ngIf="showStockModal" (click)="closeStockModal()">
+  <div class="modal-content modal-small" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Atualizar Estoque</h2>
+      <button class="close-btn" (click)="closeStockModal()">×</button>
+    </div>
+
+    <div class="stock-modal-body">
+      <p class="product-name-modal">{{ selectedProduct?.nome }}</p>
+      <p class="current-stock">Estoque atual: <strong>{{ selectedProduct?.estoque || 0 }}</strong></p>
+
+      <div class="form-group">
+        <label>Nova Quantidade</label>
+        <input
+          type="number"
+          [(ngModel)]="newStockQuantity"
+          placeholder="Digite a nova quantidade"
+          class="form-input"
+          min="0"
+        />
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn-secondary" (click)="closeStockModal()">
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="btn-primary"
+        (click)="updateStock()"
+        [disabled]="!newStockQuantity && newStockQuantity !== 0"
+      >
+        Atualizar
+      </button>
+    </div>
+  </div>
+</div>

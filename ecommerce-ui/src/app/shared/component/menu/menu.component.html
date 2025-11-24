@@ -292,7 +292,10 @@
       <button mat-menu-item routerLink="/perfil" *ngIf="(isAuthenticated$ | async)">Perfil</button>
       <button mat-menu-item routerLink="/produtos">Produtos</button>
       <button mat-menu-item routerLink="/carrinho">Carrinho</button>
+      <button mat-menu-item routerLink="/meus-pedidos">Meus Pedidos</button>
+      <button mat-menu-item *ngIf="isAdmin" routerLink="/admin/pedidos">Gerenciar Pedidos</button>
       <button mat-menu-item *ngIf="isAdmin" routerLink="/admin">Gerenciar usuários</button>
+      <button mat-menu-item *ngIf="isAdmin" routerLink="/admin/produtos">Gerenciar Produtos</button>
       <button mat-menu-item (click)="logout()">Sair</button>
     </mat-menu>
   </div>

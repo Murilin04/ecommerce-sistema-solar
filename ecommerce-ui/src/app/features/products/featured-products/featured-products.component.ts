@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartService } from '../../service/cart/cart.service';
 import { SearchService } from '../../../shared/service/search.service';
+import { ProductService } from '../../service/product/product.service';
 
 @Component({
   selector: 'app-featured-products',
@@ -19,73 +20,20 @@ import { SearchService } from '../../../shared/service/search.service';
 })
 export class FeaturedProductsComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
+  private productService = inject(ProductService);
+  private auth = inject(AuthService);
+  private router = inject(Router);
+  private cartService = inject(CartService);
+  private searchService = inject(SearchService);
+
   showQuickView = false;
-  // Array de produtos em destaque
-  produtosDestaque: Produto[] = [
-    {
-      id: 1,
-      nome: 'FRONT BOX AC DE 32A PARA INVERSORES DE ATÉ 6KW MONO',
-      descricao: 'Front Box AC de 32A para Inversores de até 6kW Monofásico',
-      categoria: 'Componentes CA Quadro CA',
-      codigoCategoria: 'Código: 30521',
-      imagem: 'assets/img/produtos/front-box-32a.png',
-      disponibilidade: 'Disponível',
-      avaliacoes: 0,
-      emDestaque: true,
-      preco: 15000,
-    },
-    {
-      id: 2,
-      nome: 'DISJUNTOR WEG BIPOLAR 20A, CURVA C, 3kA (380V), DIN',
-      descricao: 'Disjuntor Bipolar 20A Curva C 3kA DIN WEG',
-      categoria: 'Componentes CA',
-      codigoCategoria: 'Código: 31073',
-      imagem: 'assets/img/produtos/disjuntor-weg-20a.png',
-      disponibilidade: 'Disponível',
-      avaliacoes: 0,
-      emDestaque: true,
-      preco: 2000,
-    },
-    {
-      id: 3,
-      nome: 'LP16-48100 5.12KWH 51.2V 100A 6.000 CICLOS',
-      descricao: 'Bateria de Lítio MUST Solar 5.12kWh 51.2V 100A',
-      categoria: 'Bateria de Lítio Must Solar',
-      codigoCategoria: 'Código: 41165',
-      imagem: 'assets/img/produtos/bateria-litio-must.png',
-      disponibilidade: 'Disponível',
-      avaliacoes: 0,
-      emDestaque: true,
-      preco: 20000,
-    },
-    {
-      id: 4,
-      nome: 'NEO2000M-X 2KW 4MPPT MONOFÁSICO 220V',
-      descricao: 'Microinversor Solar Growatt 2kW 4MPPT 220V',
-      categoria: 'Inversor Solar Microinversor Solar Growatt',
-      codigoCategoria: 'Código: 112096',
-      imagem: 'assets/img/produtos/microinversor-growatt.png',
-      disponibilidade: 'Disponível',
-      avaliacoes: 0,
-      emDestaque: true,
-      preco: 10000,
-    },
-    {
-      id: 5,
-      nome: 'GRID ZERO MULTIMARCAS SOLARVIEW MONO BIF. TRIF. COM 3 TCs',
-      descricao: 'GRID ZERO MULTIMARCAS SOLARVIEW MONO BIF. TRIF. COM 3 TCs',
-      categoria: 'Grid Zero Multimarcas',
-      codigoCategoria: 'Código: 20145',
-      imagem: 'assets/img/produtos/grid-zero-multimarcas.png',
-      disponibilidade: 'Disponível',
-      avaliacoes: 0,
-      emDestaque: true,
-      preco: 5000,
-    },
-  ];
+
+  // Array de produtos em destaque carregado do backend
+  produtosDestaque: Produto[] = [];
 
   // Produtos visíveis no carrossel
   produtosVisiveis: Produto[] = [];
+
   // quando há filtro de busca, armazenamos a versão filtrada
   produtosDestaqueFiltrados: Produto[] | null = null;
 
@@ -98,15 +46,14 @@ export class FeaturedProductsComponent implements OnInit {
   produtoSelecionado: Produto | null = null;
   isAuthenticated = false;
 
-  constructor(
-    private auth: AuthService,
-    private router: Router,
-    private cartService: CartService,
-    private searchService: SearchService
-  ) {}
+  // Estado de carregamento
+  loading = true;
+  error: string | null = null;
 
   ngOnInit() {
-    this.atualizarProdutosVisiveis();
+    // Carregar produtos em destaque do backend
+    this.loadFeaturedProducts();
+
     this.ajustarProdutosPorPagina();
 
     this.auth.isAuthenticated$.subscribe((isAuth) => {
@@ -140,6 +87,39 @@ export class FeaturedProductsComponent implements OnInit {
     });
   }
 
+  /**
+   * Carrega produtos em destaque do backend
+   */
+  loadFeaturedProducts(): void {
+    this.loading = true;
+    this.error = null;
+
+    this.productService.getFeaturedProducts().subscribe({
+      next: (products) => {
+        this.produtosDestaque = products;
+        this.loading = false;
+        this.atualizarProdutosVisiveis();
+
+        // Log para debug
+        console.log(`✅ ${products.length} produtos em destaque carregados`);
+      },
+      error: (error) => {
+        console.error('❌ Erro ao carregar produtos em destaque:', error);
+        this.error = 'Não foi possível carregar os produtos em destaque.';
+        this.loading = false;
+
+        this.snackBar.open(
+          'Erro ao carregar produtos em destaque',
+          'Fechar',
+          {
+            duration: 5000,
+            panelClass: ['snackbar-error']
+          }
+        );
+      }
+    });
+  }
+
   atualizarProdutosVisiveis() {
     const source = this.produtosDestaqueFiltrados || this.produtosDestaque;
     const inicio = this.indiceAtual;
@@ -162,7 +142,8 @@ export class FeaturedProductsComponent implements OnInit {
   }
 
   proximosProdutos() {
-    const totalProdutos = this.produtosDestaque.length;
+    const source = this.produtosDestaqueFiltrados || this.produtosDestaque;
+    const totalProdutos = source.length;
     const proximoIndice = this.indiceAtual + this.produtosPorPagina;
 
     if (proximoIndice < totalProdutos) {
@@ -181,9 +162,8 @@ export class FeaturedProductsComponent implements OnInit {
   }
 
   podeAvancar(): boolean {
-    return (
-      this.indiceAtual + this.produtosPorPagina < this.produtosDestaque.length
-    );
+    const source = this.produtosDestaqueFiltrados || this.produtosDestaque;
+    return this.indiceAtual + this.produtosPorPagina < source.length;
   }
 
   podeVoltar(): boolean {
@@ -253,7 +233,7 @@ export class FeaturedProductsComponent implements OnInit {
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement | null;
     if (img) {
-      img.src = 'assets/img/produtos/placeholder.png';
+      img.src = 'assets/img/avatar-placeholder.png';
     }
   }
 

@@ -1,0 +1,84 @@
+<div class="confirmation-container">
+  <div class="confirmation-card">
+    <!-- Success Animation -->
+    <div class="success-animation">
+      <div class="checkmark-circle">
+        <div class="checkmark"></div>
+      </div>
+    </div>
+
+    <!-- Success Message -->
+    <h1 class="success-title">🎉 Pedido Realizado com Sucesso!</h1>
+    <p class="success-subtitle">Seu pedido foi confirmado e está sendo processado.</p>
+
+    <!-- Order Details -->
+    <div class="order-details" *ngIf="order">
+      <div class="detail-row">
+        <span class="detail-label">Número do Pedido:</span>
+        <span class="detail-value">{{ order.orderNumber }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Data:</span>
+        <span class="detail-value">{{ order.createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Total:</span>
+        <span class="detail-value total">{{ order.total | currency: 'BRL' }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Forma de Pagamento:</span>
+        <span class="detail-value">{{ getPaymentMethodLabel(order.paymentMethod) }}</span>
+      </div>
+    </div>
+
+    <!-- PIX Details -->
+    <div *ngIf="paymentMethod === 'PIX' && payment" class="payment-info pix-info">
+      <h3>📱 Pague com PIX</h3>
+      <p>Escaneie o QR Code ou copie o código:</p>
+
+      <div class="pix-qrcode">
+        <img [src]="payment.pixQrCode" alt="QR Code PIX">
+      </div>
+
+      <div class="pix-code">
+        <input type="text" [value]="payment.pixCode" readonly>
+        <button (click)="copyPixCode()">📋 Copiar</button>
+      </div>
+
+      <p class="expiry-info">⏰ Válido até {{ payment.expiresAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+    </div>
+
+    <!-- Boleto Details -->
+    <div *ngIf="paymentMethod === 'BOLETO' && payment" class="payment-info boleto-info">
+      <h3>📄 Boleto Bancário</h3>
+      <p>Código de barras:</p>
+
+      <div class="boleto-barcode">
+        <input type="text" [value]="payment.boletoBarcode" readonly>
+        <button (click)="copyBoleto()">📋 Copiar</button>
+      </div>
+
+      <a [href]="payment.boletoUrl" target="_blank" class="btn-boleto">
+        📥 Baixar Boleto PDF
+      </a>
+
+      <p class="expiry-info">⏰ Vencimento: {{ payment.expiresAt | date: 'dd/MM/yyyy' }}</p>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn-primary" (click)="viewOrderDetails()">
+        Ver Detalhes do Pedido
+      </button>
+      <button class="btn-secondary" (click)="continueShopping()">
+        Continuar Comprando
+      </button>
+    </div>
+
+    <!-- Email Notification -->
+    <div class="email-notification">
+      <span class="icon">📧</span>
+      <p>Enviamos um e-mail de confirmação para <strong>{{ order?.customerEmail }}</strong></p>
+    </div>
+  </div>
+</div>

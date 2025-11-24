@@ -14,6 +14,11 @@ import { AdminAddNewUsersComponent } from './auth/admin/admin-add-new-users/admi
 import { AdminEditUsersComponent } from './auth/admin/admin-edit-users/admin-edit-users.component';
 import { ProductsComponent } from './features/products/products/products.component';
 import { CartComponent } from './features/products/cart/cart.component';
+import { AdminProductsComponent } from './auth/admin/admin-products/admin-products.component';
+import { CheckoutComponent } from './features/products/chekout/chekout.component';
+import { OrderConfirmationComponent } from './features/products/order-comfirmation/order-comfirmation.component';
+import { MyOrdersComponent } from './features/products/my-orders/my-orders.component';
+import { AdminOrdersComponent } from './auth/admin/admin-orders/admin-orders.component';
 
 export const routes: Routes = [
 
@@ -30,6 +35,38 @@ export const routes: Routes = [
     component: ResetPasswordFormComponent,
   },
   {
+    path: 'meus-pedidos',
+    component: MyOrdersComponent,
+    canActivate: [AuthGuard]
+  },
+  // {
+  //   path: 'pedido/:id',
+  //   component: OrderDetailComponent, // Criar depois se necessário
+  //   canActivate: [AuthGuard]
+  // },
+
+  // Admin
+  {
+    path: 'admin/pedidos',
+    component: AdminOrdersComponent,
+    canActivate: [AuthGuard, RoleGuard]
+  },
+  // {
+  //   path: 'admin/pedido/:id',
+  //   component: AdminOrderDetailComponent, // Criar depois se necessário
+  //   canActivate: [AuthGuard, RoleGuard]
+  // }
+    {
+    path: 'checkout',
+    component: CheckoutComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'checkout/confirmacao',
+    component: OrderConfirmationComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'admin',
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
@@ -44,6 +81,12 @@ export const routes: Routes = [
   {
     path: 'admin/novo',
     component: AdminAddNewUsersComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'admin/produtos',
+    component: AdminProductsComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ADMIN'] }
   },

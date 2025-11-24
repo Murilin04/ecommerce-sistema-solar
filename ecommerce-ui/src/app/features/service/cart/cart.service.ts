@@ -3,12 +3,13 @@ import { Cart } from '../../models/Cart.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CartItem } from '../../models/CartItem.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private apiUrl = 'http://localhost:8080/api/carrinho';
+  private apiUrl = `${environment.apiPath}/carrinho`;
 
   // Signals para reatividade
   private cartSignal = signal<Cart>({
@@ -114,6 +115,121 @@ export class CartService {
     }
   }
 
+  // ========== NOVOS MÉTODOS PARA CHECKOUT ==========
+
+  /**
+   * Obter itens do carrinho no formato compatível com OrderItem
+   * @returns Array de itens formatados para o checkout
+   */
+  getCartItems(): Array<{
+    produto: {
+      id: number;
+      nome: string;
+      preco: number;
+      imagem: string;
+      codigoCategoria: string;
+    };
+    quantidade: number;
+  }> {
+    const currentCart = this.cartSignal();
+
+    return currentCart.items.map(item => ({
+      produto: {
+        id: item.produtoId,
+        nome: item.nome,
+        preco: item.preco,
+        imagem: item.imagem,
+        codigoCategoria: item.categoria || ''
+      },
+      quantidade: item.quantidade
+    }));
+  }
+
+  /**
+   * Obter total do carrinho (em centavos)
+   */
+  getTotal(): number {
+    return this.cartSignal().total;
+  }
+
+  /**
+   * Obter subtotal do carrinho (em centavos)
+   */
+  getSubtotal(): number {
+    return this.cartSignal().subtotal;
+  }
+
+  /**
+   * Definir valor do frete (em centavos)
+   */
+  setShippingCost(cost: number): void {
+    const currentCart = this.cartSignal();
+    currentCart.frete = cost;
+    this.recalcularTotal();
+    this.saveCart();
+  }
+
+  /**
+   * Obter frete atual
+   */
+  getShippingCost(): number {
+    return this.cartSignal().frete;
+  }
+
+  /**
+   * Definir desconto (em centavos)
+   */
+  setDiscount(discount: number): void {
+    const currentCart = this.cartSignal();
+    currentCart.desconto = discount;
+    this.recalcularTotal();
+    this.saveCart();
+  }
+
+  /**
+   * Obter desconto atual
+   */
+  getDiscount(): number {
+    return this.cartSignal().desconto;
+  }
+
+  /**
+   * Obter carrinho no formato para criar pedido
+   */
+  getCartForOrder(): {
+    items: Array<{
+      productId: number;
+      productName: string;
+      productImage: string;
+      productCode: string;
+      quantity: number;
+      unitPrice: number;
+    }>;
+    subtotal: number;
+    shippingCost: number;
+    discount: number;
+    total: number;
+  } {
+    const currentCart = this.cartSignal();
+
+    return {
+      items: currentCart.items.map(item => ({
+        productId: item.produtoId,
+        productName: item.nome,
+        productImage: item.imagem,
+        productCode: item.categoria || '',
+        quantity: item.quantidade,
+        unitPrice: (item.preco || 0) / 100 // Converter de centavos para reais
+      })),
+      subtotal: currentCart.subtotal / 100,
+      shippingCost: currentCart.frete / 100,
+      discount: currentCart.desconto / 100,
+      total: currentCart.total / 100
+    };
+  }
+
+  // ========== FIM DOS NOVOS MÉTODOS ==========
+
   // Aplicar cupom de desconto
   applyCoupon(couponCode: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/aplicar-cupom`, { code: couponCode });
@@ -163,8 +279,9 @@ export class CartService {
     });
   }
 
-  // Finalizar compra
+  // Finalizar compra (DEPRECATED - usar OrderService)
   checkout(orderData: any): Observable<any> {
+    console.warn('⚠️ CartService.checkout() está deprecated. Use OrderService.createOrder()');
     return this.http.post(`${this.apiUrl}/checkout`, {
       ...orderData,
       cart: this.cartSignal()
@@ -187,5 +304,56 @@ export class CartService {
       userId,
       cart: this.cartSignal()
     });
+  }
+
+  /**
+   * Validar se o carrinho está pronto para checkout
+   */
+  isReadyForCheckout(): { ready: boolean; errors: string[] } {
+    const errors: string[] = [];
+    const currentCart = this.cartSignal();
+
+    if (currentCart.items.length === 0) {
+      errors.push('Carrinho vazio');
+    }
+
+    currentCart.items.forEach(item => {
+      if (!item.produtoId) {
+        errors.push(`Item sem ID: ${item.nome}`);
+      }
+      if (item.quantidade < 1) {
+        errors.push(`Quantidade inválida para: ${item.nome}`);
+      }
+      if (!item.preco || item.preco <= 0) {
+        errors.push(`Preço inválido para: ${item.nome}`);
+      }
+    });
+
+    return {
+      ready: errors.length === 0,
+      errors
+    };
+  }
+
+  /**
+   * Obter número de itens únicos (não total de quantidade)
+   */
+  getUniqueItemCount(): number {
+    return this.cartSignal().items.length;
+  }
+
+  /**
+   * Verificar se produto está no carrinho
+   */
+  isProductInCart(productId: number): boolean {
+    return this.cartSignal().items.some(item => item.produtoId === productId);
+  }
+
+  /**
+   * Obter quantidade de um produto específico no carrinho
+   */
+  getProductQuantity(productId: number): number {
+    const item = this.cartSignal().items.find(i => i.produtoId === productId);
+    return item ? item.quantidade : 0;
   }
 }

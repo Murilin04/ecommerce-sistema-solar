@@ -1,26 +1,5 @@
 package com.course.projetoweb.infra;
 
-import java.time.Instant;
-import java.util.Arrays;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-
-import com.course.projetoweb.entities.Category;
-import com.course.projetoweb.entities.Order;
-import com.course.projetoweb.entities.OrderItem;
-import com.course.projetoweb.entities.Payment;
-import com.course.projetoweb.entities.Product;
-import com.course.projetoweb.entities.Integrador;
-import com.course.projetoweb.entities.enums.OrderStatus;
-import com.course.projetoweb.repositories.CategoryRepository;
-import com.course.projetoweb.repositories.OrderItemRepository;
-import com.course.projetoweb.repositories.OrderRepository;
-import com.course.projetoweb.repositories.ProductRepository;
-import com.course.projetoweb.repositories.IntegradorRepository;
-
 // @Configuration
 // @Profile("test")
 // public class TestConfig implements CommandLineRunner {

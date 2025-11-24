@@ -1,0 +1,165 @@
+<div class="my-orders-container">
+  <div class="page-header">
+    <h1>📦 Meus Pedidos</h1>
+    <p class="subtitle">Acompanhe o status dos seus pedidos</p>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Carregando seus pedidos...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && orders.length === 0" class="empty-state">
+    <div class="empty-icon">📭</div>
+    <h2>Você ainda não tem pedidos</h2>
+    <p>Que tal explorar nossos produtos e fazer sua primeira compra?</p>
+    <button class="btn-primary" (click)="goToProducts()">
+      Ver Produtos
+    </button>
+  </div>
+
+  <!-- Orders List -->
+  <div *ngIf="!loading && orders.length > 0" class="orders-list">
+    <div *ngFor="let order of orders" class="order-card">
+      <!-- Order Header -->
+      <div class="order-header">
+        <div class="order-info">
+          <h3>Pedido #{{ order.orderNumber }}</h3>
+          <p class="order-date">{{ order.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+        <div class="order-status">
+          <span
+            class="status-badge"
+            [class.status-pending]="order.status === 'PENDING'"
+            [class.status-paid]="order.status === 'PAID'"
+            [class.status-processing]="order.status === 'PROCESSING'"
+            [class.status-shipped]="order.status === 'SHIPPED'"
+            [class.status-delivered]="order.status === 'DELIVERED'"
+            [class.status-cancelled]="order.status === 'CANCELLED'"
+          >
+            {{ getStatusLabel(order.status) }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Order Items -->
+      <div class="order-items">
+        <div *ngFor="let item of order.items" class="order-item">
+          <img
+            [src]="item.productImage"
+            [alt]="item.productName"
+            (error)="onImageError($event)"
+            class="item-image"
+          >
+          <div class="item-details">
+            <h4>{{ item.productName }}</h4>
+            <p class="item-code">{{ item.productCode }}</p>
+            <p class="item-quantity">Quantidade: {{ item.quantity }}</p>
+          </div>
+          <div class="item-price">
+            <p class="unit-price">{{ item.unitPrice | currency: 'BRL' }}</p>
+            <p class="total-price">{{ item.totalPrice | currency: 'BRL' }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <div class="summary-row">
+          <span>Subtotal:</span>
+          <span>{{ order.subtotal | currency: 'BRL' }}</span>
+        </div>
+        <div class="summary-row" *ngIf="order.shippingCost > 0">
+          <span>Frete:</span>
+          <span>{{ order.shippingCost | currency: 'BRL' }}</span>
+        </div>
+        <div class="summary-row" *ngIf="order.discount > 0">
+          <span>Desconto:</span>
+          <span class="discount">-{{ order.discount | currency: 'BRL' }}</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total:</span>
+          <span>{{ order.total | currency: 'BRL' }}</span>
+        </div>
+      </div>
+
+      <!-- Payment Info -->
+      <div class="payment-info">
+        <div class="payment-row">
+          <span class="label">Pagamento:</span>
+          <span class="value">{{ getPaymentMethodLabel(order.paymentMethod) }}</span>
+        </div>
+        <div class="payment-row">
+          <span class="label">Status do Pagamento:</span>
+          <span
+            class="payment-status"
+            [class.payment-pending]="order.paymentStatus === 'PENDING'"
+            [class.payment-paid]="order.paymentStatus === 'PAID'"
+            [class.payment-failed]="order.paymentStatus === 'FAILED'"
+          >
+            {{ getPaymentStatusLabel(order.paymentStatus) }}
+          </span>
+        </div>
+        <div class="payment-row" *ngIf="order.paidAt">
+          <span class="label">Pago em:</span>
+          <span class="value">{{ order.paidAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+      </div>
+
+      <!-- Shipping Info -->
+      <div class="shipping-info" *ngIf="order.trackingCode || order.shippedAt">
+        <div class="shipping-row" *ngIf="order.trackingCode">
+          <span class="label">📦 Código de Rastreamento:</span>
+          <span class="tracking-code">{{ order.trackingCode }}</span>
+          <button class="btn-copy" (click)="copyTrackingCode(order.trackingCode)">
+            📋 Copiar
+          </button>
+        </div>
+        <div class="shipping-row" *ngIf="order.shippedAt">
+          <span class="label">Enviado em:</span>
+          <span class="value">{{ order.shippedAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        <div class="shipping-row" *ngIf="order.deliveredAt">
+          <span class="label">Entregue em:</span>
+          <span class="value">{{ order.deliveredAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+      </div>
+
+      <!-- Delivery Address -->
+      <div class="address-info">
+        <h4>📍 Endereço de Entrega</h4>
+        <p>{{ order.shippingAddress }}</p>
+        <p>{{ order.shippingCity }}/{{ order.shippingState }} - CEP: {{ order.shippingZipCode }}</p>
+        <p *ngIf="order.shippingComplement">{{ order.shippingComplement }}</p>
+      </div>
+
+      <!-- Actions -->
+      <div class="order-actions">
+        <button
+          class="btn-secondary"
+          (click)="viewOrderDetails(order)"
+        >
+          Ver Detalhes
+        </button>
+
+        <button
+          *ngIf="order.status === 'PENDING' || order.status === 'PAID'"
+          class="btn-cancel"
+          (click)="cancelOrder(order)"
+        >
+          Cancelar Pedido
+        </button>
+
+        <button
+          *ngIf="order.status === 'DELIVERED'"
+          class="btn-primary"
+          (click)="reorder(order)"
+        >
+          Comprar Novamente
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

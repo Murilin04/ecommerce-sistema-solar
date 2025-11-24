@@ -1,0 +1,252 @@
+<div class="checkout-container">
+  <div class="checkout-header">
+    <h1>🛒 Finalizar Compra</h1>
+    <div class="checkout-steps">
+      <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
+        <span class="step-number">1</span>
+        <span class="step-label">Carrinho</span>
+      </div>
+      <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep > 2">
+        <span class="step-number">2</span>
+        <span class="step-label">Endereço</span>
+      </div>
+      <div class="step" [class.active]="currentStep === 3" [class.completed]="currentStep > 3">
+        <span class="step-number">3</span>
+        <span class="step-label">Pagamento</span>
+      </div>
+      <div class="step" [class.active]="currentStep === 4">
+        <span class="step-number">4</span>
+        <span class="step-label">Confirmação</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-content">
+    <!-- ETAPA 1: Revisão do Carrinho -->
+    <div *ngIf="currentStep === 1" class="step-content">
+      <h2>📦 Itens do Pedido</h2>
+
+      <div class="cart-items">
+        <div *ngFor="let item of cartItems" class="cart-item">
+          <img [src]="item.imagem" [alt]="item.nome" class="item-image">
+          <div class="item-details">
+            <h3>{{ item.nome }}</h3>
+            <p class="item-code">{{ item.categoria }}</p>
+            <p class="item-quantity">Quantidade: {{ item.quantidade }}</p>
+          </div>
+          <div class="item-price">
+            <p class="unit-price">{{ (item.preco || 0) / 100 | currency: 'BRL' }}</p>
+            <p class="total-price">{{ ((item.preco || 0) * item.quantidade) / 100 | currency: 'BRL' }}</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-next" (click)="nextStep()" [disabled]="cartItems.length === 0">
+        Continuar →
+      </button>
+    </div>
+
+    <!-- ETAPA 2: Endereço de Entrega -->
+    <div *ngIf="currentStep === 2" class="step-content">
+      <h2>📍 Endereço de Entrega</h2>
+
+      <form [formGroup]="addressForm" class="address-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome Completo *</label>
+            <input type="text" formControlName="customerName" placeholder="Seu nome completo">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>E-mail *</label>
+            <input type="email" formControlName="customerEmail" placeholder="seu@email.com">
+          </div>
+          <div class="form-group">
+            <label>Telefone *</label>
+            <input type="tel" formControlName="customerPhone" placeholder="(00) 00000-0000">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group small">
+            <label>CEP *</label>
+            <input
+              type="text"
+              formControlName="shippingZipCode"
+              placeholder="00000-000"
+              (blur)="buscarCep()"
+              maxlength="9"
+            >
+            <span class="loading" *ngIf="loadingCep">Buscando...</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group large">
+            <label>Endereço *</label>
+            <input type="text" formControlName="shippingAddress" placeholder="Rua, Avenida, etc">
+          </div>
+          <div class="form-group small">
+            <label>Número *</label>
+            <input type="text" formControlName="addressNumber" placeholder="123">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Complemento</label>
+            <input type="text" formControlName="shippingComplement" placeholder="Apto, Bloco, etc">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Cidade *</label>
+            <input type="text" formControlName="shippingCity" placeholder="Sua cidade">
+          </div>
+          <div class="form-group small">
+            <label>Estado *</label>
+            <select formControlName="shippingState">
+              <option value="">UF</option>
+              <option *ngFor="let state of brazilStates" [value]="state.uf">{{ state.uf }}</option>
+            </select>
+          </div>
+        </div>
+      </form>
+
+      <div class="step-actions">
+        <button class="btn-back" (click)="previousStep()">← Voltar</button>
+        <button class="btn-next" (click)="nextStep()" [disabled]="addressForm.invalid">
+          Continuar →
+        </button>
+      </div>
+    </div>
+
+    <!-- ETAPA 3: Pagamento -->
+    <div *ngIf="currentStep === 3" class="step-content">
+      <h2>💳 Forma de Pagamento</h2>
+
+      <div class="payment-methods">
+        <div
+          class="payment-method"
+          [class.selected]="selectedPaymentMethod === 'PIX'"
+          (click)="selectPaymentMethod('PIX')"
+        >
+          <div class="method-icon">🔷</div>
+          <div class="method-info">
+            <h3>PIX</h3>
+            <p>Aprovação instantânea</p>
+          </div>
+        </div>
+
+        <div
+          class="payment-method"
+          [class.selected]="selectedPaymentMethod === 'CREDIT_CARD'"
+          (click)="selectPaymentMethod('CREDIT_CARD')"
+        >
+          <div class="method-icon">💳</div>
+          <div class="method-info">
+            <h3>Cartão de Crédito</h3>
+            <p>Em até 12x sem juros</p>
+          </div>
+        </div>
+
+        <div
+          class="payment-method"
+          [class.selected]="selectedPaymentMethod === 'BOLETO'"
+          (click)="selectPaymentMethod('BOLETO')"
+        >
+          <div class="method-icon">📄</div>
+          <div class="method-info">
+            <h3>Boleto</h3>
+            <p>Vencimento em 3 dias</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulário de Cartão -->
+      <form *ngIf="selectedPaymentMethod === 'CREDIT_CARD'" [formGroup]="cardForm" class="card-form">
+        <div class="form-group">
+          <label>Número do Cartão *</label>
+          <input
+            type="text"
+            formControlName="cardNumber"
+            placeholder="0000 0000 0000 0000"
+            maxlength="19"
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Nome no Cartão *</label>
+          <input type="text" formControlName="cardHolderName" placeholder="Como está no cartão">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Validade *</label>
+            <input type="text" formControlName="cardExpiry" placeholder="MM/AA" maxlength="5">
+          </div>
+          <div class="form-group">
+            <label>CVV *</label>
+            <input type="text" formControlName="cardCvv" placeholder="123" maxlength="4">
+          </div>
+          <div class="form-group">
+            <label>Parcelas *</label>
+            <select formControlName="installments">
+              <option value="1">1x de {{ calculateTotal() / 100 | currency: 'BRL' }}</option>
+              <option value="2">2x de {{ (calculateTotal() / 100) / 2 | currency: 'BRL' }}</option>
+              <option value="3">3x de {{ (calculateTotal() / 100) / 3 | currency: 'BRL' }}</option>
+              <option value="6">6x de {{ (calculateTotal() / 100) / 6 | currency: 'BRL' }}</option>
+              <option value="12">12x de {{ (calculateTotal() / 100) / 12 | currency: 'BRL' }}</option>
+            </select>
+          </div>
+        </div>
+      </form>
+
+      <div class="step-actions">
+        <button class="btn-back" (click)="previousStep()">← Voltar</button>
+        <button
+          class="btn-next"
+          (click)="processPayment()"
+          [disabled]="!selectedPaymentMethod || processing"
+        >
+          {{ processing ? 'Processando...' : 'Finalizar Compra →' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resumo Lateral -->
+  <div class="order-summary">
+    <h3>📊 Resumo do Pedido</h3>
+
+    <div class="summary-item">
+      <span>Subtotal ({{ cartItems.length }} itens)</span>
+      <span>{{ calculateSubtotal() / 100 | currency: 'BRL' }}</span>
+    </div>
+
+    <div class="summary-item">
+      <span>Frete</span>
+      <span>{{ shippingCost / 100 | currency: 'BRL' }}</span>
+    </div>
+
+    <div class="summary-item" *ngIf="discount > 0">
+      <span>Desconto</span>
+      <span class="discount">-{{ discount / 100 | currency: 'BRL' }}</span>
+    </div>
+
+    <div class="summary-divider"></div>
+
+    <div class="summary-total">
+      <span>Total</span>
+      <span>{{ calculateTotal() / 100 | currency: 'BRL' }}</span>
+    </div>
+
+    <div class="security-badge">
+      <span class="badge-icon">🔒</span>
+      <p>Compra 100% segura e protegida</p>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,11 @@
 package com.course.projetoweb.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.course.projetoweb.entities.OrderItem;
-import com.course.projetoweb.entities.pk.OrderItemPK;
 
-public interface OrderItemRepository extends JpaRepository<OrderItem, OrderItemPK> {
+@Repository
+public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     
 }

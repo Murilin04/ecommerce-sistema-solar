@@ -208,6 +208,6 @@ export class CartComponent implements OnInit{
   // Erro de imagem
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    img.src = 'assets/img/produtos/placeholder.png';
+    img.src = 'assets/img/avatar-placeholder.png';
   }
 }

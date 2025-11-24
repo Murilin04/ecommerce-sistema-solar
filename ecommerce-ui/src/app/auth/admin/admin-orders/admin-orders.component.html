@@ -1,0 +1,212 @@
+<div class="admin-orders-container">
+  <div class="page-header">
+    <h1>📦 Gerenciamento de Pedidos</h1>
+    <p class="subtitle">Acompanhe e gerencie todos os pedidos do sistema</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon stat-pending">⏳</div>
+      <div class="stat-content">
+        <p class="stat-label">Aguardando Pagamento</p>
+        <h3 class="stat-value">{{ getOrdersByStatus('PENDING').length }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-paid">💰</div>
+      <div class="stat-content">
+        <p class="stat-label">Pagos</p>
+        <h3 class="stat-value">{{ getOrdersByStatus('PAID').length }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-shipped">📦</div>
+      <div class="stat-content">
+        <p class="stat-label">Enviados</p>
+        <h3 class="stat-value">{{ getOrdersByStatus('SHIPPED').length }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-delivered">✅</div>
+      <div class="stat-content">
+        <p class="stat-label">Entregues</p>
+        <h3 class="stat-value">{{ getOrdersByStatus('DELIVERED').length }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-section">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Buscar por número do pedido, cliente..."
+        [(ngModel)]="searchTerm"
+        (input)="applyFilters()"
+        class="search-input"
+      />
+      <span class="search-icon">🔍</span>
+    </div>
+
+    <div class="filter-buttons">
+      <button
+        class="filter-btn"
+        [class.active]="filterStatus === 'all'"
+        (click)="filterByStatus('all')"
+      >
+        Todos
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="filterStatus === 'PENDING'"
+        (click)="filterByStatus('PENDING')"
+      >
+        Aguardando
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="filterStatus === 'PAID'"
+        (click)="filterByStatus('PAID')"
+      >
+        Pagos
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="filterStatus === 'SHIPPED'"
+        (click)="filterByStatus('SHIPPED')"
+      >
+        Enviados
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="filterStatus === 'DELIVERED'"
+        (click)="filterByStatus('DELIVERED')"
+      >
+        Entregues
+      </button>
+    </div>
+  </div>
+
+  <!-- Orders Table -->
+  <div class="table-container">
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>Pedido</th>
+          <th>Cliente</th>
+          <th>Data</th>
+          <th>Total</th>
+          <th>Pagamento</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of displayedOrders">
+          <td>
+            <div class="order-cell">
+              <strong>#{{ order.orderNumber }}</strong>
+              <span class="order-id">ID: {{ order.id }}</span>
+            </div>
+          </td>
+          <td>
+            <div class="customer-cell">
+              <strong>{{ order.customerName }}</strong>
+              <span>{{ order.customerEmail }}</span>
+            </div>
+          </td>
+          <td>{{ order.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td class="price-cell">{{ order.total | currency: 'BRL' }}</td>
+          <td>
+            <span
+              class="payment-badge"
+              [class.payment-pending]="order.paymentStatus === 'PENDING'"
+              [class.payment-paid]="order.paymentStatus === 'PAID'"
+              [class.payment-failed]="order.paymentStatus === 'FAILED'"
+            >
+              {{ getPaymentStatusLabel(order.paymentStatus) }}
+            </span>
+          </td>
+          <td>
+            <select
+              class="status-select"
+              [value]="order.status"
+              (change)="updateOrderStatus(order, $event)"
+              [disabled]="order.status === 'CANCELLED'"
+            >
+              <option value="PENDING">Aguardando Pagamento</option>
+              <option value="PAID">Pago</option>
+              <option value="PROCESSING">Em Processamento</option>
+              <option value="SHIPPED">Enviado</option>
+              <option value="DELIVERED">Entregue</option>
+              <option value="CANCELLED">Cancelado</option>
+            </select>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button
+                class="action-btn btn-view"
+                (click)="viewOrder(order)"
+                title="Ver Detalhes"
+              >
+                👁️
+              </button>
+              <button
+                *ngIf="order.status === 'PAID' && !order.trackingCode"
+                class="action-btn btn-ship"
+                (click)="addTrackingCode(order)"
+                title="Adicionar Rastreio"
+              >
+                📦
+              </button>
+              <button
+                *ngIf="order.status !== 'CANCELLED'"
+                class="action-btn btn-cancel"
+                (click)="cancelOrderAdmin(order)"
+                title="Cancelar"
+              >
+                ❌
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="displayedOrders.length === 0" class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h3>Nenhum pedido encontrado</h3>
+      <p>Tente ajustar os filtros</p>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="page-btn" [disabled]="currentPage === 0" (click)="previousPage()">
+      ← Anterior
+    </button>
+
+    <div class="page-numbers">
+      <button
+        *ngFor="let page of getPageNumbers()"
+        class="page-number"
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)"
+      >
+        {{ page + 1 }}
+      </button>
+    </div>
+
+    <button
+      class="page-btn"
+      [disabled]="currentPage === totalPages - 1"
+      (click)="nextPage()"
+    >
+      Próxima →
+    </button>
+  </div>
+</div>
