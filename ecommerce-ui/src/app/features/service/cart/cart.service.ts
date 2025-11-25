@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CartItem } from '../../models/CartItem.model';
 import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../auth/service/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,16 +31,111 @@ export class CartService {
   // Subject para notificações
   private cartUpdated$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) {
     this.loadCart();
+    this.setupAuthListener();
   }
 
-  // Carregar carrinho do backend ou localStorage
+  // Escuta mudanças de autenticação para trocar/limpar carrinho
+  private setupAuthListener(): void {
+    this.authService.isAuthenticated$.subscribe(() => {
+      this.loadCart();
+    });
+
+    // Escuta mudanças de role (que indicam troca de usuário)
+    this.authService.roleChanged$.subscribe(() => {
+      this.loadCart();
+    });
+  }
+
+
+  // Gera chave única do localStorage baseada no usuário
+  private getCartKey(): string {
+    const userId = this.authService.getUserId();
+
+    if (userId) {
+      return `cart_user_${userId}`;
+    }
+
+    // Carrinho para usuário não autenticado (guest)
+    return 'cart_guest';
+  }
+
+
+  // Carregar carrinho do localStorage específico do usuário
+
   private loadCart(): void {
-    const savedCart = localStorage.getItem('cart');
+    const cartKey = this.getCartKey();
+    const savedCart = localStorage.getItem(cartKey);
+
     if (savedCart) {
-      const cart = JSON.parse(savedCart);
-      this.cartSignal.set(cart);
+      try {
+        const cart = JSON.parse(savedCart);
+        this.cartSignal.set(cart);
+      } catch (error) {
+        console.error('Erro ao carregar carrinho:', error);
+        this.clearCart();
+      }
+    } else {
+      // Se não houver carrinho salvo, inicializa vazio
+      this.clearCart();
+    }
+  }
+
+  // Salvar no localStorage específico do usuário
+  private saveCart(): void {
+    const cartKey = this.getCartKey();
+    localStorage.setItem(cartKey, JSON.stringify(this.cartSignal()));
+  }
+
+
+   // Migrar carrinho de guest para usuário autenticado
+   // Chamado após login bem-sucedido
+  public migrateGuestCartToUser(): void {
+    const guestCart = localStorage.getItem('cart_guest');
+
+    if (guestCart && this.authService.getUserId()) {
+      try {
+        const cart = JSON.parse(guestCart);
+
+        // Se o carrinho guest tem itens
+        if (cart.items && cart.items.length > 0) {
+          const userCartKey = this.getCartKey();
+          const userCart = localStorage.getItem(userCartKey);
+
+          if (userCart) {
+            // Mesclar carrinhos
+            const existingCart = JSON.parse(userCart);
+            cart.items.forEach((guestItem: CartItem) => {
+              const existingItem = existingCart.items.find(
+                (item: CartItem) => item.produtoId === guestItem.produtoId
+              );
+
+              if (existingItem) {
+                existingItem.quantidade += guestItem.quantidade;
+              } else {
+                existingCart.items.push(guestItem);
+              }
+            });
+
+            this.cartSignal.set(existingCart);
+          } else {
+            // Usar carrinho guest como carrinho do usuário
+            this.cartSignal.set(cart);
+          }
+
+          this.recalcularTotal();
+          this.saveCart();
+
+          // Limpar carrinho guest
+          localStorage.removeItem('cart_guest');
+        }
+      } catch (error) {
+        console.error('Erro ao migrar carrinho:', error);
+      }
     }
   }
 
@@ -115,12 +211,8 @@ export class CartService {
     }
   }
 
-  // ========== NOVOS MÉTODOS PARA CHECKOUT ==========
+  // ========== MÉTODOS PARA CHECKOUT ==========
 
-  /**
-   * Obter itens do carrinho no formato compatível com OrderItem
-   * @returns Array de itens formatados para o checkout
-   */
   getCartItems(): Array<{
     produto: {
       id: number;
@@ -145,23 +237,14 @@ export class CartService {
     }));
   }
 
-  /**
-   * Obter total do carrinho (em centavos)
-   */
   getTotal(): number {
     return this.cartSignal().total;
   }
 
-  /**
-   * Obter subtotal do carrinho (em centavos)
-   */
   getSubtotal(): number {
     return this.cartSignal().subtotal;
   }
 
-  /**
-   * Definir valor do frete (em centavos)
-   */
   setShippingCost(cost: number): void {
     const currentCart = this.cartSignal();
     currentCart.frete = cost;
@@ -169,16 +252,10 @@ export class CartService {
     this.saveCart();
   }
 
-  /**
-   * Obter frete atual
-   */
   getShippingCost(): number {
     return this.cartSignal().frete;
   }
 
-  /**
-   * Definir desconto (em centavos)
-   */
   setDiscount(discount: number): void {
     const currentCart = this.cartSignal();
     currentCart.desconto = discount;
@@ -186,16 +263,10 @@ export class CartService {
     this.saveCart();
   }
 
-  /**
-   * Obter desconto atual
-   */
   getDiscount(): number {
     return this.cartSignal().desconto;
   }
 
-  /**
-   * Obter carrinho no formato para criar pedido
-   */
   getCartForOrder(): {
     items: Array<{
       productId: number;
@@ -219,7 +290,7 @@ export class CartService {
         productImage: item.imagem,
         productCode: item.categoria || '',
         quantity: item.quantidade,
-        unitPrice: (item.preco || 0) / 100 // Converter de centavos para reais
+        unitPrice: (item.preco || 0) / 100
       })),
       subtotal: currentCart.subtotal / 100,
       shippingCost: currentCart.frete / 100,
@@ -227,8 +298,6 @@ export class CartService {
       total: currentCart.total / 100
     };
   }
-
-  // ========== FIM DOS NOVOS MÉTODOS ==========
 
   // Aplicar cupom de desconto
   applyCoupon(couponCode: string): Observable<any> {
@@ -253,11 +322,6 @@ export class CartService {
     this.cartSignal.set({ ...currentCart });
   }
 
-  // Salvar no localStorage
-  private saveCart(): void {
-    localStorage.setItem('cart', JSON.stringify(this.cartSignal()));
-  }
-
   // Limpar carrinho
   clearCart(): void {
     this.cartSignal.set({
@@ -267,8 +331,21 @@ export class CartService {
       frete: 0,
       total: 0
     });
-    localStorage.removeItem('cart');
+    const cartKey = this.getCartKey();
+    localStorage.removeItem(cartKey);
     this.cartUpdated$.next(true);
+  }
+
+
+  //Limpar carrinho ao fazer logout
+  //Chamado pelo componente após logout
+  public clearCartOnLogout(): void {
+    // Remove carrinho do usuário atual
+    const cartKey = this.getCartKey();
+    localStorage.removeItem(cartKey);
+
+    // Inicializa carrinho guest vazio
+    this.clearCart();
   }
 
   // Sincronizar com backend
@@ -306,9 +383,6 @@ export class CartService {
     });
   }
 
-  /**
-   * Validar se o carrinho está pronto para checkout
-   */
   isReadyForCheckout(): { ready: boolean; errors: string[] } {
     const errors: string[] = [];
     const currentCart = this.cartSignal();
@@ -335,23 +409,14 @@ export class CartService {
     };
   }
 
-  /**
-   * Obter número de itens únicos (não total de quantidade)
-   */
   getUniqueItemCount(): number {
     return this.cartSignal().items.length;
   }
 
-  /**
-   * Verificar se produto está no carrinho
-   */
   isProductInCart(productId: number): boolean {
     return this.cartSignal().items.some(item => item.produtoId === productId);
   }
 
-  /**
-   * Obter quantidade de um produto específico no carrinho
-   */
   getProductQuantity(productId: number): number {
     const item = this.cartSignal().items.find(i => i.produtoId === productId);
     return item ? item.quantidade : 0;
