@@ -1,18 +1,33 @@
 .menu {
-  background-color:#4FA9FF;
+  background: linear-gradient(135deg, #667eea 0%, #3f218b 100%);
   display: grid;
   grid-template-columns: 1fr 0.5fr;
   align-items: center;
   justify-content: center;
   padding: 0 20rem;
-  box-shadow: 0 1px rgba(0, 0, 0, .04), inset 0 -1px rgba(0, 0, 0, .04);
-  color: #4a4f55;
-  height: 54px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  color: #ffffff;
+  height: 70px;
+  position: relative;
+  z-index: 1000;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 100%);
+  }
 }
 
 .menu__ul {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.5rem;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -20,28 +35,56 @@
 
 .menu__li {
   position: relative;
-  // display: flex;
-  // align-items: center;
   cursor: pointer;
-  z-index: 999;
-}
+  z-index: 998;
+  transition: all 0.3s ease;
 
-.menu__li:hover {
-  background-color: #f0f0f0;
-  border-radius: 2px;
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:hover > .menu__a {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+  }
+
+  // Mantém o submenu aberto quando hover no submenu
+  &:hover > .submenu,
+  > .submenu:hover {
+    display: block;
+  }
 }
 
 .menu__a {
   text-decoration: none;
-  color: #4A4f55;
+  color: #ffffff;
   font-weight: 600;
   font-size: 14px;
-  letter-spacing: .05rem;
-  padding: 10px;
+  letter-spacing: 0.05rem;
+  padding: 12px 18px;
   display: flex;
   align-items: center;
-  gap: 0.30rem;
+  gap: 0.5rem;
   white-space: nowrap;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 70%;
+    height: 2px;
+    background: #ffffff;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
 }
 
 .menu__button {
@@ -49,38 +92,99 @@
   gap: 1rem;
   margin-left: 5rem;
   position: relative;
+  align-items: center;
 }
 
 .menu__button-a {
-  background-color: #4A4f55;
-  color: #4FA9FF;
-  border-radius: 2px;
-  padding: 14px 15px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 12px 24px;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 14px;
-  letter-spacing: .05rem;
+  letter-spacing: 0.05rem;
   white-space: nowrap;
   transition: all 0.3s ease;
   cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease, height 0.5s ease;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+    &::before {
+      width: 300px;
+      height: 300px;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 .menu__button-links {
-  background-color: #4A4f55;
-  height: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  height: 45px;
   margin-left: 10rem;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-weight: 600;
+  padding: 0 20px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
 }
 
 .menu__svg {
   margin-top: 10px;
-  opacity: .5;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+
+  .menu__li:hover & {
+    opacity: 1;
+    transform: translateY(2px);
+  }
 }
 
 .menu__svg-one {
-  opacity: .5;
+  opacity: 0.7;
   margin-left: 8px;
   flex-shrink: 0;
   margin-bottom: 5px;
+  transition: all 0.3s ease;
+
+  .submenu__one:hover & {
+    opacity: 1;
+    transform: translateX(3px);
+  }
 }
 
 .submenu {
@@ -90,62 +194,152 @@
 }
 
 .submenu__one {
-  padding: 5px 15px;
+  padding: 12px 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: relative;
   margin: 0;
   font-size: 15px;
-}
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
 
-.submenu__one:hover {
-  background-color: #f0f0f0;
+  &:last-child {
+    border-bottom: none;
+  }
+
+  a {
+    flex: 1;
+    color: #2d3748;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  &:hover {
+    background: linear-gradient(90deg, #f7fafc 0%, #edf2f7 100%);
+    padding-left: 25px;
+
+    a {
+      color: #667eea;
+      font-weight: 600;
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #667eea;
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+  }
+
+  &:hover::before {
+    transform: scaleY(1);
+  }
 }
 
 .menu__li > .submenu {
   display: none;
   position: absolute;
-  top: 100%; /* Aparece abaixo do item pai */
+  top: 100%;
   left: 0;
-  background-color: white;
-  padding: 0.5rem 0;
-  box-shadow: 0 4px 8px rgb(0, 0, 0, 0.1);
-  min-width: 180px;
+  background: #ffffff;
+  padding: 8px 0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  min-width: 220px;
+  border-radius: 0 0 12px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: none;
+  animation: slideDown 0.3s ease;
+  overflow: visible;
+  margin-top: 0;
 }
 
 .menu__li:hover > .submenu {
   display: block;
 }
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .submenu li {
   position: relative;
+
+  // Mantém o submenu filho aberto
+  &:hover > .submenu,
+  > .submenu:hover {
+    display: block;
+  }
 }
 
 .submenu li > .submenu {
   display: none;
   position: absolute;
   top: 0;
-  left: 100%; /* Abre ao lado direito do submenu pai */
-  background-color: white;
-  padding: 0.5rem 0;
-  box-shadow: 0 4px 8px rgb(0, 0, 0, 0.1);
-  min-width: 180px;
-  z-index: 1000;
+  left: 100%;
+  background: #ffffff;
+  padding: 8px 0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  min-width: 220px;
+  z-index: 1001;
+  border-radius: 0 12px 12px 0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-left: none;
+  animation: slideRight 0.3s ease;
+  overflow: visible;
+  margin-left: 0;
 }
 
 .submenu li:hover > .submenu {
   display: block;
 }
 
+// Garante que os submenus aninhados funcionem
+.submenu__one {
+  &:hover > .submenu {
+    display: block;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.submenu__two {
+  background: linear-gradient(to bottom, #ffffff 0%, #f7fafc 100%);
+}
+
 a {
   text-decoration: none;
-  color: #4A4f55;
+  color: #2d3748;
 }
 
 .submenu__a {
   display: block;
+  font-weight: 500;
 }
 
+// Mantém os estilos do login intactos
 .login__container {
   position: fixed;
   top: 50%;
@@ -160,7 +354,6 @@ a {
   z-index: 999;
   animation: fadeIn 0.3s ease-out;
 
- //Scrollbar personalizada
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -213,7 +406,44 @@ a {
 }
 
 // Responsividade
+@media (max-width: 1200px) {
+  .menu {
+    padding: 0 5rem;
+  }
+
+  .menu__button {
+    margin-left: 2rem;
+  }
+
+  .menu__button-links {
+    margin-left: 2rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .menu {
+    grid-template-columns: 1fr;
+    padding: 0 2rem;
+    height: auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .menu__ul {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .menu__button {
+    margin-left: 0;
+    margin-top: 1rem;
+    justify-content: center;
+  }
+
+  .menu__button-links {
+    margin-left: 0;
+  }
+
   .login__container {
     width: 95%;
     max-width: 400px;
@@ -221,6 +451,20 @@ a {
 }
 
 @media (max-width: 480px) {
+  .menu {
+    padding: 1rem;
+  }
+
+  .menu__a {
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+
+  .menu__button-a {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
   .login__container {
     width: 100%;
     height: 100%;
