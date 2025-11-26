@@ -300,9 +300,10 @@
     </mat-menu>
   </div>
 
-  <div *ngIf="showLogin"
-    appClickOutside (clickOutside)="closeLogin()"
-    class="login__container">
+  <div *ngIf="showLogin" class="login-backdrop" (click)="closeLogin()"></div>
+
+  <!-- Container do login -->
+  <div *ngIf="showLogin" appClickOutside (clickOutside)="closeLogin()" class="login__container">
     <app-login (loginSuccess)="closeLogin()"></app-login>
   </div>
 

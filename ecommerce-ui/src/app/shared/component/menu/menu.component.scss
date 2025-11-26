@@ -71,18 +71,6 @@
   margin-left: 10rem;
 }
 
-.login__container {
-  position: absolute;
-  top: 20%;
-  right: 13rem;
-  width: 15%;
-  height: 45%;
-  background: white;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  z-index: 999;
-}
-
 .menu__svg {
   margin-top: 10px;
   opacity: .5;
@@ -156,4 +144,87 @@ a {
 
 .submenu__a {
   display: block;
+}
+
+.login__container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 440px;
+  max-height: 90vh;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-out;
+
+ //Scrollbar personalizada
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.5);
+    border-radius: 10px;
+
+    &:hover {
+      background: rgba(102, 126, 234, 0.7);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.login-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 998;
+  animation: backdropFadeIn 0.3s ease-out;
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .login__container {
+    width: 95%;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login__container {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
 }
