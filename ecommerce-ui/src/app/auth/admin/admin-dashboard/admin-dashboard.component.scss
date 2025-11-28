@@ -55,3 +55,9 @@ mat-paginator {
   border-radius: 12px;
   margin-left: 8px;
 }
+
+@media (max-width: 768px) {
+  .mat-elevation-z4 {
+    display: flex;
+  }
+}
