@@ -204,6 +204,7 @@
   transition: all 0.3s ease;
   cursor: pointer;
   border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  color: #2d3748;
 
   &:last-child {
     border-bottom: none;
@@ -221,7 +222,7 @@
     padding-left: 25px;
 
     a {
-      color: #667eea;
+      color: #2D3748;
       font-weight: 600;
     }
   }
