@@ -1,7 +1,7 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
-  "outputDirectory": "dist/ecommerce-ui",
+  "outputDirectory": "dist/ecommerce-ui/browser",
   "framework": "angular",
   "installCommand": "npm install",
   "routes": [
