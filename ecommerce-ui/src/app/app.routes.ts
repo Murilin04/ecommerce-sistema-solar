@@ -92,6 +92,11 @@ export const routes: Routes = [
     data: { roles: ['ADMIN'] }
   },
   {
+    path: 'admin/register-private&security/true',
+    loadComponent: () => import('./auth/admin/admin-register/admin-register.component').then(m => m.AdminRegisterComponent),
+    canActivate: [NoAuthGuard]
+  },
+  {
     path: 'admin/produtos',
     loadComponent: () => import('./auth/admin/admin-products/admin-products.component').then(m => m.AdminProductsComponent),
     canActivate: [AuthGuard, RoleGuard],
