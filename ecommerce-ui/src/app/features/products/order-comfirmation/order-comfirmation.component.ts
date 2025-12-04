@@ -106,4 +106,11 @@ export class OrderConfirmationComponent implements OnInit {
   continueShopping(): void {
     this.router.navigate(['/produtos']);
   }
+
+  formatPrice(price: number): string {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price);
+  }
 }

@@ -59,8 +59,8 @@
             <p class="item-quantity">Quantidade: {{ item.quantity }}</p>
           </div>
           <div class="item-price">
-            <p class="unit-price">{{ item.unitPrice | currency: 'BRL' }}</p>
-            <p class="total-price">{{ item.totalPrice | currency: 'BRL' }}</p>
+            <p class="unit-price">{{ formatPrice(item.unitPrice) }}</p>
+            <p class="total-price">{{ formatPrice(item.totalPrice) }}</p>
           </div>
         </div>
       </div>
@@ -69,11 +69,11 @@
       <div class="order-summary">
         <div class="summary-row">
           <span>Subtotal:</span>
-          <span>{{ order.subtotal | currency: 'BRL' }}</span>
+          <span>{{ formatPrice(order.subtotal) }}</span>
         </div>
         <div class="summary-row" *ngIf="order.shippingCost > 0">
           <span>Frete:</span>
-          <span>{{ order.shippingCost | currency: 'BRL' }}</span>
+          <span>{{ formatPrice(order.shippingCost) }}</span>
         </div>
         <div class="summary-row" *ngIf="order.discount > 0">
           <span>Desconto:</span>
@@ -81,7 +81,7 @@
         </div>
         <div class="summary-row total">
           <span>Total:</span>
-          <span>{{ order.total | currency: 'BRL' }}</span>
+          <span>{{ formatPrice(order.total) }}</span>
         </div>
       </div>
 

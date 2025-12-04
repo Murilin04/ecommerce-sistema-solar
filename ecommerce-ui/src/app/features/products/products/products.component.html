@@ -49,8 +49,8 @@
 
         <!-- Preço (visível apenas se logado) -->
         <div class="produto-preco" *ngIf="isAuthenticated && produto.preco">
-          <span class="preco-label">R$</span>
-          <span class="preco-valor">{{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}</span>
+          <!-- <span class="preco-label">R$</span> -->
+          <span class="preco-valor">{{ formatPrice(produto.preco) }}</span>
         </div>
 
         <!-- Botão Consultar Preço ou Adicionar ao Carrinho -->

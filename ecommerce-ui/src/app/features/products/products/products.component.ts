@@ -360,4 +360,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
   navigate(path: string) {
     this.router.navigate([path]);
   }
+
+  formatPrice(price: number): string {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price);
+  }
 }

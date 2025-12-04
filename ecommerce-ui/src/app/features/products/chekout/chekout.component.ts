@@ -302,4 +302,11 @@ export class CheckoutComponent implements OnInit {
       this.processing = false;
     }
   }
+
+  formatPrice(price: number): string {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price);
+  }
 }
