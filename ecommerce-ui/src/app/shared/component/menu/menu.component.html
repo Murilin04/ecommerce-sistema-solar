@@ -283,21 +283,72 @@
   </nav>
 
   <div class="menu__button">
-    <a *ngIf="!(isAuthenticated$ | async)" routerLink="/cadastro" class="menu__button-a" title="Seja Integrador">Seja Integrador</a>
-    <a *ngIf="!(isAuthenticated$ | async)" class="menu__button-a" title="Entrar" (click)="openLogin()" #loginButton>Entrar</a>
+    <!-- Botões de Não Autenticado -->
+    <a *ngIf="!(isAuthenticated$ | async)" routerLink="/cadastro" class="menu__button-a" title="Seja Integrador">
+      <span>Seja Integrador</span>
+    </a>
 
-    <button mat-button [matMenuTriggerFor]="menu" *ngIf="(isAuthenticated$ | async)" class="menu__button-links">Menu</button>
-    <app-mini-cart *ngIf="(isAuthenticated$ | async)"></app-mini-cart>
-    <mat-menu #menu="matMenu" class="mat-menu">
-      <button mat-menu-item routerLink="/perfil" *ngIf="(isAuthenticated$ | async)">Perfil</button>
-      <button mat-menu-item routerLink="/produtos">Produtos</button>
-      <button mat-menu-item routerLink="/carrinho">Carrinho</button>
-      <button mat-menu-item routerLink="/meus-pedidos">Meus Pedidos</button>
-      <button mat-menu-item *ngIf="isAdmin" routerLink="/admin/pedidos">Gerenciar Pedidos</button>
-      <button mat-menu-item *ngIf="isAdmin" routerLink="/admin">Gerenciar usuários</button>
-      <button mat-menu-item *ngIf="isAdmin" routerLink="/admin/produtos">Gerenciar Produtos</button>
-      <button mat-menu-item (click)="logout()">Sair</button>
-    </mat-menu>
+    <a *ngIf="!(isAuthenticated$ | async)" class="menu__button-a" title="Entrar" (click)="openLogin()" #loginButton>
+      <span>Entrar</span>
+    </a>
+
+    <!-- Menu Autenticado -->
+    <div *ngIf="(isAuthenticated$ | async)" class="authenticated-menu">
+      <button class="menu__button-links" (click)="toggleMenu()">
+        <span class="menu-icon">☰</span>
+        <span>Menu</span>
+        <span class="dropdown-arrow" [class.open]="menuOpen">▼</span>
+      </button>
+
+      <app-mini-cart></app-mini-cart>
+
+      <!-- Menu Dropdown Customizado -->
+      <div class="custom-dropdown" [class.show]="menuOpen">
+        <button class="dropdown-item" routerLink="/perfil" *ngIf="(isAuthenticated$ | async)" (click)="closeMenu()">
+          <span class="item-icon">👤</span>
+          <span class="item-text">Perfil</span>
+        </button>
+
+        <button class="dropdown-item" routerLink="/produtos" (click)="closeMenu()">
+          <span class="item-icon">📦</span>
+          <span class="item-text">Produtos</span>
+        </button>
+
+        <button class="dropdown-item" routerLink="/carrinho" (click)="closeMenu()">
+          <span class="item-icon">🛒</span>
+          <span class="item-text">Carrinho</span>
+        </button>
+
+        <button class="dropdown-item" routerLink="/meus-pedidos" (click)="closeMenu()">
+          <span class="item-icon">📋</span>
+          <span class="item-text">Meus Pedidos</span>
+        </button>
+
+        <div class="menu-divider" *ngIf="isAdmin"></div>
+
+        <button class="dropdown-item admin-item" *ngIf="isAdmin" routerLink="/admin/pedidos" (click)="closeMenu()">
+          <span class="item-icon">⚙️</span>
+          <span class="item-text">Gerenciar Pedidos</span>
+        </button>
+
+        <button class="dropdown-item admin-item" *ngIf="isAdmin" routerLink="/admin" (click)="closeMenu()">
+          <span class="item-icon">👥</span>
+          <span class="item-text">Gerenciar Usuários</span>
+        </button>
+
+        <button class="dropdown-item admin-item" *ngIf="isAdmin" routerLink="/admin/produtos" (click)="closeMenu()">
+          <span class="item-icon">📊</span>
+          <span class="item-text">Gerenciar Produtos</span>
+        </button>
+
+        <div class="menu-divider"></div>
+
+        <button class="dropdown-item logout-item" (click)="logout()">
+          <span class="item-icon">🚪</span>
+          <span class="item-text">Sair</span>
+        </button>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="showLogin" class="login-backdrop" (click)="closeLogin()"></div>
