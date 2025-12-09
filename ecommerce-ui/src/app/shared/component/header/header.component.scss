@@ -15,7 +15,7 @@ mat-toolbar {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+    background: linear-gradient(90deg, #2dc3ff 0%, #26476B 50%, #2dc3ff 100%);
     background-size: 200% 100%;
     animation: gradientShift 3s ease infinite;
   }
@@ -35,7 +35,6 @@ mat-toolbar {
 
 /* Logo */
 .logo {
-  padding: 10px 20px;
   cursor: pointer;
   transition: all 0.3s ease;
   border-radius: 12px;
@@ -53,12 +52,9 @@ mat-toolbar {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
-    transition: left 0.5s ease;
   }
 
   &:hover {
-    background: rgba(102, 126, 234, 0.05);
 
     img {
       transform: scale(1.05);
@@ -73,8 +69,8 @@ mat-toolbar {
 /* Search Form */
 .search_form {
   width: 100%;
-  padding-left: 60px;
-  padding-right: 60px;
+  padding-left: 10px;
+  padding-right: 50px;
   max-width: 700px;
 }
 
@@ -96,14 +92,13 @@ mat-toolbar {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 0;
   }
 
   &:focus-within {
-    border-color: #667eea;
+    border-color: #205D9B;
     background: #ffffff;
     box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
     transform: translateY(-1px);
@@ -207,13 +202,14 @@ mat-toolbar {
   display: flex;
   flex-direction: column;
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-  border: 2px solid #667eea;
+  border: 2px solid #4A4F55;
   border-radius: 16px;
   padding: 10px;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  min-width: 200px;
+  min-width: 165px;
+  margin-right: 3.5rem;
 
   &::before {
     content: '';
@@ -222,7 +218,7 @@ mat-toolbar {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #175261 0%, #26476C 100%);
     transition: left 0.5s ease;
     z-index: 0;
   }
@@ -230,7 +226,6 @@ mat-toolbar {
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.25);
-    border-color: #764ba2;
 
     &::before {
       left: 0;
@@ -253,7 +248,7 @@ mat-toolbar {
   }
 
   strong {
-    color: #667eea;
+    color: #2d3748;
     text-align: right;
     font-size: 12px;
     font-weight: 600;

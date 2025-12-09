@@ -12,22 +12,22 @@ import { RouterLink } from '@angular/router';
 export class FooterComponent {
   // Informações de contato
   contato = {
-    telefone: '(61) 99989-7286',
-    telefoneLink: '5561999897286',
-    email: 'contato@wm.com.br',
+    telefone: '(61) 99973-8084',
+    telefoneLink: '5561999738084',
+    email: 'vrenergialtda@gmail.com',
     horario: 'Seg-Sex 08:00h - 18:00h'
   };
 
   // Endereço
   endereco = {
-    rua: 'Quadra 04 MR 4, Lote 20',
-    bairro: '',
+    rua: 'Quadra 4 MR 4, Lote 20',
+    bairro: 'Setor Norte',
     cidade: 'Planaltina/GO - Brazil'
   };
 
   // Links de informações
   linksInformacoes = [
-    { nome: 'Sobre a WM Energia Solar', url: '/sobre' },
+    { nome: 'Sobre a VR Energia', url: '/sobre' },
     { nome: 'Política Comercial', url: '/politica-comercial' },
     { nome: 'Manual do Cliente', url: '/manual-cliente' },
     { nome: 'Aviso de Privacidade', url: '/privacidade' },
@@ -40,26 +40,26 @@ export class FooterComponent {
     {
       nome: 'Instagram',
       icone: 'instagram',
-      url: 'https://www.instagram.com/wm_energiasolarr/',
+      url: '',
       cor: '#E4405F'
     },
     {
       nome: 'LinkedIn',
       icone: 'linkedin',
-      url: 'https://www.linkedin.com/company/in/wm-energia-solar',
+      url: '',
       cor: '#0077B5'
     },
     {
       nome: 'Facebook',
       icone: 'facebook',
-      url: 'https://www.facebook.com/share/184zLDE1Lo/',
+      url: '',
       cor: '#1877F2'
     }
   ];
 
   // Informações legais
-  cnpj = '12.347.678/0001-88';
-  emailDados = 'dadospessoais@wm.com.br';
+  cnpj = '59.929.683/0001-09';
+  emailDados = 'vrenergialtda@gmail.com';
 
   anoAtual = new Date().getFullYear();
 
