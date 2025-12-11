@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, Output, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { Produto } from '../../models/produto.model';
-import { AuthService } from '../../../auth/service/auth.service';
-import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+
+import { AuthService } from '../../../auth/service/auth.service';
+import { Produto } from '../../models/produto.model';
+
 @Component({
   selector: 'app-quick-view',
   standalone: true,

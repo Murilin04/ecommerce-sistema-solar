@@ -1,5 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
+
 import { AuthService } from '../service/auth.service';
 
 export const authInterceptorFn: HttpInterceptorFn = (req, next) => {

@@ -2,14 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
-interface Banner {
-  imagem: string;
-  titulo: string;
-  descricao: string;
-  botao: string;
-  link?: string;
-}
-
 @Component({
   selector: 'app-carrossel',
   standalone: true,

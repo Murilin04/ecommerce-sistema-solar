@@ -7,12 +7,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
-import { IbgeService } from '../../../features/service/ibge/ibge.service';
-import { ViacepService } from '../../../features/service/cep/viacep.service';
 import { ToastrService } from 'ngx-toastr';
-import { AdminService } from '../../service/admin.service';
-import { IntegradorDTO } from '../../../features/models/integradorDTO.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+
+import { IntegradorDTO } from '../../../features/models/integradorDTO.model';
+import { ViacepService } from '../../../features/service/cep/viacep.service';
+import { IbgeService } from '../../../features/service/ibge/ibge.service';
+import { AdminService } from '../../service/admin.service';
 
 @Component({
   selector: 'app-admin-edit-users',

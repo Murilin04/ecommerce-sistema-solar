@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 
 import { AuthService } from '../../../auth/service/auth.service';
+import { ConfirmDialogComponent } from '../../../shared/dialog/confirm-dialog.component';
 import { IntegradorDTO } from '../../models/integradorDTO.model';
 import { ProfileService } from '../../service/profile/profile.service';
-import { MatButton } from "@angular/material/button";
-import { ConfirmDialogComponent } from '../../../shared/dialog/confirm-dialog.component';
 
 
 @Component({

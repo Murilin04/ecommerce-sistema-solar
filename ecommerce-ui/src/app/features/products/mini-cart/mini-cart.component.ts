@@ -1,17 +1,12 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { CartService } from '../../service/cart/cart.service';
-import { Router } from '@angular/router';
-import { MatIconModule } from "@angular/material/icon";
-import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
-import { NgIf, NgFor, CommonModule } from '@angular/common';
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate
-} from '@angular/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { Router } from '@angular/router';
+
+import { CartService } from '../../service/cart/cart.service';
 
 @Component({
   selector: 'app-mini-cart',

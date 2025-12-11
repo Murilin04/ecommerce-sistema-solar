@@ -1,7 +1,6 @@
 package com.course.projetoweb.dto;
 
 import com.course.projetoweb.entities.Integrador;
-import com.course.projetoweb.entities.IntegradorProfile;
 public class IntegradorDTO {
     private Long id;
     private String cnpj;

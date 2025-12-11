@@ -1,10 +1,11 @@
-import { computed, Injectable, signal } from '@angular/core';
-import { Cart } from '../../models/Cart.model';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { CartItem } from '../../models/CartItem.model';
+import { computed, Injectable, signal } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../auth/service/auth.service';
+import { Cart } from '../../models/Cart.model';
+import { CartItem } from '../../models/CartItem.model';
 
 @Injectable({
   providedIn: 'root'

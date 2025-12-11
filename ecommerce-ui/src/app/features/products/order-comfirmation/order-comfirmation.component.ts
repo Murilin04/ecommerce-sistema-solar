@@ -1,11 +1,12 @@
-import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { OrderService } from '../../service/order/order.service';
-import { PaymentService } from '../../service/payment/payment.service';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { Order } from '../../models/Order.model';
 import { Payment } from '../../models/Payment.model';
+import { OrderService } from '../../service/order/order.service';
+import { PaymentService } from '../../service/payment/payment.service';
 
 @Component({
   selector: 'app-order-comfirmation',

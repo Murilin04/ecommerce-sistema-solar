@@ -1,15 +1,16 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { AuthService } from '../../../auth/service/auth.service';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatIcon } from "@angular/material/icon";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatInput } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../../service/cart/cart.service';
-import { CartItem } from '../../models/CartItem.model';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
+
+import { AuthService } from '../../../auth/service/auth.service';
+import { CartItem } from '../../models/CartItem.model';
+import { CartService } from '../../service/cart/cart.service';
 
 @Component({
   selector: 'app-cart',

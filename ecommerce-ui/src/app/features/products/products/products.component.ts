@@ -1,14 +1,15 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../../auth/service/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { QuickViewComponent } from '../quick-view/quick-view.component';
-import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+
+import { AuthService } from '../../../auth/service/auth.service';
+import { Produto } from '../../models/produto.model';
 import { CartService } from '../../service/cart/cart.service';
 import { ProductService } from '../../service/product/product.service';
-import { Produto } from '../../models/produto.model';
-import { Subject, takeUntil } from 'rxjs';
+import { QuickViewComponent } from '../quick-view/quick-view.component';
 
 @Component({
   selector: 'app-products',

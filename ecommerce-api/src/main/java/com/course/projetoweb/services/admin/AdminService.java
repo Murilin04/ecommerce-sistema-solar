@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.course.projetoweb.dto.CreateIntegradorDTO;
 import com.course.projetoweb.dto.IntegradorDTO;
-import com.course.projetoweb.dto.UpdateIntegradorDTO;
 import com.course.projetoweb.entities.Integrador;
 import com.course.projetoweb.entities.IntegradorProfile;
 import com.course.projetoweb.entities.enums.IntegradorRole;

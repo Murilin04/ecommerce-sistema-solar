@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../../auth/service/auth.service';
-import { Produto } from '../../models/produto.model';
-import { QuickViewComponent } from '../quick-view/quick-view.component';
-import { Router } from '@angular/router';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { CartService } from '../../service/cart/cart.service';
 import { SearchService } from '../../../shared/service/search.service';
+import { Produto } from '../../models/produto.model';
+import { CartService } from '../../service/cart/cart.service';
 import { ProductService } from '../../service/product/product.service';
+import { QuickViewComponent } from '../quick-view/quick-view.component';
 
 @Component({
   selector: 'app-featured-products',

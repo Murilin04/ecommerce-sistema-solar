@@ -1,10 +1,7 @@
 import { Directive } from '@angular/core';
-import {
-  AbstractControl,
-  NG_ASYNC_VALIDATORS,
-  ValidationErrors,
-} from '@angular/forms';
-import { EMPTY, Observable, catchError } from 'rxjs';
+import { AbstractControl, NG_ASYNC_VALIDATORS, ValidationErrors } from '@angular/forms';
+import { catchError, EMPTY, Observable } from 'rxjs';
+
 import { AuthService } from '../../auth/service/auth.service';
 
 @Directive({

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Integrador } from '../../features/models/integrador.model';
 import { Observable } from 'rxjs';
+
 import { environment } from '../../../environments/environment';
+import { Integrador } from '../../features/models/integrador.model';
 import { IntegradorDTO } from '../../features/models/integradorDTO.model';
 
 @Injectable({

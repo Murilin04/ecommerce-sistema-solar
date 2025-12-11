@@ -1,20 +1,28 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  AsyncValidatorFn,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { Router } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, switchMap } from 'rxjs';
 
 import { ViacepService } from '../../features/service/cep/viacep.service';
 import { IbgeService } from '../../features/service/ibge/ibge.service';
 import { AuthService } from '../service/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',

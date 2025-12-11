@@ -1,3 +1,4 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -7,13 +8,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { NgxMaskDirective } from 'ngx-mask';
-import { IbgeService } from '../../../features/service/ibge/ibge.service';
-import { ViacepService } from '../../../features/service/cep/viacep.service';
-import { OverlayContainer } from '@angular/cdk/overlay';
 import { Router } from '@angular/router';
-import { AdminService } from '../../service/admin.service';
+import { NgxMaskDirective } from 'ngx-mask';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+
+import { ViacepService } from '../../../features/service/cep/viacep.service';
+import { IbgeService } from '../../../features/service/ibge/ibge.service';
+import { AdminService } from '../../service/admin.service';
 
 @Component({
   selector: 'app-admin-add-new-users',

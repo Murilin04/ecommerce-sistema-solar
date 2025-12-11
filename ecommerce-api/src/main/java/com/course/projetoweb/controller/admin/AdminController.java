@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.course.projetoweb.dto.CreateIntegradorDTO;
 import com.course.projetoweb.dto.IntegradorDTO;
-import com.course.projetoweb.dto.UpdateIntegradorDTO;
 import com.course.projetoweb.dto.UpdatePasswordDTO;
 import com.course.projetoweb.entities.Integrador;
 import com.course.projetoweb.services.admin.AdminService;

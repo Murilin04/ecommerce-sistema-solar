@@ -1,11 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Order } from '../../models/Order.model';
-import { OrderService } from '../../service/order/order.service';
-import { AuthService } from '../../../auth/service/auth.service';
-import { Router } from '@angular/router';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { CartService } from '../../service/cart/cart.service';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+
+import { AuthService } from '../../../auth/service/auth.service';
+import { Order } from '../../models/Order.model';
+import { CartService } from '../../service/cart/cart.service';
+import { OrderService } from '../../service/order/order.service';
 
 @Component({
   selector: 'app-my-orders',

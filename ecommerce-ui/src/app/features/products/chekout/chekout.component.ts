@@ -1,14 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CartItem } from '../../models/CartItem.model';
-import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CartService } from '../../service/cart/cart.service';
-import { AuthService } from '../../../auth/service/auth.service';
-import { PaymentService } from '../../service/payment/payment.service';
-import { OrderService } from '../../service/order/order.service';
-import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
+
+import { AuthService } from '../../../auth/service/auth.service';
+import { CartItem } from '../../models/CartItem.model';
+import { CartService } from '../../service/cart/cart.service';
+import { OrderService } from '../../service/order/order.service';
+import { PaymentService } from '../../service/payment/payment.service';
 
 @Component({
   selector: 'app-chekout',

@@ -4,16 +4,17 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
-import { IbgeService } from '../../service/ibge/ibge.service';
-import { ViacepService } from '../../service/cep/viacep.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { MatSelectModule } from "@angular/material/select";
-import { NgxMaskDirective } from 'ngx-mask';
-import { ProfileService } from '../../service/profile/profile.service';
 import { jwtDecode } from 'jwt-decode';
-import { IntegradorDTO } from '../../models/integradorDTO.model';
+import { NgxMaskDirective } from 'ngx-mask';
 import { ToastrService } from 'ngx-toastr';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
+
+import { IntegradorDTO } from '../../models/integradorDTO.model';
+import { ViacepService } from '../../service/cep/viacep.service';
+import { IbgeService } from '../../service/ibge/ibge.service';
+import { ProfileService } from '../../service/profile/profile.service';
 
 @Component({
   selector: 'app-edit-profile',

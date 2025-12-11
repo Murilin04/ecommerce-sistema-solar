@@ -11,8 +11,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
-import { LoadingComponent } from '../loading/loading.component';
 import { AuthService } from '../../../auth/service/auth.service';
+import { LoadingComponent } from '../loading/loading.component';
 
 
 @Component({

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -13,7 +14,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Integrador } from '../../../features/models/integrador.model';
 import { AdminService } from '../../service/admin.service';
 import { AuthService } from '../../service/auth.service';
-import { MatCardModule } from "@angular/material/card";
 
 @Component({
   selector: 'app-admin-dashboard',

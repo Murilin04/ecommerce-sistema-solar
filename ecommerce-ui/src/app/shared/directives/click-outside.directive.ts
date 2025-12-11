@@ -1,11 +1,4 @@
-import {
-  Directive,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Output,
-  inject,
-} from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, inject, Output } from '@angular/core';
 
 @Directive({
   selector: '[appClickOutside]'

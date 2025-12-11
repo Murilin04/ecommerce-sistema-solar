@@ -6,11 +6,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterModule } from '@angular/router';
-import { LoginComponent } from "../../../auth/login/login.component";
-import { AuthService } from '../../../auth/service/auth.service';
 import { Observable, Subscription } from 'rxjs';
+
+import { LoginComponent } from '../../../auth/login/login.component';
+import { AuthService } from '../../../auth/service/auth.service';
+import { MiniCartComponent } from '../../../features/products/mini-cart/mini-cart.component';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
-import { MiniCartComponent } from "../../../features/products/mini-cart/mini-cart.component";
 
 
 @Component({

@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Integrador } from '../../features/models/integrador.model';
 import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { environment } from '../../../environments/environment';
+import { Integrador } from '../../features/models/integrador.model';
 
 @Injectable({
   providedIn: 'root',

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 import { IntegradorDTO } from '../../models/integradorDTO.model';
-import { Integrador } from '../../models/integrador.model';
 
 @Injectable({
   providedIn: 'root'

@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+
 import { AuthService } from '../../../auth/service/auth.service';
 import { Integrador } from '../../../features/models/integrador.model';
 import { LoadingComponent } from '../loading/loading.component';
