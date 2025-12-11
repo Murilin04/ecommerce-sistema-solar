@@ -299,11 +299,6 @@ export class CartService {
     };
   }
 
-  // Aplicar cupom de desconto
-  applyCoupon(couponCode: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/aplicar-cupom`, { code: couponCode });
-  }
-
   // Calcular frete
   calculateShipping(cep: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/calcular-frete`, { cep });

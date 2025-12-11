@@ -8,10 +8,11 @@ import { AuthService } from '../../../auth/service/auth.service';
 import { PaymentService } from '../../service/payment/payment.service';
 import { OrderService } from '../../service/order/order.service';
 import { CommonModule } from '@angular/common';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-chekout',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgxMaskDirective],
   templateUrl: './chekout.component.html',
   styleUrl: './chekout.component.scss'
 })
@@ -72,8 +73,8 @@ export class CheckoutComponent implements OnInit {
     this.addressForm = this.fb.group({
       customerName: ['', [Validators.required, Validators.minLength(3)]],
       customerEmail: ['', [Validators.required, Validators.email]],
-      customerPhone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\) \d{4,5}-\d{4}$/)]],
-      shippingZipCode: ['', [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
+      customerPhone: ['', [Validators.required]],
+      shippingZipCode: ['', [Validators.required]],
       shippingAddress: ['', [Validators.required, Validators.minLength(5)]],
       addressNumber: ['', Validators.required],
       shippingComplement: [''],
@@ -102,6 +103,13 @@ export class CheckoutComponent implements OnInit {
       categoria: item.produto.codigoCategoria,
       quantidade: item.quantidade
     }));
+
+    this.addressForm.get('shippingZipCode')?.valueChanges.subscribe(value => {
+      const numeros = value?.replace(/\D/g, '') || '';
+      if (numeros.length === 8) {
+        this.buscarCep();
+      }
+    });
 
     if (this.cartItems.length === 0) {
       this.snackBar.open('Seu carrinho está vazio', 'OK', { duration: 3000 });
@@ -173,10 +181,17 @@ export class CheckoutComponent implements OnInit {
 
   buscarCep(): void {
     const cep = this.addressForm.get('shippingZipCode')?.value;
-    if (!cep || cep.length !== 9) return;
+    if (!cep) return;
+
+    // Remove todos os caracteres não numéricos
+    const cepNumeros = cep.replace(/\D/g, '');
+
+    // Verifica se tem 8 dígitos
+    if (cepNumeros.length !== 8) {
+      return;
+    }
 
     this.loadingCep = true;
-    const cepNumeros = cep.replace('-', '');
 
     // Buscar CEP via ViaCEP
     fetch(`https://viacep.com.br/ws/${cepNumeros}/json/`)
@@ -184,14 +199,19 @@ export class CheckoutComponent implements OnInit {
       .then(data => {
         if (!data.erro) {
           this.addressForm.patchValue({
-            shippingAddress: data.logradouro,
-            shippingCity: data.localidade,
-            shippingState: data.uf,
-            shippingComplement: data.complemento
+            shippingAddress: data.logradouro || '',
+            shippingCity: data.localidade || '',
+            shippingState: data.uf || '',
+            shippingComplement: data.complemento || ''
           });
+        } else {
+          this.snackBar.open('CEP não encontrado', 'OK', { duration: 3000 });
         }
       })
-      .catch(err => console.error('Erro ao buscar CEP:', err))
+      .catch(err => {
+        console.error('Erro ao buscar CEP:', err);
+        this.snackBar.open('Erro ao buscar CEP', 'OK', { duration: 3000 });
+      })
       .finally(() => this.loadingCep = false);
   }
 

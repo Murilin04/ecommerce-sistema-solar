@@ -9,10 +9,11 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../service/cart/cart.service';
 import { CartItem } from '../../models/CartItem.model';
 import { FormsModule } from '@angular/forms';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-cart',
-  imports: [MatIcon, MatFormField, MatLabel, CommonModule, FormsModule, MatInput],
+  imports: [MatIcon, MatFormField, MatLabel, CommonModule, FormsModule, MatInput, NgxMaskDirective],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
@@ -131,38 +132,6 @@ export class CartComponent implements OnInit{
           panelClass: ['snackbar-erro']
         });
         this.calculandoFrete = false;
-      }
-    });
-  }
-
-  // Aplicar cupom
-  aplicarCupom(): void {
-    if (!this.cupomCode) {
-      this.snackBar.open('Digite um código de cupom', 'Fechar', {
-        duration: 3000,
-        panelClass: ['snackbar-erro']
-      });
-      return;
-    }
-
-    this.aplicandoCupom = true;
-
-    this.cartService.applyCoupon(this.cupomCode).subscribe({
-      next: (response) => {
-        this.snackBar.open(
-          `Cupom aplicado! Desconto: R$ ${response.desconto.toFixed(2)}`,
-          'Fechar',
-          { duration: 3000, panelClass: ['snackbar-sucesso'] }
-        );
-        this.aplicandoCupom = false;
-        this.cupomCode = '';
-      },
-      error: (error) => {
-        this.snackBar.open('Cupom inválido ou expirado', 'Fechar', {
-          duration: 3000,
-          panelClass: ['snackbar-erro']
-        });
-        this.aplicandoCupom = false;
       }
     });
   }

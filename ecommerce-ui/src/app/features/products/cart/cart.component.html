@@ -96,7 +96,8 @@
               matInput
               [(ngModel)]="cep"
               placeholder="00000-000"
-              maxlength="9">
+              maxlength="9"
+              mask="00000-000">
             <mat-icon matPrefix>location_on</mat-icon>
           </mat-form-field>
           <button
@@ -105,28 +106,6 @@
             (click)="calcularFrete()"
             [disabled]="calculandoFrete">
             {{ calculandoFrete ? 'Calculando...' : 'Calcular' }}
-          </button>
-        </div>
-      </div>
-
-      <!-- Cupom de Desconto -->
-      <div class="summary-section coupon">
-        <h3>Cupom de Desconto</h3>
-        <div class="input-group">
-          <mat-form-field appearance="outline">
-            <mat-label>Código do Cupom</mat-label>
-            <input
-              matInput
-              [(ngModel)]="cupomCode"
-              placeholder="Digite o cupom">
-            <mat-icon matPrefix>local_offer</mat-icon>
-          </mat-form-field>
-          <button
-            mat-raised-button
-            color="accent"
-            (click)="aplicarCupom()"
-            [disabled]="aplicandoCupom">
-            {{ aplicandoCupom ? 'Aplicando...' : 'Aplicar' }}
           </button>
         </div>
       </div>

@@ -65,7 +65,7 @@
           </div>
           <div class="form-group">
             <label>Telefone *</label>
-            <input type="tel" formControlName="customerPhone" placeholder="(00) 00000-0000">
+            <input type="tel" formControlName="customerPhone" placeholder="(00) 00000-0000" mask="(00) 00000-0000">
           </div>
         </div>
 
@@ -78,6 +78,7 @@
               placeholder="00000-000"
               (blur)="buscarCep()"
               maxlength="9"
+              mask="00000-000"
             >
             <span class="loading" *ngIf="loadingCep">Buscando...</span>
           </div>
@@ -175,6 +176,7 @@
             formControlName="cardNumber"
             placeholder="0000 0000 0000 0000"
             maxlength="19"
+            mask="0000 0000 0000 0000"
           >
         </div>
 
@@ -186,7 +188,7 @@
         <div class="form-row">
           <div class="form-group">
             <label>Validade *</label>
-            <input type="text" formControlName="cardExpiry" placeholder="MM/AA" maxlength="5">
+            <input type="text" formControlName="cardExpiry" placeholder="MM/AA" maxlength="5" mask="MM/AA">
           </div>
           <div class="form-group">
             <label>CVV *</label>
